@@ -1,5 +1,11 @@
 # Persephone (Working Title)
 
+![Code Climate maintainability](https://img.shields.io/codeclimate/maintainability-percentage/pazuzu156/Persephone?label=maintainability&style=flat-square)
+![GitHub release](https://img.shields.io/github/release/pazuzu156/persephone?style=flat-square)
+![GitHub last commit](https://img.shields.io/github/last-commit/pazuzu156/persephone?style=flat-square)
+![Travis (.org)](https://img.shields.io/travis/pazuzu156/persephone?style=flat-square)
+![Snyk Vulnerabilities for GitHub Repo](https://api.kalebklein.com/persephone/vulns/)
+
 Persephone is a Discord bot that's used to interface with Lastfm, and is built to be used with the Untrodden Corrodors of Hades Discord server.
 
 ## Used Libraries
