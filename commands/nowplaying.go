@@ -165,18 +165,20 @@ func (c Nowplaying) Register() *aurora.Command {
 
 			os.Remove(res.Filename)
 			dc.SavePNG("temp/" + ctx.Message.Author.ID.String() + ".png")
+
+			r, _ := os.Open("temp/" + ctx.Message.Author.ID.String() + ".png")
+
+			ctx.Aurora.CreateMessage(ctx.Message.ChannelID, &disgord.CreateMessageParams{
+				Files: []disgord.CreateMessageFileParams{
+					{FileName: ctx.Message.Author.ID.String() + ".png", Reader: r},
+				},
+			})
+
+			r.Close()
+			os.Remove("temp/" + ctx.Message.Author.ID.String() + ".png")
+		} else {
+			ctx.Message.RespondString(ctx.Aurora, "You're currently not listening to anything")
 		}
-
-		r, _ := os.Open("temp/" + ctx.Message.Author.ID.String() + ".png")
-
-		ctx.Aurora.CreateMessage(ctx.Message.ChannelID, &disgord.CreateMessageParams{
-			Files: []disgord.CreateMessageFileParams{
-				{FileName: ctx.Message.Author.ID.String() + ".png", Reader: r},
-			},
-		})
-
-		r.Close()
-		os.Remove("temp/" + ctx.Message.Author.ID.String() + ".png")
 	}
 
 	return c.Command.CommandInterface
