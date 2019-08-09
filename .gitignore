@@ -1,2 +1,4 @@
 *.exe
 config.json
+temp/*
+!temp/.gitkeep
