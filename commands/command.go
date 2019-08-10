@@ -4,7 +4,7 @@ import (
 	"persephone/utils"
 
 	"github.com/pazuzu156/aurora"
-	"github.com/shkh/lastfm-go/lastfm"
+	"github.com/pazuzu156/lastfm-go"
 )
 
 // Command is the base command object for all commands.

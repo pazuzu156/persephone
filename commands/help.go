@@ -18,6 +18,7 @@ func InitHelp(aliases ...string) Help {
 	return Help{Init(
 		"help",
 		"Displays help information for commands",
+		aliases...,
 	)}
 }
 

@@ -20,22 +20,16 @@ func InitLogout(aliases ...string) Logout {
 // Register registers and runs the logout command.
 func (c Logout) Register() *aurora.Command {
 	c.Command.CommandInterface.Run = func(ctx aurora.Context) {
-		dbu := database.GetUser(ctx.Message.Author)
+		db, _ := database.OpenDB()
+		defer db.Close()
 
-		if len(dbu) > 0 {
-			user := dbu[0]
-
-			db, _ := database.OpenDB()
-			n, err := db.Delete(&user)
-
-			if err != nil {
-				fmt.Println(err)
-			}
+		if user := database.GetUser(ctx.Message.Author); user.Username != "" {
+			n, _ := db.Delete(&user)
 
 			if n > 0 {
-				ctx.Message.RespondString(ctx.Aurora, fmt.Sprintf("%s You have logged out!", ctx.Message.Author.Mention()))
+				ctx.Message.RespondString(ctx.Aurora, fmt.Sprintf("%s You have logged out successfully", ctx.Message.Author.Mention()))
 			} else {
-				ctx.Message.RespondString(ctx.Aurora, "There was an issue logging you out. Please try again")
+				ctx.Message.RespondString(ctx.Aurora, "There was an issue logging you out. Please try again later")
 			}
 		} else {
 			ctx.Message.RespondString(ctx.Aurora, "You are not logged in with Last.fm")

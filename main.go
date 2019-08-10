@@ -42,7 +42,7 @@ func init() {
 	np := commands.InitNowPlaying("np")
 	aurora.Use(np.Register())
 
-	help := commands.InitHelp()
+	help := commands.InitHelp("h")
 	aurora.Use(help.Register())
 
 	login := commands.InitLogin()
@@ -50,4 +50,7 @@ func init() {
 
 	logout := commands.InitLogout()
 	aurora.Use(logout.Register())
+
+	wk := commands.InitWhoknows("wk")
+	aurora.Use(wk.Register())
 }

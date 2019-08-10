@@ -13,9 +13,9 @@ import (
 	"github.com/andersfylling/disgord"
 	"github.com/cavaliercoder/grab"
 	"github.com/fogleman/gg"
+	"github.com/pazuzu156/lastfm-go"
 	"github.com/nfnt/resize"
 	"github.com/pazuzu156/aurora"
-	"github.com/shkh/lastfm-go/lastfm"
 	"golang.org/x/text/language"
 	"golang.org/x/text/message"
 )
@@ -37,18 +37,14 @@ func InitNowPlaying(aliases ...string) Nowplaying {
 // Register registers and runs the nowplaying command.
 func (c Nowplaying) Register() *aurora.Command {
 	c.Command.CommandInterface.Run = func(ctx aurora.Context) {
-		dbu := database.GetUser(ctx.Message.Author)
-		fmt.Println(dbu)
-
-		if len(dbu) > 0 {
-			user := dbu[0]
+		if user := database.GetUser(ctx.Message.Author); user.Username != "" {
 			np, _ := c.Command.Lastfm.User.GetRecentTracks(lastfm.P{
 				"user":  user.Lastfm,
 				"limit": "3",
 			})
 
 			track := np.Tracks[0]                                                      // want first track
-			lfmuser, _ := c.Command.Lastfm.User.GetInfo(lastfm.P{"user": "Pazuzu156"}) // gets the user
+			lfmuser, _ := c.Command.Lastfm.User.GetInfo(lastfm.P{"user": user.Lastfm}) // gets the user
 
 			if track.NowPlaying == "true" {
 				res, _ := grab.Get("temp/", track.Images[3].Url)
