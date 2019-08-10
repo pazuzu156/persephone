@@ -13,10 +13,14 @@ type Command struct {
 	Lastfm           *lastfm.Api
 }
 
+var commands = map[string]*aurora.Command{}
+
 // Init initializes aurora commands.
 func Init(name string, description string, aliases ...string) Command {
 	cmd := aurora.NewCommand(name).SetDescription(description)
+	commands[cmd.Name] = cmd // used for the help command
 
+	// register aliases
 	if aliases != nil {
 		cmd.SetAliases(aliases...)
 	}

@@ -6,7 +6,10 @@ require (
 	github.com/andersfylling/disgord v0.11.3
 	github.com/cavaliercoder/grab v2.0.0+incompatible
 	github.com/fogleman/gg v1.3.0
+	github.com/go-sql-driver/mysql v1.4.1
 	github.com/golang/freetype v0.0.0-20170609003504-e2365dfdc4a0 // indirect
+	github.com/naoina/genmai v0.0.0-20170715140901-78583835e1e4
+	github.com/naoina/go-stringutil v0.1.0 // indirect
 	github.com/nfnt/resize v0.0.0-20180221191011-83c6a9932646
 	github.com/polaron/aurora v0.1.0
 	github.com/shkh/lastfm-go v0.0.0-20180729041255-29483feae857
