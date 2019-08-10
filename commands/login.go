@@ -4,8 +4,8 @@ import (
 	"fmt"
 	"persephone/database"
 
+	"github.com/pazuzu156/lastfm-go"
 	"github.com/pazuzu156/aurora"
-	"github.com/shkh/lastfm-go/lastfm"
 )
 
 // Login command.
@@ -25,9 +25,7 @@ func (c Login) Register() *aurora.Command {
 		defer db.Close()
 
 		if len(ctx.Args) > 0 {
-			dbu := database.GetUser(ctx.Message.Author)
-
-			if len(dbu) == 0 {
+			if user := database.GetUser(ctx.Message.Author); user.Username == "" {
 				lfmun := ctx.Args[0]
 				lfmuser, err := c.Command.Lastfm.User.GetInfo(lastfm.P{"user": lfmun})
 
@@ -48,12 +46,12 @@ func (c Login) Register() *aurora.Command {
 				n, _ := db.Insert(newuser)
 
 				if n > 0 {
-					ctx.Message.RespondString(ctx.Aurora, fmt.Sprintf("%s You have logged in with Last.fm username: `%s`", ctx.Message.Author.Mention(), lfmuser.Name))
+					ctx.Message.RespondString(ctx.Aurora, fmt.Sprintf("%s You have logged in with your Last.fm username: `%s`", ctx.Message.Author.Mention(), lfmuser.Name))
 				} else {
 					ctx.Message.RespondString(ctx.Aurora, "There was a problem saving your information. Please try again later")
 				}
 			} else {
-				ctx.Message.RespondString(ctx.Aurora, fmt.Sprintf("%s You're already logged in to Last.fm", ctx.Message.Author.Mention()))
+				ctx.Message.RespondString(ctx.Aurora, "You are already logged in with Last.fm")
 			}
 		} else {
 			ctx.Message.RespondString(ctx.Aurora, "You need to provide your Last.fm username to log in")

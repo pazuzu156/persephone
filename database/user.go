@@ -15,7 +15,7 @@ type User struct {
 }
 
 // GetUser gets the database user via a Discord user.
-func GetUser(user *disgord.User) []User {
+func GetUser(user *disgord.User) User {
 	db, err := OpenDB()
 	defer db.Close()
 
@@ -25,6 +25,25 @@ func GetUser(user *disgord.User) []User {
 
 	var dbu []User
 	db.Select(&dbu, db.Where("discord_id", "=", GetUInt64ID(user)))
+
+	if len(dbu) > 0 {
+		return dbu[0]
+	}
+
+	return User{}
+}
+
+// GetUsers returns all the users in the database.
+func GetUsers() []User {
+	db, err := OpenDB()
+	defer db.Close()
+
+	if err != nil {
+		panic(err)
+	}
+
+	var dbu []User
+	db.Select(&dbu)
 
 	return dbu
 }
