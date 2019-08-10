@@ -9,7 +9,7 @@ type Ping struct {
 
 // InitPing initializes the ping command.
 func InitPing(aliases ...string) Ping {
-	return Ping{Init("ping", "Ping/Pong", aliases...)}
+	return Ping{Init("ping", "Ping/Pong")}
 }
 
 // Register registers and runs the ping command.
