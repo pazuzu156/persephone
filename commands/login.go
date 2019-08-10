@@ -2,36 +2,34 @@ package commands
 
 import (
 	"fmt"
-	"persephone/models"
-	"persephone/utils"
-	"strconv"
+	"persephone/database"
 
-	"github.com/polaron/aurora"
+	"github.com/pazuzu156/aurora"
 	"github.com/shkh/lastfm-go/lastfm"
 )
 
+// Login command.
 type Login struct {
 	Command Command
 }
 
+// InitLogin initializes the login command.
 func InitLogin(aliases ...string) Login {
 	return Login{Init("login", "Login to the bot with your Lastfm Username")}
 }
 
+// Register registers and runs the login command.
 func (c Login) Register() *aurora.Command {
 	c.Command.CommandInterface.Run = func(ctx aurora.Context) {
-		db, _ := utils.OpenDB()
+		db, _ := database.OpenDB()
 		defer db.Close()
 
 		if len(ctx.Args) > 0 {
-			did, _ := strconv.Atoi(ctx.Message.Author.ID.String())
-			var res []models.User
-			db.Select(&res, db.Where("discord_id", "=", did))
+			dbu := database.GetUser(ctx.Message.Author)
 
-			if len(res) == 0 {
+			if len(dbu) == 0 {
 				lfmun := ctx.Args[0]
 				lfmuser, err := c.Command.Lastfm.User.GetInfo(lastfm.P{"user": lfmun})
-				fmt.Println(lfmuser)
 
 				if err != nil {
 					ctx.Message.RespondString(ctx.Aurora, "A user with that username could not be found")
@@ -39,14 +37,15 @@ func (c Login) Register() *aurora.Command {
 					return
 				}
 
-				user := []models.User{
+				newuser := []database.User{
 					{
-						Username:  lfmuser.Name,
-						DiscordID: uint64(did),
+						Username:  ctx.Message.Author.Username,
+						DiscordID: database.GetUInt64ID(ctx.Message.Author),
 						Lastfm:    lfmuser.Name,
 					},
 				}
-				n, _ := db.Insert(user)
+
+				n, _ := db.Insert(newuser)
 
 				if n > 0 {
 					ctx.Message.RespondString(ctx.Aurora, fmt.Sprintf("%s You have logged in with Last.fm username: `%s`", ctx.Message.Author.Mention(), lfmuser.Name))

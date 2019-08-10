@@ -1,6 +1,6 @@
 package commands
 
-import "github.com/polaron/aurora"
+import "github.com/pazuzu156/aurora"
 
 // Ping is a simple testing command.
 type Ping struct {

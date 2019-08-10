@@ -3,7 +3,7 @@ package commands
 import (
 	"persephone/utils"
 
-	"github.com/polaron/aurora"
+	"github.com/pazuzu156/aurora"
 	"github.com/shkh/lastfm-go/lastfm"
 )
 

@@ -1,22 +1,20 @@
-package utils
+package database
 
 import (
 	"fmt"
-	"persephone/models"
+	"persephone/utils"
 
-	_ "github.com/go-sql-driver/mysql"
+	_ "github.com/go-sql-driver/mysql" // required for mysql driver
 	"github.com/naoina/genmai"
 )
 
-var config = Config()
+var config = utils.Config()
 
 // Migrate migrates database tables (only run on database creation)
 func Migrate() {
 	var db *genmai.DB
 	db, _ = OpenDB()
-
-	db.CreateTableIfNotExists(&models.User{})
-
+	db.CreateTableIfNotExists(&User{})
 	db.Close()
 }
 
@@ -31,18 +29,4 @@ func OpenDB() (*genmai.DB, error) {
 	))
 
 	return db, err
-	// db, err := genmai.New(&genmai.MySQLDialect{}, "root@/persephone")
-	// if err != nil {
-	// 	panic(err)
-	// }
-	// defer db.Close()
-
-	// obj := []User{
-	// 	{Username: "Apollyon", DiscordID: 12345678, Lastfm: "Pazuzu156"},
-	// }
-	// n, err := db.Insert(obj)
-	// if err != nil {
-	// 	panic(err)
-	// }
-	// fmt.Printf("Inserted rows: %d\n", n)
 }
