@@ -2,10 +2,11 @@ package main
 
 import (
 	"persephone/commands"
+	"persephone/database"
 	"persephone/utils"
 
 	"github.com/andersfylling/disgord"
-	"github.com/polaron/aurora"
+	"github.com/pazuzu156/aurora"
 )
 
 var migrate = false
@@ -13,7 +14,7 @@ var migrate = false
 // main entry point
 func main() {
 	if migrate {
-		utils.Migrate()
+		database.Migrate()
 	} else {
 		config := utils.Config()
 
@@ -41,9 +42,12 @@ func init() {
 	np := commands.InitNowPlaying("np")
 	aurora.Use(np.Register())
 
-	help := commands.InitHelp("help")
+	help := commands.InitHelp()
 	aurora.Use(help.Register())
 
-	login := commands.InitLogin("login")
+	login := commands.InitLogin()
 	aurora.Use(login.Register())
+
+	logout := commands.InitLogout()
+	aurora.Use(logout.Register())
 }

@@ -5,7 +5,7 @@ import (
 	"strings"
 
 	"github.com/andersfylling/disgord"
-	"github.com/polaron/aurora"
+	"github.com/pazuzu156/aurora"
 )
 
 // Help command.
@@ -13,12 +13,11 @@ type Help struct {
 	Command Command
 }
 
-// InitHelp initialized the help command.
+// InitHelp initializes the help command.
 func InitHelp(aliases ...string) Help {
 	return Help{Init(
 		"help",
 		"Displays help information for commands",
-		"h", "hh",
 	)}
 }
 
