@@ -18,6 +18,10 @@ func InitHelp(aliases ...string) Help {
 	return Help{Init(
 		"help",
 		"Displays help information for commands",
+		[]string{
+			"help",
+			"help [command]",
+		},
 		aliases...,
 	)}
 }
@@ -34,6 +38,23 @@ func (c Help) Register() *aurora.Command {
 					},
 				}
 
+				// Usage
+				if len(usageMap) > 0 {
+					var usage []string
+
+					for _, u := range usageMap {
+						if c.Command.CommandInterface.Name == u.CommandName {
+							usage = append(usage, fmt.Sprintf("`%s`", u.Usage))
+						}
+					}
+
+					embedFields = append(embedFields, &disgord.EmbedField{
+						Name:  "Usage",
+						Value: strings.TrimRight(strings.Join(usage, ", "), ", "),
+					})
+				}
+
+				// Aliases
 				if len(cmd.Aliases) > 0 {
 					var aliases []string
 
