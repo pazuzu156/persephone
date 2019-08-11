@@ -18,10 +18,20 @@ func InitHelp(aliases ...string) Help {
 	return Help{Init(
 		"help",
 		"Displays help information for commands",
-		[]string{
-			"help",
-			"help [command]",
+		[]Usage{
+			{
+				Command:     "help",
+				Description: "Shows the master help list",
+			},
+			{
+				Command:     "help [command]",
+				Description: "Gets help on a specific command",
+			},
 		},
+		// []string{
+		// 	"help",
+		// 	"help [command]",
+		// },
 		aliases...,
 	)}
 }
@@ -42,17 +52,35 @@ func (c Help) Register() *aurora.Command {
 				if len(usageMap) > 0 {
 					var usage []string
 
-					for _, u := range usageMap {
-						if c.Command.CommandInterface.Name == u.CommandName {
-							usage = append(usage, fmt.Sprintf("`%s`", u.Usage))
+					for _, i := range usageMap {
+						fmt.Println(c.Command.CommandInterface.Name)
+						if cmd.Name == i.CommandName {
+							for _, j := range i.Usage {
+								usage = append(usage, fmt.Sprintf("`%s` - %s", j.Command, j.Description))
+								fmt.Sprintf("Adding for command %s", i.CommandName)
+							}
 						}
 					}
 
 					embedFields = append(embedFields, &disgord.EmbedField{
 						Name:  "Usage",
-						Value: strings.TrimRight(strings.Join(usage, ", "), ", "),
+						Value: strings.Join(usage, "\n"),
 					})
 				}
+				// if len(usageMap) > 0 {
+				// 	var usage []string
+
+				// 	for _, u := range usageMap {
+				// 		if c.Command.CommandInterface.Name == u.CommandName {
+				// 			usage = append(usage, fmt.Sprintf("`%s`", u.Usage))
+				// 		}
+				// 	}
+
+				// 	embedFields = append(embedFields, &disgord.EmbedField{
+				// 		Name:  "Usage",
+				// 		Value: strings.TrimRight(strings.Join(usage, ", "), ", "),
+				// 	})
+				// }
 
 				// Aliases
 				if len(cmd.Aliases) > 0 {

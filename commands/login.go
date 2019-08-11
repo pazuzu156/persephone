@@ -15,7 +15,7 @@ type Login struct {
 
 // InitLogin initializes the login command.
 func InitLogin(aliases ...string) Login {
-	return Login{Init("login", "Login to the bot with your Lastfm Username", []string{"login"})}
+	return Login{Init("login", "Login to the bot with your Lastfm Username", []Usage{})}
 }
 
 // Register registers and runs the login command.
