@@ -23,6 +23,7 @@ func main() {
 				BotToken: config.Token,
 				Logger:   disgord.DefaultLogger(false),
 			},
+			OwnerID: config.BotOwner,
 		})
 
 		client.Use(aurora.DefaultLogger())
@@ -53,4 +54,7 @@ func init() {
 
 	wk := commands.InitWhoknows("wk")
 	aurora.Use(wk.Register())
+
+	bi := commands.InitBandinfo("bi")
+	aurora.Use(bi.Register())
 }

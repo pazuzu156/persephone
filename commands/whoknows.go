@@ -3,6 +3,7 @@ package commands
 import (
 	"fmt"
 	"persephone/database"
+	"persephone/utils"
 	"sort"
 	"strconv"
 	"strings"
@@ -41,15 +42,7 @@ func (c Whoknows) Register() *aurora.Command {
 		// if args > 0, an artist is likely provided
 		// so .wk <artist> runs the command on a requested artist
 		if len(ctx.Args) > 0 {
-			var artist = ""
-
-			// merge all args into one string
-			if len(ctx.Args) > 1 {
-				artist = strings.Join(ctx.Args, " ")
-			} else {
-				artist = ctx.Args[0]
-			}
-
+			artist := strings.TrimRight(strings.Join(ctx.Args, " "), " ")
 			a, err := c.Command.Lastfm.Artist.GetInfo(lastfm.P{"artist": artist})
 
 			if err != nil {
@@ -103,13 +96,8 @@ func (c Whoknows) displayWhoKnows(ctx aurora.Context, artist lastfm.ArtistGetInf
 		plays, _ := strconv.Atoi(a.Stats.UserPlays)
 
 		// add all users who have scrobbled the artist to the slice
-		// otherwise, break from the loop
-		// Also, don't loop through all the logged in users if the last
-		// seen user has no scrobbles
 		if plays > 0 {
 			wk = append(wk, U{Name: user.Username, Plays: plays})
-		} else if plays == 0 {
-			break
 		}
 	}
 
@@ -137,9 +125,9 @@ func (c Whoknows) displayWhoKnows(ctx aurora.Context, artist lastfm.ArtistGetInf
 		ctx.Aurora.CreateMessage(ctx.Message.ChannelID, &disgord.CreateMessageParams{
 			Embed: &disgord.Embed{
 				Title:       fmt.Sprintf("Who knows %s?", artist.Name),
-				URL:         fmt.Sprintf("https://last.fm/music/%s", artist.Name),
+				URL:         fmt.Sprintf("https://last.fm/music/%s", strings.Replace(artist.Name, " ", "+", len(artist.Name))),
 				Description: desc,
-				Color:       0xb3ff00,
+				Color:       utils.RandomColor(),
 			},
 		})
 	} else {
