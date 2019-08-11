@@ -21,6 +21,10 @@ type Whoknows struct {
 func InitWhoknows(aliases ...string) Whoknows {
 	return Whoknows{Init("whoknows",
 		"Shows who knows a specific artist",
+		[]string{
+			"whoknows",
+			"whoknows [artist]",
+		},
 		aliases...,
 	)}
 }

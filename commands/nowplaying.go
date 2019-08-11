@@ -13,9 +13,9 @@ import (
 	"github.com/andersfylling/disgord"
 	"github.com/cavaliercoder/grab"
 	"github.com/fogleman/gg"
-	"github.com/pazuzu156/lastfm-go"
 	"github.com/nfnt/resize"
 	"github.com/pazuzu156/aurora"
+	"github.com/pazuzu156/lastfm-go"
 	"golang.org/x/text/language"
 	"golang.org/x/text/message"
 )
@@ -30,6 +30,7 @@ func InitNowPlaying(aliases ...string) Nowplaying {
 	return Nowplaying{Init(
 		"nowplaying",
 		"Shows what you're currently listening to",
+		[]string{"nowplaying"},
 		aliases...,
 	)}
 }
