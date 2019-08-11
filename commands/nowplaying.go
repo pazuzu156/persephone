@@ -7,6 +7,7 @@ import (
 	"image/png"
 	"os"
 	"persephone/database"
+	"persephone/utils"
 	"strconv"
 	"strings"
 
@@ -197,7 +198,7 @@ func (c Nowplaying) Register() *aurora.Command {
 					Embed: &disgord.Embed{
 						Title: fmt.Sprintf("View %s's Profile on Last.fm", ctx.Message.Author.Username),
 						URL:   fmt.Sprintf("https://last.fm/user/%s", lfmuser.Name),
-						Color: 0x4d00ff,
+						Color: utils.RandomColor(),
 					},
 				})
 

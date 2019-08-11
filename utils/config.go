@@ -9,6 +9,7 @@ import (
 // Configuration is the base json object.
 type Configuration struct {
 	Token    string   `json:"token"`
+	BotOwner string   `json:"bot_owner"`
 	Prefix   string   `json:"prefix"`
 	Lastfm   Lastfm   `json:"lastfm"`
 	Database Database `json:"database"`
