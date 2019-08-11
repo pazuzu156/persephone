@@ -21,7 +21,7 @@ type Whoknows struct {
 func InitWhoknows(aliases ...string) Whoknows {
 	return Whoknows{Init("whoknows",
 		"Shows who knows a specific artist",
-		[]Usage{
+		[]UsageItem{
 			{
 				Command:     "whoknows",
 				Description: "Shows a list of users who know the current playing artist",

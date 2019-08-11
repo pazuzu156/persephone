@@ -30,7 +30,7 @@ func InitNowPlaying(aliases ...string) Nowplaying {
 	return Nowplaying{Init(
 		"nowplaying",
 		"Shows what you're currently listening to",
-		[]Usage{
+		[]UsageItem{
 			{
 				Command:     "np",
 				Description: "shows current song",
