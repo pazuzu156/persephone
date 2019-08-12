@@ -1,7 +1,7 @@
 package commands
 
 import (
-	"persephone/utils"
+	"persephone/lib"
 
 	"github.com/pazuzu156/aurora"
 	"github.com/pazuzu156/lastfm-go"
@@ -13,9 +13,11 @@ type Command struct {
 	Lastfm           *lastfm.Api
 }
 
-// Usage is the base usage object for the help command.
-type Usage struct {
-	CommandName string
+// CommandItem is the base command item object for the help command.
+type CommandItem struct {
+	Name        string
+	Description string
+	Aliases     []string
 	Usage       []UsageItem
 }
 
@@ -25,26 +27,27 @@ type UsageItem struct {
 	Description string
 }
 
-var commands = map[string]*aurora.Command{}
-var usageMap = []Usage{}
+// var commands = map[string]*aurora.Command{}
+var commands = []CommandItem{}
 
 // Init initializes aurora commands.
 func Init(name string, description string, usage []UsageItem, aliases ...string) Command {
 	cmd := aurora.NewCommand(name).SetDescription(description)
-	commands[cmd.Name] = cmd // used for the help command
-
-	usageMap = append(usageMap, Usage{
-		CommandName: cmd.Name,
-		Usage:       usage,
-	})
 
 	// register aliases
 	if aliases != nil {
 		cmd.SetAliases(aliases...)
 	}
 
-	config := utils.Config()
+	// Add all command info to slice for help command
+	commands = append(commands, CommandItem{
+		Name:        cmd.Name,
+		Description: cmd.Description,
+		Aliases:     cmd.Aliases,
+		Usage:       usage,
+	})
 
+	config := lib.Config()
 	lfm := lastfm.New(config.Lastfm.APIKey, config.Lastfm.Secret)
 
 	return Command{cmd, lfm}
