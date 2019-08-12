@@ -55,6 +55,6 @@ func init() {
 	wk := commands.InitWhoknows("wk")
 	aurora.Use(wk.Register())
 
-	bi := commands.InitBandinfo("bi")
-	aurora.Use(bi.Register())
+	b := commands.InitBand("b")
+	aurora.Use(b.Register())
 }

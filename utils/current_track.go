@@ -34,16 +34,18 @@ type Track struct {
 
 // GetNowPlayingTrack returns the currently playing track
 func GetNowPlayingTrack(author *disgord.User, lfm *lastfm.Api) (Track, error) {
-	tracks, err := GetRecentTracks(author, lfm, "1")
+	tracks, err := GetRecentTracks(author, lfm, "3")
 
-	if len(tracks) > 0 {
-		track := tracks[0]
+	if err == nil {
+		if len(tracks) > 0 {
+			track := tracks[0]
 
-		if track.NowPlaying == "true" {
-			return track, nil
+			if track.NowPlaying == "true" {
+				return track, nil
+			}
+
+			return Track{}, errors.New("You're not currently listening to anything")
 		}
-
-		return Track{}, errors.New("You're not currently listening to anything")
 	}
 
 	return Track{}, err
