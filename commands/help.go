@@ -36,59 +36,31 @@ func InitHelp(aliases ...string) Help {
 func (c Help) Register() *aurora.Command {
 	c.Command.CommandInterface.Run = func(ctx aurora.Context) {
 		if len(ctx.Args) > 0 {
-			if cmd, ok := commands[ctx.Args[0]]; ok {
-				embedFields := []*disgord.EmbedField{
-					{
-						Name:  "Help",
-						Value: fmt.Sprintf("`%s`: %s", cmd.Name, cmd.Description),
-					},
-				}
+			argcmd := ctx.Args[0]
 
-				// Usage
-				if len(usageMap) > 0 {
-					var usage []string
-
-					for _, i := range usageMap {
-						fmt.Println(c.Command.CommandInterface.Name)
-						if cmd.Name == i.CommandName {
-							for _, j := range i.Usage {
-								usage = append(usage, fmt.Sprintf("`%s` - %s", j.Command, j.Description))
-							}
+			for _, command := range commands {
+				// if argcmd == command.Name then
+				// run help, otherwise, likely an
+				// alias was used instead
+				// which should also work
+				if argcmd == command.Name {
+					// TODO: Command name given, process help for command
+					c.processHelp(ctx, command)
+				} else {
+					// check if argument was an alias
+					for _, alias := range command.Aliases {
+						if argcmd == alias {
+							// TODO: Alias given, process help for command
+							c.processHelp(ctx, command)
 						}
 					}
-
-					embedFields = append(embedFields, &disgord.EmbedField{
-						Name:  "Usage",
-						Value: strings.Join(usage, "\n"),
-					})
 				}
-
-				// Aliases
-				if len(cmd.Aliases) > 0 {
-					var aliases []string
-
-					for _, alias := range cmd.Aliases {
-						aliases = append(aliases, fmt.Sprintf("`%s`", alias))
-					}
-
-					embedFields = append(embedFields, &disgord.EmbedField{
-						Name:  "Aliases",
-						Value: strings.TrimRight(strings.Join(aliases, ", "), ", "),
-					})
-				}
-
-				ctx.Aurora.CreateMessage(ctx.Message.ChannelID, &disgord.CreateMessageParams{
-					Embed: &disgord.Embed{
-						Fields: embedFields,
-						Color:  0x007FFF,
-					},
-				})
 			}
 		} else {
 			var cmdstrslc []string
 
-			for name := range commands {
-				cmdstrslc = append(cmdstrslc, fmt.Sprintf("`%s`", name))
+			for _, command := range commands {
+				cmdstrslc = append(cmdstrslc, fmt.Sprintf("`%s`", command.Name))
 			}
 
 			cmdstr := strings.Join(cmdstrslc, ", ")
@@ -112,4 +84,48 @@ func (c Help) Register() *aurora.Command {
 	}
 
 	return c.Command.CommandInterface
+}
+
+func (c Help) processHelp(ctx aurora.Context, command CommandItem) {
+	embedFields := []*disgord.EmbedField{
+		{
+			Name:  "Help",
+			Value: fmt.Sprintf("`%s`: %s", command.Name, command.Description),
+		},
+	}
+
+	// Usage
+	if len(command.Usage) > 0 {
+		var usage []string
+
+		for _, i := range command.Usage {
+			usage = append(usage, fmt.Sprintf("`%s` - %s", i.Command, i.Description))
+		}
+
+		embedFields = append(embedFields, &disgord.EmbedField{
+			Name:  "Usage",
+			Value: strings.Join(usage, "\n"),
+		})
+	}
+
+	// Aliases
+	if len(command.Aliases) > 0 {
+		var aliases []string
+
+		for _, alias := range command.Aliases {
+			aliases = append(aliases, fmt.Sprintf("`%s`", alias))
+		}
+
+		embedFields = append(embedFields, &disgord.EmbedField{
+			Name:  "Aliases",
+			Value: strings.TrimRight(strings.Join(aliases, ", "), ", "),
+		})
+	}
+
+	ctx.Aurora.CreateMessage(ctx.Message.ChannelID, &disgord.CreateMessageParams{
+		Embed: &disgord.Embed{
+			Fields: embedFields,
+			Color:  0x007FFF,
+		},
+	})
 }

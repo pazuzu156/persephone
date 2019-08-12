@@ -2,13 +2,13 @@ package database
 
 import (
 	"fmt"
-	"persephone/utils"
+	"persephone/lib"
 
 	_ "github.com/go-sql-driver/mysql" // required for mysql driver
 	"github.com/naoina/genmai"
 )
 
-var config = utils.Config()
+var config = lib.Config()
 
 // Migrate migrates database tables (only run on database creation)
 func Migrate() {

@@ -4,6 +4,7 @@ import (
 	"strconv"
 
 	"github.com/andersfylling/disgord"
+	"github.com/pazuzu156/lastfm-go"
 )
 
 // User object.
@@ -46,6 +47,13 @@ func GetUsers() []User {
 	db.Select(&dbu)
 
 	return dbu
+}
+
+// GetLastfmUserInfo gets user info from last.fm.
+func GetLastfmUserInfo(user *disgord.User, lfm *lastfm.Api) (lastfm.UserGetInfo, error) {
+	dbu := GetUser(user)
+
+	return lfm.User.GetInfo(lastfm.P{"user": dbu.Lastfm})
 }
 
 // GetUInt64ID returns a uint64 version of the Discord user ID.
