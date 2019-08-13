@@ -41,7 +41,7 @@ func (c Youtube) Register() *aurora.Command {
 		ss := map[string]string{"key": c.APIKey, "part": "snippet", "type": "video"}
 
 		if len(ctx.Args) > 0 {
-			ss["q"] = utils.JoinString(ctx.Args, "+")
+			ss["q"] = utils.JoinString(ctx.Args, " ")
 		} else {
 			track, err := utils.GetNowPlayingTrack(ctx.Message.Author, c.Command.Lastfm)
 
