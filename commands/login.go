@@ -30,7 +30,7 @@ func (c Login) Register() *aurora.Command {
 				lfmuser, err := c.Command.Lastfm.User.GetInfo(lastfm.P{"user": lfmun})
 
 				if err != nil {
-					ctx.Message.RespondString(ctx.Aurora, "A user with that username could not be found")
+					ctx.Message.Reply(ctx.Aurora, "A user with that username could not be found")
 
 					return
 				}
@@ -46,15 +46,15 @@ func (c Login) Register() *aurora.Command {
 				n, _ := db.Insert(newuser)
 
 				if n > 0 {
-					ctx.Message.RespondString(ctx.Aurora, fmt.Sprintf("%s You have logged in with your Last.fm username: `%s`", ctx.Message.Author.Mention(), lfmuser.Name))
+					ctx.Message.Reply(ctx.Aurora, fmt.Sprintf("%s You have logged in with your Last.fm username: `%s`", ctx.Message.Author.Mention(), lfmuser.Name))
 				} else {
-					ctx.Message.RespondString(ctx.Aurora, "There was a problem saving your information. Please try again later")
+					ctx.Message.Reply(ctx.Aurora, "There was a problem saving your information. Please try again later")
 				}
 			} else {
-				ctx.Message.RespondString(ctx.Aurora, "You are already logged in with Last.fm")
+				ctx.Message.Reply(ctx.Aurora, "You are already logged in with Last.fm")
 			}
 		} else {
-			ctx.Message.RespondString(ctx.Aurora, "You need to provide your Last.fm username to log in")
+			ctx.Message.Reply(ctx.Aurora, "You need to provide your Last.fm username to log in")
 		}
 	}
 

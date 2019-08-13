@@ -46,7 +46,7 @@ func (c Whoknows) Register() *aurora.Command {
 			a, err := c.Command.Lastfm.Artist.GetInfo(lastfm.P{"artist": artist})
 
 			if err != nil {
-				ctx.Message.RespondString(ctx.Aurora, "Artist could not be found on Last.fm")
+				ctx.Message.Reply(ctx.Aurora, "Artist could not be found on Last.fm")
 
 				return
 			}
@@ -58,7 +58,7 @@ func (c Whoknows) Register() *aurora.Command {
 				np, err := c.Command.Lastfm.User.GetRecentTracks(lastfm.P{"user": user.Lastfm, "limit": "2"})
 
 				if err != nil {
-					ctx.Message.RespondString(ctx.Aurora, "Artist could not be found on Last.fm")
+					ctx.Message.Reply(ctx.Aurora, "Artist could not be found on Last.fm")
 
 					return
 				}
@@ -72,7 +72,7 @@ func (c Whoknows) Register() *aurora.Command {
 					}
 				}
 			} else {
-				ctx.Message.RespondString(ctx.Aurora, "You're not currently logged in with Last.fm")
+				ctx.Message.Reply(ctx.Aurora, "You're not currently logged in with Last.fm")
 			}
 		}
 	}
@@ -131,6 +131,6 @@ func (c Whoknows) displayWhoKnows(ctx aurora.Context, artist lastfm.ArtistGetInf
 			},
 		})
 	} else {
-		ctx.Message.RespondString(ctx.Aurora, fmt.Sprintf("No one has scrobbled %s yet", artist.Name))
+		ctx.Message.Reply(ctx.Aurora, fmt.Sprintf("No one has scrobbled %s yet", artist.Name))
 	}
 }

@@ -30,9 +30,9 @@ func (c Ping) Register() *aurora.Command {
 	c.Command.CommandInterface.Run = func(ctx aurora.Context) {
 		if len(ctx.Args) > 0 {
 			fmt.Println(ctx.Message.Content)
-			ctx.Message.RespondString(ctx.Aurora, ctx.Message.Content)
+			ctx.Message.Reply(ctx.Aurora, ctx.Message.Content)
 		} else {
-			ctx.Message.RespondString(ctx.Aurora, "Pong")
+			ctx.Message.Reply(ctx.Aurora, "Pong")
 		}
 	}
 

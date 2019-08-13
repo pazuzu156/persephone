@@ -2,14 +2,11 @@ package commands
 
 import (
 	"fmt"
-	"image"
-	"image/jpeg"
-	"image/png"
 	"os"
 	"persephone/database"
+	"persephone/lib"
 	"persephone/utils"
 	"strconv"
-	"strings"
 
 	"github.com/andersfylling/disgord"
 	"github.com/cavaliercoder/grab"
@@ -51,9 +48,9 @@ func (c Nowplaying) Register() *aurora.Command {
 			avres, _ := grab.Get("temp/", "https://cdn.discordapp.com/avatars/"+ctx.Message.Author.ID.String()+"/"+*ctx.Message.Author.Avatar+".png")
 
 			// Open base images
-			bg := openImage("static/images/background.png")
-			aa := openImage(res.Filename)
-			av := openImage(avres.Filename)
+			bg := lib.OpenImage("static/images/background.png")
+			aa := lib.OpenImage(res.Filename)
+			av := lib.OpenImage(avres.Filename)
 
 			// delete downloaded images (they're already loaded into memory)
 			os.Remove(res.Filename)
@@ -74,15 +71,15 @@ func (c Nowplaying) Register() *aurora.Command {
 
 			// Draw avatar and add username + scrobble count
 			dc.DrawImage(avr, 315, 100)
-			dc.LoadFontFace("static/fonts/NotoSans-Bold.ttf", 26)
+			dc.LoadFontFace(FontBold, 26)
 			dc.SetRGB(0.9, 0.9, 0.9)
 			dc.DrawString(ctx.Message.Author.Username+" ("+lfmuser.Name+")", 390, 130)
 			// scrobble count
-			dc.LoadFontFace("static/fonts/NotoSans-Regular.ttf", 20)
+			dc.LoadFontFace(FontRegular, 20)
 			dc.SetRGB(0.9, 0.9, 0.9)
 			printer := message.NewPrinter(language.English)
 			pc, _ := strconv.Atoi(lfmuser.PlayCount)
-			dc.DrawString(fmt.Sprintf("%s scrobbles", printer.Sprintf("%d", pc)), 390, 155)
+			dc.DrawString(fmt.Sprintf("%s scrobbles", printer.Sprintf("%d", pc)), 390, 160)
 
 			// Draw white box that goes behind album art + draw album art
 			dc.SetRGBA(1, 1, 1, 0.2)
@@ -91,12 +88,12 @@ func (c Nowplaying) Register() *aurora.Command {
 			dc.DrawImage(aar, 55, 105)
 
 			// Draw artist name
-			dc.LoadFontFace("static/fonts/NotoSans-Bold.ttf", 20)
+			dc.LoadFontFace(FontBold, 20)
 			dc.SetRGB(0.9, 0.9, 0.9)
 			dc.DrawStringWrapped(track.Artist.Name, 70, 370, 0, 0, 200, 1.5, gg.AlignLeft)
 
 			// Draw album + track name
-			dc.LoadFontFace("static/fonts/NotoSans-Regular.ttf", 20)
+			dc.LoadFontFace(FontRegular, 20)
 			dc.SetRGB(0.9, 0.9, 0.9)
 			dc.DrawStringWrapped(track.Album.Name+" - "+track.Name, 70, 420, 0, 0, 200, 1.5, gg.AlignLeft)
 
@@ -120,17 +117,17 @@ func (c Nowplaying) Register() *aurora.Command {
 					dc.DrawRoundedRectangle(340, 400, 160, 160, 80)
 					dc.Clip()
 					i, _ := grab.Get("temp/", img)
-					ii := openImage(i.Filename)
+					ii := lib.OpenImage(i.Filename)
 					iir := resize.Resize(160, 160, ii, resize.Bicubic)
 					dc.DrawImage(iir, 340, 400)
 					dc.ResetClip()
 					os.Remove(i.Filename)
 
 					dc.SetRGB(0.9, 0.9, 0.9)
-					dc.LoadFontFace("static/fonts/NotoSans-Bold.ttf", 25)
+					dc.LoadFontFace(FontBold, 25)
 					dc.DrawString(t3.Artist.Name, 510, 480)
 
-					dc.LoadFontFace("static/fonts/NotoSans-Regular.ttf", 25)
+					dc.LoadFontFace(FontRegular, 25)
 					dc.DrawString(t3.Name, 510, 520)
 				}
 
@@ -143,17 +140,17 @@ func (c Nowplaying) Register() *aurora.Command {
 					dc.DrawRoundedRectangle(340, 310, 160, 160, 80)
 					dc.Clip()
 					i, _ := grab.Get("temp/", img)
-					ii := openImage(i.Filename)
+					ii := lib.OpenImage(i.Filename)
 					iir := resize.Resize(160, 160, ii, resize.Bicubic)
 					dc.DrawImage(iir, 340, 310)
 					dc.ResetClip()
 					os.Remove(i.Filename)
 
 					dc.SetRGB(0.9, 0.9, 0.9)
-					dc.LoadFontFace("static/fonts/NotoSans-Bold.ttf", 25)
+					dc.LoadFontFace(FontBold, 25)
 					dc.DrawString(t2.Artist.Name, 510, 380)
 
-					dc.LoadFontFace("static/fonts/NotoSans-Regular.ttf", 25)
+					dc.LoadFontFace(FontRegular, 25)
 					dc.DrawString(t2.Name, 510, 420)
 				}
 
@@ -166,23 +163,23 @@ func (c Nowplaying) Register() *aurora.Command {
 					dc.DrawRoundedRectangle(340, 220, 160, 160, 80)
 					dc.Clip()
 					i, _ := grab.Get("temp/", img)
-					ii := openImage(i.Filename)
+					ii := lib.OpenImage(i.Filename)
 					iir := resize.Resize(160, 160, ii, resize.Bicubic)
 					dc.DrawImage(iir, 340, 220)
 					dc.ResetClip()
 					os.Remove(i.Filename)
 
 					dc.SetRGB(0.9, 0.9, 0.9)
-					dc.LoadFontFace("static/fonts/NotoSans-Bold.ttf", 25)
+					dc.LoadFontFace(FontBold, 25)
 					dc.DrawString(t1.Artist.Name, 510, 280)
 
-					dc.LoadFontFace("static/fonts/NotoSans-Regular.ttf", 25)
+					dc.LoadFontFace(FontRegular, 25)
 					dc.DrawString(t1.Name, 510, 320)
 				}
 			}
 
-			dc.SavePNG("temp/" + ctx.Message.Author.ID.String() + ".png")      // save generated image
-			r, _ := os.Open("temp/" + ctx.Message.Author.ID.String() + ".png") // open generated image into memory
+			dc.SavePNG("temp/" + ctx.Message.Author.ID.String() + "_np.png")      // save generated image
+			r, _ := os.Open("temp/" + ctx.Message.Author.ID.String() + "_np.png") // open generated image into memory
 
 			// create new message with the image + embed with a link to the user's Last.fm profile page
 			ctx.Aurora.CreateMessage(ctx.Message.ChannelID, &disgord.CreateMessageParams{
@@ -198,39 +195,11 @@ func (c Nowplaying) Register() *aurora.Command {
 
 			// Close and delete the image
 			r.Close()
-			os.Remove("temp/" + ctx.Message.Author.ID.String() + ".png")
+			os.Remove("temp/" + ctx.Message.Author.ID.String() + "_np.png")
 		} else {
-			ctx.Message.RespondString(ctx.Aurora, err.Error())
+			ctx.Message.Reply(ctx.Aurora, err.Error())
 		}
 	}
 
 	return c.Command.CommandInterface
-}
-
-// getExt returns the extension of a given file name
-func getExt(filename string) string {
-	s := strings.Split(filename, ".")
-
-	return s[len(s)-1]
-}
-
-// openImage returns an image.Image instance of a given file
-func openImage(filename string) image.Image {
-	in, _ := os.Open(filename)
-	defer in.Close()
-	var img image.Image
-
-	switch getExt(filename) {
-	case "png":
-		img, _ = png.Decode(in)
-		break
-	case "jpeg":
-		img, _ = jpeg.Decode(in)
-		break
-	case "jpg":
-		img, _ = jpeg.Decode(in)
-		break
-	}
-
-	return img
 }

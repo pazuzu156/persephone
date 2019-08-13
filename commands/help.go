@@ -44,13 +44,11 @@ func (c Help) Register() *aurora.Command {
 				// alias was used instead
 				// which should also work
 				if argcmd == command.Name {
-					// TODO: Command name given, process help for command
 					c.processHelp(ctx, command)
 				} else {
 					// check if argument was an alias
 					for _, alias := range command.Aliases {
 						if argcmd == alias {
-							// TODO: Alias given, process help for command
 							c.processHelp(ctx, command)
 						}
 					}

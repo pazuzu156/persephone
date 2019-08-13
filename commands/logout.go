@@ -27,12 +27,12 @@ func (c Logout) Register() *aurora.Command {
 			n, _ := db.Delete(&user)
 
 			if n > 0 {
-				ctx.Message.RespondString(ctx.Aurora, fmt.Sprintf("%s You have logged out successfully", ctx.Message.Author.Mention()))
+				ctx.Message.Reply(ctx.Aurora, fmt.Sprintf("%s You have logged out successfully", ctx.Message.Author.Mention()))
 			} else {
-				ctx.Message.RespondString(ctx.Aurora, "There was an issue logging you out. Please try again later")
+				ctx.Message.Reply(ctx.Aurora, "There was an issue logging you out. Please try again later")
 			}
 		} else {
-			ctx.Message.RespondString(ctx.Aurora, "You are not logged in with Last.fm")
+			ctx.Message.Reply(ctx.Aurora, "You are not logged in with Last.fm")
 		}
 	}
 
