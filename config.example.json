@@ -1,6 +1,7 @@
 {
     "token": "",
     "bot_owner": "",
+    "bot_id": "",
     "prefix": "-",
     "lastfm": {
         "apikey": "",
