@@ -18,3 +18,9 @@ Most developers follow their own coding conventions, or follow others, especiall
 2. Use 4 spaces for a tab (pressing tab should insert 4 spaces)
 3. Code blocks start with piercing brackets on the same line as the statement, and end with the corresponding bracket on the line below the last command.
 4. Control/Conditional blocks should be on their own lines. Blank line above and below the blocks.
+
+## Metal Archives Images
+
+Not everyone can code, but there are other ways you can help with this project
+
+Sometimes, just the artist name alone won't get the metal archives page so the artist image can be scraped. Notice there are more than one name for a band you listen to? Add their band name and the metal archives ID in `artists.json`. This will be used to ensure the correct band is loaded every time metal archives is scraped for said artist image
