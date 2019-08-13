@@ -30,6 +30,12 @@ type UsageItem struct {
 // var commands = map[string]*aurora.Command{}
 var commands = []CommandItem{}
 
+// FontRegular is the name for the regular typed font.
+const FontRegular = "static/fonts/NotoSans-Regular.ttf"
+
+// FontBold is the name for the bold typed font.
+const FontBold = "static/fonts/NotoSans-Bold.ttf"
+
 // Init initializes aurora commands.
 func Init(name string, description string, usage []UsageItem, aliases ...string) Command {
 	cmd := aurora.NewCommand(name).SetDescription(description)
