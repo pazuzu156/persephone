@@ -17,9 +17,12 @@ type About struct {
 	Version string
 }
 
+// Version holds the bot's version number
+const Version = "0.0.1"
+
 // InitAbout initialized the about command.
 func InitAbout() About {
-	return About{Init("about", "Gets information about the bot", []UsageItem{}), "0.0.1"}
+	return About{Init("about", "Gets information about the bot", []UsageItem{}), Version}
 }
 
 // Register registers and runs the about command.
