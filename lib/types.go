@@ -18,27 +18,27 @@ type TopAlbum struct {
 }
 
 type Track struct {
-	NowPlaying string "xml:\"nowplaying,attr,omitempty\""
+	NowPlaying string `xml:"nowplaying,attr,omitempty"`
 	Artist     struct {
-		Name string "xml:\",chardata\""
-		Mbid string "xml:\"mbid,attr\""
-	} "xml:\"artist\""
-	Name       string "xml:\"name\""
-	Streamable string "xml:\"streamable\""
-	Mbid       string "xml:\"mbid\""
+		Name string `xml:",chardata"`
+		Mbid string `xml:"mbid,attr"`
+	} `xml:"artist"`
+	Name       string `xml:"name"`
+	Streamable string `xml:"streamable"`
+	Mbid       string `xml:"mbid"`
 	Album      struct {
-		Name string "xml:\",chardata\""
-		Mbid string "xml:\"mbid,attr\""
-	} "xml:\"album\""
-	Url    string "xml:\"url\""
+		Name string `xml:",chardata"`
+		Mbid string `xml:"mbid,attr"`
+	} `xml:"album"`
+	Url    string `xml:"url"`
 	Images []struct {
-		Size string "xml:\"size,attr\""
-		Url  string "xml:\",chardata\""
-	} "xml:\"image\""
+		Size string `xml:"size,attr"`
+		Url  string `xml:",chardata"`
+	} `xml:"image"`
 	Date struct {
-		Uts  string "xml:\"uts,attr\""
-		Date string "xml:\",chardata\""
-	} "xml:\"date\""
+		Uts  string `xml:"uts,attr"`
+		Date string `xml:",chardata"`
+	} `xml:"date"`
 }
 
 type TopTrack struct {
@@ -91,4 +91,49 @@ type InfoText struct {
 type PlaysText struct {
 	X float64
 	Y float64
+}
+
+type YouTubeResponse struct {
+	Kind string `json:"kind"`
+	ETag struct {
+		NextPageToken string `json:"nextPageToken"`
+		RegionCode    string `json:"regionCode"`
+	} `json:"etag"`
+	PageInfo struct {
+		TotalResults   string `json:"totalResults"`
+		ResultsPerPage string `json:"resultsPerPage"`
+	} `json:"pageInfo"`
+	Items []struct {
+		Kind string `json:"kind"`
+		ETag string `json:"etag"`
+		ID   struct {
+			Kind    string `json:"kind"`
+			VideoID string `json:"videoId"`
+		} `json:"id"`
+		Snippet struct {
+			PublishedAt string `json:"publishedAt"`
+			ChannelID   string `json:"channelId"`
+			Title       string `json:"title"`
+			Description string `json:"description"`
+			Thumbnails  struct {
+				Default struct {
+					URL    string `json:"url"`
+					Width  int    `json:"width"`
+					Height int    `json:"height"`
+				} `json:"default"`
+				Medium struct {
+					URL    string `json:"url"`
+					Width  int    `json:"width"`
+					Height int    `json:"height"`
+				} `json:"medium"`
+				High struct {
+					URL    string `json:"url"`
+					Width  int    `json:"width"`
+					Height int    `json:"height"`
+				} `json:"high"`
+				ChannelTitle         string `json:"channelTitle"`
+				LiveBroadcastContent string `json:"liveBroadcastContent"`
+			} `json:"thumbnails"`
+		} `json:"snippet"`
+	} `json:"items"`
 }

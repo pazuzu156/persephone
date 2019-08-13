@@ -10,6 +10,4 @@ if ! `go vet`; then
 	exit 1
 fi
 
-go fmt
-
 git add -A

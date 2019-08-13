@@ -8,26 +8,23 @@ import (
 
 // Configuration is the base json object.
 type Configuration struct {
-	Token    string   `json:"token"`
-	BotOwner string   `json:"bot_owner"`
-	Prefix   string   `json:"prefix"`
-	Lastfm   Lastfm   `json:"lastfm"`
-	Database Database `json:"database"`
-}
-
-// Lastfm is the lastfm json object.
-type Lastfm struct {
-	APIKey string `json:"apikey"`
-	Secret string `json:"secret"`
-}
-
-// Database is the database json object.
-type Database struct {
-	Hostname string `json:"hostname"`
-	Port     int    `json:"port"`
-	Username string `json:"username"`
-	Password string `json:"password"`
-	Name     string `json:"name"`
+	Token    string `json:"token"`
+	BotOwner string `json:"bot_owner"`
+	Prefix   string `json:"prefix"`
+	Lastfm   struct {
+		APIKey string `json:"apikey"`
+		Secret string `json:"secret"`
+	} `json:"lastfm"`
+	Database struct {
+		Hostname string `json:"hostname"`
+		Port     int    `json:"port"`
+		Username string `json:"username"`
+		Password string `json:"password"`
+		Name     string `json:"name"`
+	} `json:"database"`
+	YouTube struct {
+		APIKey string `json:"apikey"`
+	} `json:"youtube"`
 }
 
 // Config retrieves the app's configuration form config.json.

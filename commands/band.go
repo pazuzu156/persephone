@@ -134,7 +134,7 @@ type Band struct {
 }
 
 // InitBand initializes the band command.
-func InitBand(aliases ...string) Band {
+func InitBand() Band {
 	return Band{Init(
 		"bandinfo",
 		"Gets information on a band",
@@ -148,7 +148,7 @@ func InitBand(aliases ...string) Band {
 				Description: "Gets information on a requested artist",
 			},
 		},
-		aliases...,
+		"b",
 	)}
 }
 

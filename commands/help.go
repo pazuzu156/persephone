@@ -14,7 +14,7 @@ type Help struct {
 }
 
 // InitHelp initializes the help command.
-func InitHelp(aliases ...string) Help {
+func InitHelp() Help {
 	return Help{Init(
 		"help",
 		"Displays help information for commands",
@@ -28,7 +28,7 @@ func InitHelp(aliases ...string) Help {
 				Description: "Gets help on a specific command",
 			},
 		},
-		aliases...,
+		"h", "hh",
 	)}
 }
 

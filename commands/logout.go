@@ -13,8 +13,8 @@ type Logout struct {
 }
 
 // InitLogout initializes the logout command.
-func InitLogout(aliases ...string) Logout {
-	return Logout{Init("logout", "Logs the user out of the Last.fm integration", []UsageItem{}, aliases...)}
+func InitLogout() Logout {
+	return Logout{Init("logout", "Logs the user out of the Last.fm integration", []UsageItem{}, "lo")}
 }
 
 // Register registers and runs the logout command.
