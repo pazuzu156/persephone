@@ -1,0 +1,39 @@
+#!/bin/bash
+
+strtolower() {
+    echo "$@" | awk '{print tolower($0)}'
+}
+
+iswindows() {
+    echo $(strtolower `uname -o`) == "msys"
+}
+
+EXE_NAME=persephone
+PIGZ_PATH=/usr/bin/pigz
+TAR_FLAGS=-zcvf
+
+if [ `iswindows` ]; then
+    EXE_NAME=persephone.exe
+    PIGZ_PATH=/mingw64/bin/pigz
+fi
+
+if [ -f $PIGZ_PATH ]; then
+    TAR_FLAGS="-I pigz -cvf"
+fi
+
+if test -z `which go`; then
+	echo "git couldn't find your Go installation, please make sure it's in your PATH"
+	exit 1
+fi
+
+go build -o $EXE_NAME -i -v
+
+mv temp/.gitkeep gkt
+
+if ! [ -f config.json ]; then
+    cp config.example.json config.json
+fi
+
+tar $TAR_FLAGS persephone.tar.gz $EXE_NAME temp/ static/ config.json artists.json
+
+mv gkt temp/.gitkeep
