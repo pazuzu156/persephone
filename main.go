@@ -37,24 +37,12 @@ func main() {
 
 // Initializes all commands (register them here)
 func init() {
-	ping := commands.InitPing()
-	aurora.Use(ping.Register())
-
-	np := commands.InitNowPlaying("np")
-	aurora.Use(np.Register())
-
-	help := commands.InitHelp("h")
-	aurora.Use(help.Register())
-
-	login := commands.InitLogin("li")
-	aurora.Use(login.Register())
-
-	logout := commands.InitLogout("lo")
-	aurora.Use(logout.Register())
-
-	wk := commands.InitWhoknows("wk")
-	aurora.Use(wk.Register())
-
-	b := commands.InitBand("b")
-	aurora.Use(b.Register())
+	aurora.Use(commands.InitBand().Register())
+	aurora.Use(commands.InitHelp().Register())
+	aurora.Use(commands.InitLogin().Register())
+	aurora.Use(commands.InitLogout().Register())
+	aurora.Use(commands.InitNowPlaying().Register())
+	aurora.Use(commands.InitPing().Register())
+	aurora.Use(commands.InitWhoknows().Register())
+	aurora.Use(commands.InitYoutube().Register())
 }

@@ -23,7 +23,7 @@ type Nowplaying struct {
 }
 
 // InitNowPlaying initializes the nowplaying command.
-func InitNowPlaying(aliases ...string) Nowplaying {
+func InitNowPlaying() Nowplaying {
 	return Nowplaying{Init(
 		"nowplaying",
 		"Shows what you're currently listening to",
@@ -33,7 +33,7 @@ func InitNowPlaying(aliases ...string) Nowplaying {
 				Description: "shows current song",
 			},
 		},
-		aliases...,
+		"np",
 	)}
 }
 

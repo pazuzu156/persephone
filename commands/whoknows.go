@@ -19,7 +19,7 @@ type Whoknows struct {
 }
 
 // InitWhoknows initialized the whoknows command.
-func InitWhoknows(aliases ...string) Whoknows {
+func InitWhoknows() Whoknows {
 	return Whoknows{Init("whoknows",
 		"Shows who knows a specific artist",
 		[]UsageItem{
@@ -32,7 +32,7 @@ func InitWhoknows(aliases ...string) Whoknows {
 				Description: "Shows a list of users who know the requested artist",
 			},
 		},
-		aliases...,
+		"wk",
 	)}
 }
 
@@ -51,7 +51,7 @@ func (c Whoknows) Register() *aurora.Command {
 				return
 			}
 
-			c.displayWhoKnows(ctx, a) // runs the whoknows logic and displays the embed
+			go c.displayWhoKnows(ctx, a) // runs the whoknows logic and displays the embed
 		} else {
 			// get the user from the sender
 			if user := database.GetUser(ctx.Message.Author); user.Username != "" {
@@ -67,7 +67,7 @@ func (c Whoknows) Register() *aurora.Command {
 				for _, track := range np.Tracks {
 					if track.NowPlaying == "true" {
 						npa, _ := c.Command.Lastfm.Artist.GetInfo(lastfm.P{"artist": track.Artist.Name})
-						c.displayWhoKnows(ctx, npa) // runs the whoknows logic and displays the embed
+						go c.displayWhoKnows(ctx, npa) // runs the whoknows logic and displays the embed
 						break
 					}
 				}
