@@ -6,6 +6,7 @@ require (
 	cloud.google.com/go v0.44.3 // indirect
 	github.com/PuerkitoBio/goquery v1.5.0 // indirect
 	github.com/andersfylling/disgord v0.11.3
+	github.com/andersfylling/snowflake/v3 v3.0.2
 	github.com/antchfx/htmlquery v1.0.0 // indirect
 	github.com/antchfx/xmlquery v1.0.0 // indirect
 	github.com/antchfx/xpath v1.0.0 // indirect

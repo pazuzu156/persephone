@@ -10,6 +10,7 @@ import (
 type Configuration struct {
 	Token    string `json:"token"`
 	BotOwner string `json:"bot_owner"`
+	BotID    string `json:"bot_id"`
 	Prefix   string `json:"prefix"`
 	Lastfm   struct {
 		APIKey string `json:"apikey"`

@@ -37,6 +37,7 @@ func main() {
 
 // Initializes all commands (register them here)
 func init() {
+	aurora.Use(commands.InitAbout().Register())
 	aurora.Use(commands.InitBand().Register())
 	aurora.Use(commands.InitHelp().Register())
 	aurora.Use(commands.InitLogin().Register())
