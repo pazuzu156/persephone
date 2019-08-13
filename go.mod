@@ -9,12 +9,13 @@ require (
 	github.com/antchfx/xmlquery v1.0.0 // indirect
 	github.com/antchfx/xpath v1.0.0 // indirect
 	github.com/cavaliercoder/grab v2.0.0+incompatible
-	github.com/ethereum/go-ethereum v1.9.1
+	github.com/ethereum/go-ethereum v1.9.2
 	github.com/fogleman/gg v1.3.0
 	github.com/go-sql-driver/mysql v1.4.1
 	github.com/gobwas/glob v0.2.3 // indirect
 	github.com/gocolly/colly v1.2.0
 	github.com/golang/freetype v0.0.0-20170609003504-e2365dfdc4a0 // indirect
+	github.com/golang/protobuf v1.3.2 // indirect
 	github.com/json-iterator/go v1.1.7 // indirect
 	github.com/kennygrant/sanitize v1.2.4 // indirect
 	github.com/lib/pq v1.2.0 // indirect
@@ -23,15 +24,17 @@ require (
 	github.com/naoina/go-stringutil v0.1.0 // indirect
 	github.com/nfnt/resize v0.0.0-20180221191011-83c6a9932646
 	github.com/pazuzu156/aurora v0.1.1
-	github.com/pazuzu156/lastfm-go v0.0.0-20190810215351-f16c550792d8
+	github.com/pazuzu156/lastfm-go v0.0.1
 	github.com/saintfish/chardet v0.0.0-20120816061221-3af4cd4741ca // indirect
+	github.com/stretchr/objx v0.2.0 // indirect
 	github.com/temoto/robotstxt v1.1.1 // indirect
 	go.uber.org/atomic v1.4.0 // indirect
 	go.uber.org/zap v1.10.0 // indirect
 	golang.org/x/crypto v0.0.0-20190701094942-4def268fd1a4 // indirect
 	golang.org/x/image v0.0.0-20190802002840-cff245a6509b // indirect
-	golang.org/x/net v0.0.0-20190724013045-ca1201d0de80 // indirect
-	golang.org/x/sys v0.0.0-20190804053845-51ab0e2deafa // indirect
+	golang.org/x/net v0.0.0-20190813141303-74dc4d7220e7 // indirect
+	golang.org/x/sys v0.0.0-20190813064441-fde4db37ae7a // indirect
 	golang.org/x/text v0.3.2
+	golang.org/x/tools v0.0.0-20190813142322-97f12d73768f // indirect
 	google.golang.org/appengine v1.6.1 // indirect
 )

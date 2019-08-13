@@ -1,0 +1,15 @@
+#!/usr/bin/sh
+
+if test -z `which go`; then
+	echo "git couldn't find your Go installation, please make sure it's in your PATH"
+	exit 1
+fi
+
+if ! `go vet`; then
+	echo "Go vetting failed. Please check your project for errors"
+	exit 1
+fi
+
+go fmt
+
+git add -A

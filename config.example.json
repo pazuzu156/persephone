@@ -11,6 +11,9 @@
         "port": 3306,
         "username": "root",
         "password": "",
-        "database": "persephone"
+        "name": "persephone"
+    },
+    "youtube": {
+        "apikey": ""
     }
 }
