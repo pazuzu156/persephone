@@ -6,7 +6,7 @@ go:
 
 install:
     - env GO111MODULE=on go get -u
-    - go vet
+    - env GO111MODULE=on go vet
 
 script:
     - env GO111MODULE=on go build
