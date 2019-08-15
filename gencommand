@@ -1,0 +1,42 @@
+#!/bin/bash
+
+if ! [ ${1,x} ]; then
+    echo -n "Command Name: "
+    read COMMAND_NAME
+else
+    COMMAND_NAME=$1
+fi
+
+echo -n "Command description: "
+read COMMAND_DESCRIPTION
+
+cat > commands/${COMMAND_NAME,,}.go <<- EOC
+package commands
+
+import "github.com/pazuzu156/aurora"
+
+// ${COMMAND_NAME^} command.
+type ${COMMAND_NAME^} struct {
+    Command Command
+}
+
+// Init${COMMAND_NAME^} initializes the ${COMMAND_NAME,,} command.
+func Init${COMMAND_NAME^}() ${COMMAND_NAME^} {
+    return ${COMMAND_NAME^}{Init(
+        "${COMMAND_NAME,,}",
+        "${COMMAND_DESCRIPTION}",
+        []UsageItem{},
+    )}
+}
+
+// Register registers and runs the ${COMMAND_NAME,,} command.
+func (c ${COMMAND_NAME^}) Register() *aurora.Command {
+    c.Command.CommandInterface.Run = func(ctx aurora.Context) {
+        ctx.Message.Reply(ctx.Aurora, "Hello, ${COMMAND_NAME^}!")
+    }
+
+    return c.Command.CommandInterface
+}
+EOC
+
+echo "Be sure to add \"aurora.Use(commands.Init${COMMAND_NAME^}().Register())\" to main.go"

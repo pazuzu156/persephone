@@ -39,6 +39,7 @@ func main() {
 func init() {
 	aurora.Use(commands.InitAbout().Register())
 	aurora.Use(commands.InitBand().Register())
+	aurora.Use(commands.InitCrowns().Register())
 	aurora.Use(commands.InitHelp().Register())
 	aurora.Use(commands.InitLogin().Register())
 	aurora.Use(commands.InitLogout().Register())

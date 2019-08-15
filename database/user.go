@@ -1,9 +1,11 @@
 package database
 
 import (
+	"persephone/lib"
 	"strconv"
 
 	"github.com/andersfylling/disgord"
+	"github.com/naoina/genmai"
 	"github.com/pazuzu156/lastfm-go"
 )
 
@@ -15,15 +17,14 @@ type User struct {
 	Lastfm    string
 }
 
+func init() {
+	var err error
+	db, err = OpenDB()
+	lib.Check(err)
+}
+
 // GetUser gets the database user via a Discord user.
 func GetUser(user *disgord.User) User {
-	db, err := OpenDB()
-	defer db.Close()
-
-	if err != nil {
-		panic(err)
-	}
-
 	var dbu []User
 	db.Select(&dbu, db.Where("discord_id", "=", GetUInt64ID(user)))
 
@@ -36,13 +37,6 @@ func GetUser(user *disgord.User) User {
 
 // GetUsers returns all the users in the database.
 func GetUsers() []User {
-	db, err := OpenDB()
-	defer db.Close()
-
-	if err != nil {
-		panic(err)
-	}
-
 	var dbu []User
 	db.Select(&dbu)
 
@@ -61,4 +55,33 @@ func GetUInt64ID(user *disgord.User) uint64 {
 	did, _ := strconv.Atoi(user.ID.String())
 
 	return uint64(did)
+}
+
+func (c User) DB() *genmai.DB {
+	return db
+}
+
+// Crown is a relational function to get crowns model
+func (c User) Crown(id int64) Crown {
+	crowns := GetCrownsList()
+
+	for _, crown := range crowns {
+		if crown.ID == id {
+			return crown
+		}
+	}
+
+	return Crown{}
+}
+
+func (c User) Crowns() (crowns []Crown) {
+	dbc := GetCrownsList()
+
+	for _, crown := range dbc {
+		if c.DiscordID == crown.DiscordID {
+			crowns = append(crowns, crown)
+		}
+	}
+
+	return
 }

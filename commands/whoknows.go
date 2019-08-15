@@ -9,6 +9,7 @@ import (
 	"strings"
 
 	"github.com/andersfylling/disgord"
+	"github.com/andersfylling/snowflake/v3"
 	"github.com/pazuzu156/aurora"
 	"github.com/pazuzu156/lastfm-go"
 )
@@ -115,6 +116,31 @@ func (c Whoknows) displayWhoKnows(ctx aurora.Context, artist lastfm.ArtistGetInf
 			if i < max {
 				user := wk[i]
 				if i == 0 {
+					db, _ := database.OpenDB()
+					defer db.Close()
+					crowns := database.GetCrownsList()
+
+					updated := false
+					for _, crown := range crowns {
+						if artist.Name == crown.Artist {
+							updated = true
+							crown.DiscordID = database.GetUInt64ID(ctx.Message.Author)
+							crown.PlayCount = user.Plays
+							db.Update(crown)
+						}
+					}
+
+					if !updated {
+						crown := []database.Crown{
+							{
+								DiscordID: database.GetUInt64ID(ctx.Message.Author),
+								Artist:    artist.Name,
+								PlayCount: user.Plays,
+							},
+						}
+						db.Insert(crown)
+					}
+
 					desc += fmt.Sprintf("👑 **%s** with **%d** plays\n", user.Name, user.Plays) // has the most plays
 				} else {
 					desc += fmt.Sprintf("🎶 **%s** with **%d** plays\n", user.Name, user.Plays) // all other scrobblers
@@ -122,12 +148,19 @@ func (c Whoknows) displayWhoKnows(ctx aurora.Context, artist lastfm.ArtistGetInf
 			}
 		}
 
+		id, _ := strconv.Atoi(config.BotID)
+		bot, _ := ctx.Aurora.GetMember(ctx.Message.GuildID, snowflake.NewSnowflake(uint64(id)))
+
 		ctx.Aurora.CreateMessage(ctx.Message.ChannelID, &disgord.CreateMessageParams{
 			Embed: &disgord.Embed{
 				Title:       fmt.Sprintf("Who knows %s?", artist.Name),
 				URL:         fmt.Sprintf("https://last.fm/music/%s", strings.Replace(artist.Name, " ", "+", len(artist.Name))),
 				Description: desc,
 				Color:       utils.RandomColor(),
+				Footer: &disgord.EmbedFooter{
+					IconURL: utils.GenAvatarURL(bot.User),
+					Text:    fmt.Sprintf("Command invoked by: %s#%s", ctx.Message.Author.Username, ctx.Message.Author.Discriminator),
+				},
 			},
 		})
 	} else {
