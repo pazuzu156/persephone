@@ -2,7 +2,6 @@ package commands
 
 import (
 	"fmt"
-	"persephone/lib"
 	"persephone/utils"
 	"strconv"
 
@@ -28,7 +27,6 @@ func InitAbout() About {
 // Register registers and runs the about command.
 func (c About) Register() *aurora.Command {
 	c.Command.CommandInterface.Run = func(ctx aurora.Context) {
-		config := lib.Config()
 		id, _ := strconv.Atoi(config.BotID)
 		bot, _ := ctx.Aurora.GetMember(ctx.Message.GuildID, snowflake.NewSnowflake(uint64(id)))
 

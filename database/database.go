@@ -8,12 +8,16 @@ import (
 	"github.com/naoina/genmai"
 )
 
-var config = lib.Config()
+var (
+	db     *genmai.DB
+	config = lib.Config()
+)
 
 // Migrate migrates database tables (only run on database creation)
 func Migrate() {
 	var db *genmai.DB
 	db, _ = OpenDB()
+	db.CreateTableIfNotExists(&Crown{})
 	db.CreateTableIfNotExists(&User{})
 	db.Close()
 }

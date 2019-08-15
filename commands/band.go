@@ -196,7 +196,7 @@ func (c Band) displayArtistInfo(ctx aurora.Context, artist lastfm.ArtistGetInfo)
 	lfmuser, _ := database.GetLastfmUserInfo(ctx.Message.Author, c.Command.Lastfm)
 
 	aimg := c.getArtistImage(artist)
-	avres, _ := grab.Get("temp/", "https://cdn.discordapp.com/avatars/"+ctx.Message.Author.ID.String()+"/"+*ctx.Message.Author.Avatar+".png")
+	avres, _ := grab.Get("temp/", utils.GenAvatarURL(ctx.Message.Author))
 	bg := lib.OpenImage("static/images/background.png")
 	av := lib.OpenImage(avres.Filename)
 	os.Remove(avres.Filename)

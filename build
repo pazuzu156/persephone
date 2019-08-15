@@ -1,18 +1,11 @@
 #!/bin/bash
 
-strtolower() {
-    echo "$@" | awk '{print tolower($0)}'
-}
-
-iswindows() {
-    echo $(strtolower `uname -o`) == "msys"
-}
-
 EXE_NAME=persephone
 PIGZ_PATH=/usr/bin/pigz
 TAR_FLAGS=-zcvf
+OS=`uname -o`
 
-if [ `iswindows` ]; then
+if [ ${OS,,} == "msys" ]; then
     EXE_NAME=persephone.exe
     PIGZ_PATH=/mingw64/bin/pigz
 fi
