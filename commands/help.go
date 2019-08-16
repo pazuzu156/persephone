@@ -120,8 +120,7 @@ func (c Help) processHelp(ctx aurora.Context, command CommandItem) {
 		}
 
 		embedFields = append(embedFields, &disgord.EmbedField{
-			Name: "Aliases",
-			// Value: strings.TrimRight(strings.Join(aliases, ", "), ", "),
+			Name:  "Aliases",
 			Value: utils.JoinString(aliases, ", "),
 		})
 	}

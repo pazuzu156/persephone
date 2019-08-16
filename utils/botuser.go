@@ -9,6 +9,7 @@ import (
 	"github.com/pazuzu156/aurora"
 )
 
+// GetBot returns the bot object.
 func GetBot(ctx aurora.Context) *disgord.Member {
 	config := lib.Config()
 	id, _ := strconv.Atoi(config.BotID)
@@ -17,6 +18,7 @@ func GetBot(ctx aurora.Context) *disgord.Member {
 	return bot
 }
 
+// GetBotUser returns the bot User object.
 func GetBotUser(ctx aurora.Context) *disgord.User {
 	return GetBot(ctx).User
 }
