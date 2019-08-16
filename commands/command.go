@@ -19,12 +19,20 @@ type CommandItem struct {
 	Description string
 	Aliases     []string
 	Usage       []UsageItem
+	Parameters  []Parameter
 }
 
 // UsageItem is the base usage object for the help command.
 type UsageItem struct {
 	Command     string
 	Description string
+}
+
+// Parameter is the base parameter object for the help command.
+type Parameter struct {
+	Name        string
+	Description string
+	Required    bool
 }
 
 var (
@@ -42,7 +50,7 @@ const (
 )
 
 // Init initializes aurora commands.
-func Init(name string, description string, usage []UsageItem, aliases ...string) Command {
+func Init(name string, description string, usage []UsageItem, params []Parameter, aliases ...string) Command {
 	cmd := aurora.NewCommand(name).SetDescription(description)
 
 	// register aliases
@@ -56,6 +64,7 @@ func Init(name string, description string, usage []UsageItem, aliases ...string)
 		Description: cmd.Description,
 		Aliases:     cmd.Aliases,
 		Usage:       usage,
+		Parameters:  params,
 	})
 
 	config := lib.Config()

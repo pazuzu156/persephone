@@ -33,6 +33,7 @@ func InitNowPlaying() Nowplaying {
 				Description: "shows current song",
 			},
 		},
+		[]Parameter{},
 		"np",
 	)}
 }

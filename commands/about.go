@@ -21,7 +21,7 @@ const Version = "0.0.1"
 
 // InitAbout initialized the about command.
 func InitAbout() About {
-	return About{Init("about", "Gets information about the bot", []UsageItem{}), Version}
+	return About{Init("about", "Gets information about the bot", []UsageItem{}, []Parameter{}), Version}
 }
 
 // Register registers and runs the about command.

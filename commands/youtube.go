@@ -28,6 +28,13 @@ func InitYoutube() Youtube {
 			"youtube",
 			"Gets a youtube video from query or current playing tack",
 			[]UsageItem{},
+			[]Parameter{
+				{
+					Name:        "query",
+					Description: "Gets a youtube video from the given search query",
+					Required:    false,
+				},
+			},
 			"yt",
 		),
 		APIKey:  config.YouTube.APIKey,

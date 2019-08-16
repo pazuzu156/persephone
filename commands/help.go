@@ -24,9 +24,12 @@ func InitHelp() Help {
 				Command:     "help",
 				Description: "Shows the master help list",
 			},
+		},
+		[]Parameter{
 			{
-				Command:     "help [command]",
+				Name:        "command",
 				Description: "Gets help on a specific command",
+				Required:    false,
 			},
 		},
 		"h", "hh",
@@ -108,6 +111,27 @@ func (c Help) processHelp(ctx aurora.Context, command CommandItem) {
 		embedFields = append(embedFields, &disgord.EmbedField{
 			Name:  "Usage",
 			Value: strings.Join(usage, "\n"),
+		})
+	}
+
+	if len(command.Parameters) > 0 {
+		var params []string
+
+		for _, param := range command.Parameters {
+			var paramStr string
+
+			if param.Required {
+				paramStr = fmt.Sprintf("<%s>", param.Name)
+			} else {
+				paramStr = fmt.Sprintf("[%s]", param.Name)
+			}
+
+			params = append(params, fmt.Sprintf("`%s` - %s", paramStr, param.Description))
+		}
+
+		embedFields = append(embedFields, &disgord.EmbedField{
+			Name:  "Parameters",
+			Value: utils.JoinString(params, "\n"),
 		})
 	}
 

@@ -28,9 +28,12 @@ func InitWhoknows() Whoknows {
 				Command:     "whoknows",
 				Description: "Shows a list of users who know the current playing artist",
 			},
+		},
+		[]Parameter{
 			{
-				Command:     "whoknows [artist]",
+				Name:        "artist",
 				Description: "Shows a list of users who know the requested artist",
+				Required:    false,
 			},
 		},
 		"wk",
