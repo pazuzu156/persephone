@@ -40,7 +40,3 @@ func (c Crown) GetUserCrowns(sql ...interface{}) (crowns []Crown) {
 	db.Select(&crowns, db.From(Crown{}), db.Where("discord_id", "=", user.DiscordID))
 	return
 }
-
-// func (c Crown) Paginate(limit int, offset int) (crowns []Crown) {
-// 	return c.GetUserCrowns(db.Limit(limit), db.Offset(offset))
-// }
