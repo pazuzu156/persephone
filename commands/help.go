@@ -2,6 +2,7 @@ package commands
 
 import (
 	"fmt"
+	"persephone/utils"
 	"strings"
 
 	"github.com/andersfylling/disgord"
@@ -58,7 +59,7 @@ func (c Help) Register() *aurora.Command {
 			var cmdstrslc []string
 
 			for _, command := range commands {
-				cmdstrslc = append(cmdstrslc, fmt.Sprintf("`%s`", command.Name))
+				cmdstrslc = append(cmdstrslc, fmt.Sprintf("`%s%s`", config.Prefix, command.Name))
 			}
 
 			cmdstr := strings.Join(cmdstrslc, ", ")
@@ -69,6 +70,10 @@ func (c Help) Register() *aurora.Command {
 						{
 							Name:  "Help",
 							Value: "Listing all top-level commands. Specify a command to see more information.",
+						},
+						{
+							Name:  "Command Prefix",
+							Value: "`.`",
 						},
 						{
 							Name:  "Commands",
@@ -88,7 +93,7 @@ func (c Help) processHelp(ctx aurora.Context, command CommandItem) {
 	embedFields := []*disgord.EmbedField{
 		{
 			Name:  "Help",
-			Value: fmt.Sprintf("`%s`: %s", command.Name, command.Description),
+			Value: fmt.Sprintf("`%s%s`: %s", config.Prefix, command.Name, command.Description),
 		},
 	}
 
@@ -97,7 +102,7 @@ func (c Help) processHelp(ctx aurora.Context, command CommandItem) {
 		var usage []string
 
 		for _, i := range command.Usage {
-			usage = append(usage, fmt.Sprintf("`%s` - %s", i.Command, i.Description))
+			usage = append(usage, fmt.Sprintf("`%s%s` - %s", config.Prefix, i.Command, i.Description))
 		}
 
 		embedFields = append(embedFields, &disgord.EmbedField{
@@ -111,12 +116,13 @@ func (c Help) processHelp(ctx aurora.Context, command CommandItem) {
 		var aliases []string
 
 		for _, alias := range command.Aliases {
-			aliases = append(aliases, fmt.Sprintf("`%s`", alias))
+			aliases = append(aliases, fmt.Sprintf("`%s%s`", config.Prefix, alias))
 		}
 
 		embedFields = append(embedFields, &disgord.EmbedField{
-			Name:  "Aliases",
-			Value: strings.TrimRight(strings.Join(aliases, ", "), ", "),
+			Name: "Aliases",
+			// Value: strings.TrimRight(strings.Join(aliases, ", "), ", "),
+			Value: utils.JoinString(aliases, ", "),
 		})
 	}
 
