@@ -86,8 +86,9 @@ func (c Whoknows) displayWhoKnows(ctx aurora.Context, artist lastfm.ArtistGetInf
 
 	// user representation for the wk slice
 	type U struct {
-		Name  string
-		Plays int
+		DiscordID uint64
+		Name      string
+		Plays     int
 	}
 
 	// Gets all logged in users
@@ -98,7 +99,7 @@ func (c Whoknows) displayWhoKnows(ctx aurora.Context, artist lastfm.ArtistGetInf
 
 		// add all users who have scrobbled the artist to the slice
 		if plays > 0 {
-			wk = append(wk, U{Name: user.Username, Plays: plays})
+			wk = append(wk, U{DiscordID: user.DiscordID, Name: user.Username, Plays: plays})
 		}
 	}
 
@@ -119,12 +120,13 @@ func (c Whoknows) displayWhoKnows(ctx aurora.Context, artist lastfm.ArtistGetInf
 					db, _ := database.OpenDB()
 					defer db.Close()
 					crowns := database.GetCrownsList()
+					fmt.Println(user)
 
 					updated := false
 					for _, crown := range crowns {
 						if artist.Name == crown.Artist {
 							updated = true
-							crown.DiscordID = database.GetUInt64ID(ctx.Message.Author)
+							crown.DiscordID = user.DiscordID
 							crown.PlayCount = user.Plays
 							db.Update(crown)
 						}
