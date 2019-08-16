@@ -7,9 +7,9 @@ import (
 	"sort"
 	"strconv"
 	"strings"
+	"time"
 
 	"github.com/andersfylling/disgord"
-	"github.com/andersfylling/snowflake/v3"
 	"github.com/pazuzu156/aurora"
 	"github.com/pazuzu156/lastfm-go"
 )
@@ -150,9 +150,6 @@ func (c Whoknows) displayWhoKnows(ctx aurora.Context, artist lastfm.ArtistGetInf
 			}
 		}
 
-		id, _ := strconv.Atoi(config.BotID)
-		bot, _ := ctx.Aurora.GetMember(ctx.Message.GuildID, snowflake.NewSnowflake(uint64(id)))
-
 		ctx.Aurora.CreateMessage(ctx.Message.ChannelID, &disgord.CreateMessageParams{
 			Embed: &disgord.Embed{
 				Title:       fmt.Sprintf("Who knows %s?", artist.Name),
@@ -160,8 +157,11 @@ func (c Whoknows) displayWhoKnows(ctx aurora.Context, artist lastfm.ArtistGetInf
 				Description: desc,
 				Color:       utils.RandomColor(),
 				Footer: &disgord.EmbedFooter{
-					IconURL: utils.GenAvatarURL(bot.User),
+					IconURL: utils.GenAvatarURL(utils.GetBotUser(ctx)),
 					Text:    fmt.Sprintf("Command invoked by: %s#%s", ctx.Message.Author.Username, ctx.Message.Author.Discriminator),
+				},
+				Timestamp: disgord.Time{
+					Time: time.Now(),
 				},
 			},
 		})

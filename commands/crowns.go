@@ -8,6 +8,7 @@ import (
 	"sort"
 	"strconv"
 	"strings"
+	"time"
 
 	"github.com/andersfylling/disgord"
 	"github.com/andersfylling/snowflake/v3"
@@ -36,9 +37,9 @@ func InitCrowns() Crowns {
 func (c Crowns) Register() *aurora.Command {
 	c.Command.CommandInterface.Run = func(ctx aurora.Context) {
 		if len(ctx.Args) > 0 {
-			// TODO: requested user
 			var (
 				user *disgord.User
+				page = 1
 				err  error
 			)
 
@@ -51,14 +52,9 @@ func (c Crowns) Register() *aurora.Command {
 					if err != nil {
 						ctx.Message.Reply(ctx.Aurora, "That user could not be found in the server")
 					}
-					fmt.Println(user)
 				}
 
 				if strings.Contains(arg, "page:") {
-					var (
-						page = 1
-						err  error
-					)
 					a := strings.Split(arg, ":")
 
 					if a[1] != "" {
@@ -74,36 +70,16 @@ func (c Crowns) Register() *aurora.Command {
 					fmt.Println(page)
 				}
 
+				if user == nil {
+					user = ctx.Message.Author
+				}
+
+				c.displayCrowns(ctx, user, page)
+
 			}
-			// if strings.Contains(ctx.Args[0], "<@") {
-			// 	did, _ := strconv.Atoi(strings.TrimLeft(strings.TrimRight(ctx.Args[0], ">"), "<@"))
-			// 	discordid := snowflake.NewSnowflake(uint64(did))
-			// 	user, err = ctx.Aurora.GetUser(discordid)
-
-			// 	if err != nil {
-			// 		ctx.Message.Reply(ctx.Aurora, "That user could not be found in the server")
-			// 	}
-
-			// 	c.displayCrowns(ctx, user)
-			// } else {
-
-			// }
 		} else {
 			c.displayCrowns(ctx, ctx.Message.Author, 1)
-			// ctx.Message.Reply(ctx.Aurora, utils.JoinString(descar, "\n"))
-
 		}
-
-		// dbu := database.GetUser(ctx.Message.Author)
-
-		// sql := db.DB()
-		// stmt, _ := sql.Prepare("SELECT * FROM crown LIMIT 1 OFFSET 0")
-		// res, _ := stmt.Exec()
-		// var desc = ""
-		// dbu.DB().Select(&out, dbu.DB().From(database.User{}))
-
-		// ctx.Message.Reply(ctx.Aurora, dbu.Crowns())
-		// fmt.Println(out)
 
 	}
 
@@ -114,31 +90,56 @@ func (c Crowns) displayCrowns(ctx aurora.Context, user *disgord.User, page int) 
 	crowns := database.GetUser(user).Crowns()
 
 	if len(crowns) > 0 {
-		count := len(crowns)
-		maxPerPage := 5
-		pages := math.Ceil(float64(count) / float64(maxPerPage))
-		page := page
-		ctx.Message.Reply(ctx.Aurora, fmt.Sprintf("Page %d of %d", page, int(pages)))
+		var (
+			count      = len(crowns)
+			maxPerPage = 10
+			pages      = int(math.Ceil(float64(count) / float64(maxPerPage)))
+			offset     = 0
+		)
 
-		db, _ := database.OpenDB()
-		db.Select(&crowns, db.From(database.Crown{}), db.Limit(maxPerPage), db.Offset(0))
+		if page <= pages {
+			if page > 1 {
+				offset = (page-1)*maxPerPage + 1
+			}
 
-		// Sorts the slice in descending order by number of plays
-		sort.SliceStable(crowns, func(i, j int) bool {
-			return crowns[i].PlayCount > crowns[j].PlayCount
-		})
+			fmt.Println(offset)
 
-		var descar []string
+			db, _ := database.OpenDB()
+			db.Select(&crowns, db.Where("discord_id", "=", database.GetUInt64ID(user)), db.From(database.Crown{}), db.Limit(maxPerPage), db.Offset(offset))
 
-		for n, crown := range crowns {
-			descar = append(descar, fmt.Sprintf("%d. 👑 %s with %d plays", n+1, crown.Artist, crown.PlayCount))
+			// Sorts the slice in descending order by number of plays
+			sort.SliceStable(crowns, func(i, j int) bool {
+				return crowns[i].PlayCount > crowns[j].PlayCount
+			})
+
+			var descar []string
+
+			for n, crown := range crowns {
+				descar = append(descar, fmt.Sprintf("%d. 👑 %s with %d plays", n+1, crown.Artist, crown.PlayCount))
+			}
+
+			ctx.Aurora.CreateMessage(ctx.Message.ChannelID, &disgord.CreateMessageParams{
+				Embed: &disgord.Embed{
+					Title:       fmt.Sprintf("%d crowns for %s", count, user.Username),
+					Description: utils.JoinString(descar, "\n"),
+					Color:       utils.RandomColor(),
+					Footer: &disgord.EmbedFooter{
+						IconURL: utils.GenAvatarURL(utils.GetBotUser(ctx)),
+						Text: fmt.Sprintf("Command invoked by: %s#%s | Page %d/%d",
+							ctx.Message.Author.Username,
+							ctx.Message.Author.Discriminator,
+							page, pages,
+						),
+					},
+					Timestamp: disgord.Time{
+						Time: time.Now(),
+					},
+				},
+			})
+
+			return
 		}
 
-		ctx.Aurora.CreateMessage(ctx.Message.ChannelID, &disgord.CreateMessageParams{
-			Embed: &disgord.Embed{
-				Title:       fmt.Sprintf("%d crowns for %s", count, user.Username),
-				Description: utils.JoinString(descar, "\n"),
-			},
-		})
+		ctx.Message.Reply(ctx.Aurora, fmt.Sprintf("%s Invalid page count", ctx.Message.Author.Mention()))
 	}
 }
