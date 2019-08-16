@@ -27,7 +27,20 @@ func InitCrowns() Crowns {
 		"List your crowns",
 		[]UsageItem{
 			{
-				Command: "crowns",
+				Command:     "crowns",
+				Description: "Shows a list of all your crowns (limit 10 per page)",
+			},
+		},
+		[]Parameter{
+			{
+				Name:        "member",
+				Description: "Shows a list of crowns for the requested user",
+				Required:    false,
+			},
+			{
+				Name:        "page:#",
+				Description: "Shows the requested page of results",
+				Required:    false,
 			},
 		},
 	)}

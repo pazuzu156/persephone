@@ -140,15 +140,18 @@ func InitBand() Band {
 		"Gets information on a band",
 		[]UsageItem{
 			{
-				Command:     "band",
+				Command:     "bandinfo",
 				Description: "Gets information on the artist you're currently listening to",
 			},
+		},
+		[]Parameter{
 			{
-				Command:     "band [artist]",
+				Name:        "artist",
 				Description: "Gets information on a requested artist",
+				Required:    false,
 			},
 		},
-		"b",
+		"b", "bi", "band",
 	)}
 }
 

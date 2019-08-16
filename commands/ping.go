@@ -13,16 +13,22 @@ type Ping struct {
 
 // InitPing initializes the ping command.
 func InitPing() Ping {
-	return Ping{Init("ping", "Ping/Pong", []UsageItem{
-		{
-			Command:     "ping",
-			Description: "Sends `pong` back",
+	return Ping{Init("ping",
+		"Ping/Pong",
+		[]UsageItem{
+			{
+				Command:     "ping",
+				Description: "Sends `pong` back",
+			},
 		},
-		{
-			Command:     "ping [string]",
-			Description: "Sends your message back to you",
+		[]Parameter{
+			{
+				Name:        "string",
+				Description: "A string to send back to yourself",
+				Required:    false,
+			},
 		},
-	})}
+	)}
 }
 
 // Register registers and runs the ping command.
