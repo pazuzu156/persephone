@@ -15,10 +15,10 @@ Libraries used for the bot will be listed here (you can also see them listed in 
 - [Disgord](https://github.com/andersfylling/disgord) The Discord library for Go
 - [Aurora](https://github.com/pazuzu156/aurora) The command router for Disgord (fork)
 - [Lastfm-Go](https://github.com/pazuzu156/lastfm-go) The Last.FM API library for Go (fork)
-- [gg](github.com/fogleman/gg) 2D Image generation for Go
-- [genmai](github.com/naoina/genmai) Database ORM for Go
+- [gg](https://github.com/fogleman/gg) 2D Image generation for Go
+- [genmai](https://github.com/naoina/genmai) Database ORM for Go
 - <https://github.com/go-sql-driver/mysql> MySQL driver used with database
-- [Colly](github.com/gocolly/colly) For hex conversions for embed colors
+- [Colly](https://github.com/gocolly/colly) For hex conversions for embed colors
 
 ## Building
 
