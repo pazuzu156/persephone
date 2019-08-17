@@ -92,6 +92,7 @@ func (c Help) Register() *aurora.Command {
 	return c.Command.CommandInterface
 }
 
+// processHelp processes help info defined in each command for command specific help pages.
 func (c Help) processHelp(ctx aurora.Context, command CommandItem) {
 	embedFields := []*disgord.EmbedField{
 		{
@@ -114,6 +115,7 @@ func (c Help) processHelp(ctx aurora.Context, command CommandItem) {
 		})
 	}
 
+	// Command parameters
 	if len(command.Parameters) > 0 {
 		var params []string
 

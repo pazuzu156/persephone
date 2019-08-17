@@ -5,7 +5,6 @@ import (
 	"strconv"
 
 	"github.com/andersfylling/disgord"
-	"github.com/naoina/genmai"
 	"github.com/pazuzu156/lastfm-go"
 )
 
@@ -57,10 +56,6 @@ func GetUInt64ID(user *disgord.User) uint64 {
 	return uint64(did)
 }
 
-func (c User) DB() *genmai.DB {
-	return db
-}
-
 // Crown is a relational function to get crowns model
 func (c User) Crown(id int64) Crown {
 	crowns := GetCrownsList()
@@ -74,6 +69,7 @@ func (c User) Crown(id int64) Crown {
 	return Crown{}
 }
 
+// Crowns is a relational function to get crowns model
 func (c User) Crowns() (crowns []Crown) {
 	dbc := GetCrownsList()
 

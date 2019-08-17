@@ -28,6 +28,7 @@ func GetNowPlayingTrack(author *disgord.User, lfm *lastfm.Api) (lib.Track, error
 	return lib.Track{}, err
 }
 
+// GetRecentTracks retrieves a users recently scrobbled tracks.
 func GetRecentTracks(author *disgord.User, lfm *lastfm.Api, limit string) ([]lib.Track, error) {
 	if user := database.GetUser(author); user.Username != "" {
 		np, _ := lfm.User.GetRecentTracks(lastfm.P{

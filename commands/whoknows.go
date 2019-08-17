@@ -84,6 +84,7 @@ func (c Whoknows) Register() *aurora.Command {
 	return c.Command.CommandInterface
 }
 
+// displayWhoKnows displays an embed with a list of top users who have scrobbled a given artist.
 func (c Whoknows) displayWhoKnows(ctx aurora.Context, artist lastfm.ArtistGetInfo) {
 	users := database.GetUsers()
 

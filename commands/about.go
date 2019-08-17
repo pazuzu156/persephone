@@ -30,6 +30,8 @@ func (c About) Register() *aurora.Command {
 		id, _ := strconv.Atoi(config.BotID)
 		bot, _ := ctx.Aurora.GetMember(ctx.Message.GuildID, snowflake.NewSnowflake(uint64(id)))
 
+		// Gets roles the bot has, so they can be displayed in
+		// the embed
 		var roles []string
 		for _, r := range bot.Roles {
 			groles, _ := ctx.Aurora.GetGuildRoles(ctx.Message.GuildID)

@@ -49,6 +49,7 @@ func InitCrowns() Crowns {
 // Register registers and runs the crowns command.
 func (c Crowns) Register() *aurora.Command {
 	c.Command.CommandInterface.Run = func(ctx aurora.Context) {
+		// check for command arguments
 		if len(ctx.Args) > 0 {
 			var (
 				user *disgord.User
@@ -56,7 +57,10 @@ func (c Crowns) Register() *aurora.Command {
 				err  error
 			)
 
+			// loop through arguments
+			// they don't have a particular order
 			for _, arg := range ctx.Args {
+				// Check if a user is supplied
 				if strings.Contains(arg, "<@") {
 					did, _ := strconv.Atoi(strings.TrimLeft(strings.TrimRight(arg, ">"), "<@"))
 					discordid := snowflake.NewSnowflake(uint64(did))
@@ -67,6 +71,7 @@ func (c Crowns) Register() *aurora.Command {
 					}
 				}
 
+				// check if a page number is requested
 				if strings.Contains(arg, "page:") {
 					a := strings.Split(arg, ":")
 
@@ -87,11 +92,11 @@ func (c Crowns) Register() *aurora.Command {
 					user = ctx.Message.Author
 				}
 
-				c.displayCrowns(ctx, user, page)
+				c.displayCrowns(ctx, user, page) // display crowns
 
 			}
 		} else {
-			c.displayCrowns(ctx, ctx.Message.Author, 1)
+			c.displayCrowns(ctx, ctx.Message.Author, 1) // display crowns
 		}
 
 	}
@@ -99,24 +104,27 @@ func (c Crowns) Register() *aurora.Command {
 	return c.Command.CommandInterface
 }
 
+// displayCrowns displays all crowns for users logged in with lastfm.
 func (c Crowns) displayCrowns(ctx aurora.Context, user *disgord.User, page int) {
-	crowns := database.GetUser(user).Crowns()
+	crowns := database.GetUser(user).Crowns() // get crowns
 
 	if len(crowns) > 0 {
 		var (
 			count      = len(crowns)
 			maxPerPage = 10
-			pages      = int(math.Ceil(float64(count) / float64(maxPerPage)))
+			pages      = int(math.Ceil(float64(count) / float64(maxPerPage))) // gets total number of pages
 			offset     = 0
 		)
 
+		// page sanity check
 		if page <= pages {
 			if page > 1 {
-				offset = (page-1)*maxPerPage + 1
+				offset = (page-1)*maxPerPage + 1 // fucking pagination
 			}
 
 			fmt.Println(offset)
 
+			// query database with limit/offset for each page
 			db, _ := database.OpenDB()
 			db.Select(&crowns, db.Where("discord_id", "=", database.GetUInt64ID(user)), db.From(database.Crown{}), db.Limit(maxPerPage), db.Offset(offset))
 
@@ -127,6 +135,7 @@ func (c Crowns) displayCrowns(ctx aurora.Context, user *disgord.User, page int) 
 
 			var descar []string
 
+			// add each crown to string slice for embed
 			for n, crown := range crowns {
 				descar = append(descar, fmt.Sprintf("%d. 👑 %s with %d plays", n+1, crown.Artist, crown.PlayCount))
 			}

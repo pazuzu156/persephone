@@ -67,6 +67,7 @@ func (c Youtube) Register() *aurora.Command {
 	return c.Command.CommandInterface
 }
 
+// displayResults displays the results of a youtube search.
 func (c Youtube) displayResults(ctx aurora.Context, ss map[string]string) {
 	qstring := c.stringify(ss)
 
@@ -92,6 +93,7 @@ func (c Youtube) displayResults(ctx aurora.Context, ss map[string]string) {
 	}
 }
 
+// strigify generates a URL GET query string.
 func (c Youtube) stringify(ss map[string]string) (enc string) {
 	var urlss []string
 
