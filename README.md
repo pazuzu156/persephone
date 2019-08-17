@@ -12,9 +12,13 @@ Persephone is a Discord bot that's used to interface with Lastfm, and is built t
 
 Libraries used for the bot will be listed here (you can also see them listed in `go.mod`)
 
-* [Disgord](https://github.com/andersfylling/disgord) The Discord library for Go
-* [Aurora](https://github.com/pazuuz156/aurora) The command router for Disgord
-* [Lastfm-Go](https://github.com/pazuzu156/lastfm-go) The Last.FM API library for Go
+- [Disgord](https://github.com/andersfylling/disgord) The Discord library for Go
+- [Aurora](https://github.com/pazuzu156/aurora) The command router for Disgord (fork)
+- [Lastfm-Go](https://github.com/pazuzu156/lastfm-go) The Last.FM API library for Go (fork)
+- [gg](github.com/fogleman/gg) 2D Image generation for Go
+- [genmai](github.com/naoina/genmai) Database ORM for Go
+- <https://github.com/go-sql-driver/mysql> MySQL driver used with database
+- [Colly](github.com/gocolly/colly) For hex conversions for embed colors
 
 ## Building
 
