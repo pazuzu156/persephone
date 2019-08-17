@@ -17,7 +17,7 @@ Libraries used for the bot will be listed here (you can also see them listed in 
 - [Lastfm-Go](https://github.com/pazuzu156/lastfm-go) The Last.FM API library for Go (fork)
 - [gg](https://github.com/fogleman/gg) 2D Image generation for Go
 - [genmai](https://github.com/naoina/genmai) Database ORM for Go
-- <https://https://github.com/go-sql-driver/mysql> MySQL driver used with database
+- <https://github.com/go-sql-driver/mysql> MySQL driver used with database
 - [Colly](https://github.com/gocolly/colly) For hex conversions for embed colors
 
 ## Building
