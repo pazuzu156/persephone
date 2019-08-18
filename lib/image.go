@@ -6,6 +6,8 @@ import (
 	"image/png"
 	"os"
 	"strings"
+
+	"github.com/fogleman/gg"
 )
 
 // GetExt returns the extension of a given file name
@@ -34,4 +36,15 @@ func OpenImage(filename string) image.Image {
 	}
 
 	return img
+}
+
+// BrandImage tags an image with a discord link and bot's name
+func BrandImage(dc *gg.Context) {
+	dc.LoadFontFace("static/fonts/NotoSans-Regular.ttf", 14)
+	dc.SetRGB(0.9, 0.9, 0.9)
+	dc.DrawStringAnchored(
+		"Persephone: discord.gg/BtqjBDu",
+		float64(dc.Width()), float64(dc.Height()),
+		1.04, -1.2,
+	)
 }

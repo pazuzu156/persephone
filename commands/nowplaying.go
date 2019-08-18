@@ -179,6 +179,8 @@ func (c Nowplaying) Register() *aurora.Command {
 				}
 			}
 
+			lib.BrandImage(dc) // brand image
+
 			dc.SavePNG("temp/" + ctx.Message.Author.ID.String() + "_np.png")      // save generated image
 			r, _ := os.Open("temp/" + ctx.Message.Author.ID.String() + "_np.png") // open generated image into memory
 

@@ -305,6 +305,8 @@ func (c Band) displayArtistInfo(ctx aurora.Context, artist lastfm.ArtistGetInfo)
 		}
 	}
 
+	lib.BrandImage(dc) // brand image
+
 	dc.SavePNG("temp/" + ctx.Message.Author.ID.String() + "_band.png")
 	r, _ := os.Open("temp/" + ctx.Message.Author.ID.String() + "_band.png")
 
