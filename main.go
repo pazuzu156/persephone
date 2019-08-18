@@ -1,9 +1,11 @@
 package main
 
 import (
+	"fmt"
 	"persephone/commands"
 	"persephone/database"
 	"persephone/lib"
+	"runtime"
 
 	"github.com/andersfylling/disgord"
 	"github.com/pazuzu156/aurora"
@@ -13,6 +15,8 @@ var migrate = false
 
 // main entry point
 func main() {
+	fmt.Println(runtime.GOOS)
+
 	if migrate {
 		database.Migrate()
 	} else {
