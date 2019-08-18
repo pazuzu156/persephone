@@ -9,5 +9,3 @@ if ! `go vet`; then
 	echo "Go vetting failed. Please check your project for errors"
 	exit 1
 fi
-
-git add .
