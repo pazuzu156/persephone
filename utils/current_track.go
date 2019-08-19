@@ -10,7 +10,7 @@ import (
 )
 
 // GetNowPlayingTrack returns the currently playing track
-func GetNowPlayingTrack(author *disgord.User, lfm *lastfm.Api) (lib.Track, error) {
+func GetNowPlayingTrack(author *disgord.User, lfm *lastfm.API) (lib.Track, error) {
 	tracks, err := GetRecentTracks(author, lfm, "3")
 
 	if err == nil {
@@ -29,7 +29,7 @@ func GetNowPlayingTrack(author *disgord.User, lfm *lastfm.Api) (lib.Track, error
 }
 
 // GetRecentTracks retrieves a users recently scrobbled tracks.
-func GetRecentTracks(author *disgord.User, lfm *lastfm.Api, limit string) ([]lib.Track, error) {
+func GetRecentTracks(author *disgord.User, lfm *lastfm.API, limit string) ([]lib.Track, error) {
 	if user := database.GetUser(author); user.Username != "" {
 		np, _ := lfm.User.GetRecentTracks(lastfm.P{
 			"user":  user.Lastfm,

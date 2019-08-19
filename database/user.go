@@ -43,7 +43,7 @@ func GetUsers() []User {
 }
 
 // GetLastfmUserInfo gets user info from last.fm.
-func GetLastfmUserInfo(user *disgord.User, lfm *lastfm.Api) (lastfm.UserGetInfo, error) {
+func GetLastfmUserInfo(user *disgord.User, lfm *lastfm.API) (lastfm.UserGetInfo, error) {
 	dbu := GetUser(user)
 
 	return lfm.User.GetInfo(lastfm.P{"user": dbu.Lastfm})

@@ -29,7 +29,7 @@ require (
 	github.com/naoina/go-stringutil v0.1.0 // indirect
 	github.com/nfnt/resize v0.0.0-20180221191011-83c6a9932646
 	github.com/pazuzu156/aurora v0.1.1
-	github.com/pazuzu156/lastfm-go v0.0.1
+	github.com/pazuzu156/lastfm-go v0.0.2
 	github.com/saintfish/chardet v0.0.0-20120816061221-3af4cd4741ca // indirect
 	github.com/stretchr/objx v0.2.0 // indirect
 	github.com/stretchr/testify v1.4.0 // indirect

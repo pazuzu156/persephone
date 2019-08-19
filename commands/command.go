@@ -10,7 +10,7 @@ import (
 // Command is the base command object for all commands.
 type Command struct {
 	CommandInterface *aurora.Command
-	Lastfm           *lastfm.Api
+	Lastfm           *lastfm.API
 }
 
 // CommandItem is the base command item object for the help command.
