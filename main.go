@@ -15,8 +15,6 @@ var migrate = false
 
 // main entry point
 func main() {
-	fmt.Println(runtime.GOOS)
-
 	if migrate {
 		database.Migrate()
 	} else {
