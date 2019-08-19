@@ -24,6 +24,15 @@ Libraries used for the bot will be listed here (you can also see them listed in 
 
 Building is quite easy, just make sure you have [Go](https://golang.org/) installed, and run `go build` You should be able to run the compiled executable after making required changes to `config.json` for your bot
 
+### Linux
+
+On Linux, to build for distribution (or to install on your system) use the provided Makefile.
+
+    $ make; make install
+    ...
+
+Do not run `make install` with sudo, it will run sudo when needed. Make sure you update your configuration in `~/persephone/config.json` so the bot will run
+
 ## Contributing
 
 Please refer to [CONTRIBUTING.md](CONTRIBUTING.md) for more info
