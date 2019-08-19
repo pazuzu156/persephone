@@ -39,14 +39,12 @@ var (
 	// var commands = map[string]*aurora.Command{}
 	commands = []CommandItem{}
 	config   = lib.Config()
-)
 
-const (
 	// FontRegular is the name for the regular typed font.
-	FontRegular = "static/fonts/NotoSans-Regular.ttf"
+	FontRegular = lib.LocGet("static/fonts/NotoSans-Regular.ttf")
 
 	// FontBold is the name for the bold typed font.
-	FontBold = "static/fonts/NotoSans-Bold.ttf"
+	FontBold = lib.LocGet("static/fonts/NotoSans-Bold.ttf")
 )
 
 // Init initializes aurora commands.

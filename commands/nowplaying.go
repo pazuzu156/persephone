@@ -45,11 +45,11 @@ func (c Nowplaying) Register() *aurora.Command {
 		lfmuser, _ := database.GetLastfmUserInfo(ctx.Message.Author, c.Command.Lastfm)
 
 		if err == nil {
-			res, _ := grab.Get("temp/", track.Images[3].URL)
-			avres, _ := grab.Get("temp/", "https://cdn.discordapp.com/avatars/"+ctx.Message.Author.ID.String()+"/"+*ctx.Message.Author.Avatar+".png")
+			res, _ := grab.Get(lib.LocGet("temp/"), track.Images[3].URL)
+			avres, _ := grab.Get(lib.LocGet("temp/"), "https://cdn.discordapp.com/avatars/"+ctx.Message.Author.ID.String()+"/"+*ctx.Message.Author.Avatar+".png")
 
 			// Open base images
-			bg := lib.OpenImage("static/images/background.png")
+			bg := lib.OpenImage(lib.LocGet("static/images/background.png"))
 			aa := lib.OpenImage(res.Filename)
 			av := lib.OpenImage(avres.Filename)
 
@@ -117,7 +117,7 @@ func (c Nowplaying) Register() *aurora.Command {
 
 					dc.DrawRoundedRectangle(340, 400, 160, 160, 80)
 					dc.Clip()
-					i, _ := grab.Get("temp/", img)
+					i, _ := grab.Get(lib.LocGet("temp/"), img)
 					ii := lib.OpenImage(i.Filename)
 					iir := resize.Resize(160, 160, ii, resize.Bicubic)
 					dc.DrawImage(iir, 340, 400)
@@ -140,7 +140,7 @@ func (c Nowplaying) Register() *aurora.Command {
 
 					dc.DrawRoundedRectangle(340, 310, 160, 160, 80)
 					dc.Clip()
-					i, _ := grab.Get("temp/", img)
+					i, _ := grab.Get(lib.LocGet("temp/"), img)
 					ii := lib.OpenImage(i.Filename)
 					iir := resize.Resize(160, 160, ii, resize.Bicubic)
 					dc.DrawImage(iir, 340, 310)
@@ -163,7 +163,7 @@ func (c Nowplaying) Register() *aurora.Command {
 
 					dc.DrawRoundedRectangle(340, 220, 160, 160, 80)
 					dc.Clip()
-					i, _ := grab.Get("temp/", img)
+					i, _ := grab.Get(lib.LocGet("temp/"), img)
 					ii := lib.OpenImage(i.Filename)
 					iir := resize.Resize(160, 160, ii, resize.Bicubic)
 					dc.DrawImage(iir, 340, 220)
@@ -181,8 +181,8 @@ func (c Nowplaying) Register() *aurora.Command {
 
 			lib.BrandImage(dc) // brand image
 
-			dc.SavePNG("temp/" + ctx.Message.Author.ID.String() + "_np.png")      // save generated image
-			r, _ := os.Open("temp/" + ctx.Message.Author.ID.String() + "_np.png") // open generated image into memory
+			dc.SavePNG(lib.LocGet("temp/" + ctx.Message.Author.ID.String() + "_np.png"))      // save generated image
+			r, _ := os.Open(lib.LocGet("temp/" + ctx.Message.Author.ID.String() + "_np.png")) // open generated image into memory
 
 			// create new message with the image + embed with a link to the user's Last.fm profile page
 			ctx.Aurora.CreateMessage(ctx.Message.ChannelID, &disgord.CreateMessageParams{
@@ -198,7 +198,7 @@ func (c Nowplaying) Register() *aurora.Command {
 
 			// Close and delete the image
 			r.Close()
-			os.Remove("temp/" + ctx.Message.Author.ID.String() + "_np.png")
+			os.Remove(lib.LocGet("temp/" + ctx.Message.Author.ID.String() + "_np.png"))
 		} else {
 			ctx.Message.Reply(ctx.Aurora, err.Error())
 		}
