@@ -101,6 +101,8 @@ github.com/pazuzu156/aurora v0.1.1 h1:KbkflJTdMSxbBAmyxuypY96f3NT8dNqc1I3mVTsf9r
 github.com/pazuzu156/aurora v0.1.1/go.mod h1:J6Z3gTy1sflqGgFxx7pNYnLsD51GKUPzOW7DkKYmbUE=
 github.com/pazuzu156/lastfm-go v0.0.1 h1:kE5nnQD4NKPVCf+lvs3qNsmNSu+bMePRON/4KFJq21I=
 github.com/pazuzu156/lastfm-go v0.0.1/go.mod h1:TnaXGRQlzwrxMlj8nkHmmFx5YhQJzd/GLfSMEbDqqT0=
+github.com/pazuzu156/lastfm-go v0.0.2 h1:d1BRHZzkcKNooc65PTelSyk3pxHtiD35n2AXLJFpBpE=
+github.com/pazuzu156/lastfm-go v0.0.2/go.mod h1:TnaXGRQlzwrxMlj8nkHmmFx5YhQJzd/GLfSMEbDqqT0=
 github.com/pkg/errors v0.8.1 h1:iURUrRGxPUNPdy5/HRSm+Yj6okJ6UtLINN0Q9M4+h3I=
 github.com/pkg/errors v0.8.1/go.mod h1:bwawxfHBFNV+L2hUp1rHADufV3IMtnDRdf1r5NINEl0=
 github.com/pmezard/go-difflib v1.0.0 h1:4DBwDE0NGyQoBHbLQYPwSUPoCMWR5BEzIk/f1lZbAQM=

@@ -45,7 +45,7 @@ func (c Nowplaying) Register() *aurora.Command {
 		lfmuser, _ := database.GetLastfmUserInfo(ctx.Message.Author, c.Command.Lastfm)
 
 		if err == nil {
-			res, _ := grab.Get("temp/", track.Images[3].Url)
+			res, _ := grab.Get("temp/", track.Images[3].URL)
 			avres, _ := grab.Get("temp/", "https://cdn.discordapp.com/avatars/"+ctx.Message.Author.ID.String()+"/"+*ctx.Message.Author.Avatar+".png")
 
 			// Open base images
@@ -110,7 +110,7 @@ func (c Nowplaying) Register() *aurora.Command {
 
 				// This needs to be rendered first, as it'll be in the back
 				// behind the other 2 recent tracks
-				if img := t3.Images[3].Url; img != "" {
+				if img := t3.Images[3].URL; img != "" {
 					dc.SetRGBA(0, 0, 0, 0.3)
 					dc.DrawRoundedRectangle(336, 396, 168, 168, 85)
 					dc.Fill()
@@ -133,7 +133,7 @@ func (c Nowplaying) Register() *aurora.Command {
 				}
 
 				// Track 2
-				if img := t2.Images[3].Url; img != "" {
+				if img := t2.Images[3].URL; img != "" {
 					dc.SetRGBA(0, 0, 0, 0.3)
 					dc.DrawRoundedRectangle(336, 306, 168, 168, 85)
 					dc.Fill()
@@ -156,7 +156,7 @@ func (c Nowplaying) Register() *aurora.Command {
 				}
 
 				// First most recent track
-				if img := t1.Images[3].Url; img != "" {
+				if img := t1.Images[3].URL; img != "" {
 					dc.SetRGBA(0, 0, 0, 0.3)
 					dc.DrawRoundedRectangle(336, 216, 168, 168, 85)
 					dc.Fill()

@@ -1,22 +1,24 @@
 package lib
 
+// TopAlbum holds top album info.
 type TopAlbum struct {
 	Rank      string `xml:"rank,attr"`
 	Name      string `xml:"name"`
 	PlayCount string `xml:"playcount"`
 	Mbid      string `xml:"mbid"`
-	Url       string `xml:"url"`
+	URL       string `xml:"url"`
 	Artist    struct {
 		Name string `xml:"name"`
 		Mbid string `xml:"mbid"`
-		Url  string `xml:"url"`
+		URL  string `xml:"url"`
 	} `xml:"artist"`
 	Images []struct {
 		Size string `xml:"size,attr"`
-		Url  string `xml:",chardata"`
+		URL  string `xml:",chardata"`
 	} `xml:"image"`
 }
 
+// Track holds track info.
 type Track struct {
 	NowPlaying string `xml:"nowplaying,attr,omitempty"`
 	Artist     struct {
@@ -30,10 +32,10 @@ type Track struct {
 		Name string `xml:",chardata"`
 		Mbid string `xml:"mbid,attr"`
 	} `xml:"album"`
-	Url    string `xml:"url"`
+	URL    string `xml:"url"`
 	Images []struct {
 		Size string `xml:"size,attr"`
-		Url  string `xml:",chardata"`
+		URL  string `xml:",chardata"`
 	} `xml:"image"`
 	Date struct {
 		Uts  string `xml:"uts,attr"`
@@ -41,13 +43,14 @@ type Track struct {
 	} `xml:"date"`
 }
 
+// TopTrack holds top track info.
 type TopTrack struct {
 	Rank       string `xml:"rank,attr"`
 	Name       string `xml:"name"`
 	Duration   string `xml:"duration"`
 	PlayCount  string `xml:"playcount"`
 	Mbid       string `xml:"mbid"`
-	Url        string `xml:"url"`
+	URL        string `xml:"url"`
 	Streamable struct {
 		FullTrack  string `xml:"fulltrack,attr"`
 		Streamable string `xml:",chardata"`
@@ -55,14 +58,15 @@ type TopTrack struct {
 	Artist struct {
 		Name string `xml:"name"`
 		Mbid string `xml:"mbid"`
-		Url  string `xml:"url"`
+		URL  string `xml:"url"`
 	} `xml:"artist"`
 	Images []struct {
 		Size string `xml:"size,attr"`
-		Url  string `xml:",chardata"`
+		URL  string `xml:",chardata"`
 	} `xml:"image"`
 }
 
+// AlbumPosition holds album art positions.
 type AlbumPosition struct {
 	X      int
 	Y      int
@@ -70,29 +74,34 @@ type AlbumPosition struct {
 	Info   InfoText
 }
 
+// TrackPosition holds track label positions.
 type TrackPosition struct {
 	X     float64
 	Y     float64
 	Plays PlaysText
 }
 
+// Shadow holds image shadow positions.
 type Shadow struct {
 	X float64
 	Y float64
 	R float64
 }
 
+// InfoText holds info text positions.
 type InfoText struct {
 	X     float64
 	Y     float64
 	Plays PlaysText
 }
 
+// PlaysText holds play count text positions.
 type PlaysText struct {
 	X float64
 	Y float64
 }
 
+// YouTubeResponse holds youtube response info.
 type YouTubeResponse struct {
 	Kind string `json:"kind"`
 	ETag struct {

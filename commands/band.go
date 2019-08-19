@@ -267,7 +267,7 @@ func (c Band) displayArtistInfo(ctx aurora.Context, artist lastfm.ArtistGetInfo)
 	// takes all albums and aranges them in a 2x2 grid
 	for i, album := range albums {
 		if i < len(albums) && i < 4 {
-			ares, _ := grab.Get("temp/", album.Images[3].Url)
+			ares, _ := grab.Get("temp/", album.Images[3].URL)
 			ai := lib.OpenImage(ares.Filename)
 			os.Remove(ares.Filename)
 			ar := resize.Resize(145, 145, ai, resize.Bicubic)
@@ -355,7 +355,7 @@ func (c Band) getArtistImage(artist lastfm.ArtistGetInfo) image.Image {
 		return img
 	}
 
-	ares, _ := grab.Get("temp/", artist.Images[3].Url)
+	ares, _ := grab.Get("temp/", artist.Images[3].URL)
 	aimg := lib.OpenImage(ares.Filename)
 	os.Remove(ares.Filename)
 
