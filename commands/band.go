@@ -206,8 +206,8 @@ func (c Band) displayArtistInfo(ctx aurora.Context, artist lastfm.ArtistGetInfo)
 	lfmuser, _ := database.GetLastfmUserInfo(ctx.Message.Author, c.Command.Lastfm)
 
 	aimg := c.getArtistImage(artist) // artist image is scraped from metal-archives
-	avres, _ := grab.Get("temp/", utils.GenAvatarURL(ctx.Message.Author))
-	bg := lib.OpenImage("static/images/background.png")
+	avres, _ := grab.Get(lib.LocGet("temp/"), utils.GenAvatarURL(ctx.Message.Author))
+	bg := lib.OpenImage(lib.LocGet("static/images/background.png"))
 	av := lib.OpenImage(avres.Filename)
 	os.Remove(avres.Filename)
 
@@ -267,7 +267,7 @@ func (c Band) displayArtistInfo(ctx aurora.Context, artist lastfm.ArtistGetInfo)
 	// takes all albums and aranges them in a 2x2 grid
 	for i, album := range albums {
 		if i < len(albums) && i < 4 {
-			ares, _ := grab.Get("temp/", album.Images[3].URL)
+			ares, _ := grab.Get(lib.LocGet("temp/"), album.Images[3].URL)
 			ai := lib.OpenImage(ares.Filename)
 			os.Remove(ares.Filename)
 			ar := resize.Resize(145, 145, ai, resize.Bicubic)
@@ -307,8 +307,8 @@ func (c Band) displayArtistInfo(ctx aurora.Context, artist lastfm.ArtistGetInfo)
 
 	lib.BrandImage(dc) // brand image
 
-	dc.SavePNG("temp/" + ctx.Message.Author.ID.String() + "_band.png")
-	r, _ := os.Open("temp/" + ctx.Message.Author.ID.String() + "_band.png")
+	dc.SavePNG(lib.LocGet("temp/" + ctx.Message.Author.ID.String() + "_band.png"))
+	r, _ := os.Open(lib.LocGet("temp/" + ctx.Message.Author.ID.String() + "_band.png"))
 
 	ctx.Aurora.CreateMessage(ctx.Message.ChannelID, &disgord.CreateMessageParams{
 		Files: []disgord.CreateMessageFileParams{
@@ -320,7 +320,7 @@ func (c Band) displayArtistInfo(ctx aurora.Context, artist lastfm.ArtistGetInfo)
 	})
 
 	r.Close()
-	os.Remove("temp/" + ctx.Message.Author.ID.String() + "_band.png")
+	os.Remove(lib.LocGet("temp/" + ctx.Message.Author.ID.String() + "_band.png"))
 }
 
 // getArtistInfo retrieves artist info for a given user.
@@ -347,7 +347,7 @@ func (c Band) getArtistImage(artist lastfm.ArtistGetInfo) image.Image {
 	}
 
 	if imgsrc != "" {
-		res, _ := grab.Get("temp/", imgsrc)
+		res, _ := grab.Get(lib.LocGet("temp/"), imgsrc)
 		img := lib.OpenImage(res.Filename)
 
 		os.Remove(res.Filename)
@@ -355,7 +355,7 @@ func (c Band) getArtistImage(artist lastfm.ArtistGetInfo) image.Image {
 		return img
 	}
 
-	ares, _ := grab.Get("temp/", artist.Images[3].URL)
+	ares, _ := grab.Get(lib.LocGet("temp/"), artist.Images[3].URL)
 	aimg := lib.OpenImage(ares.Filename)
 	os.Remove(ares.Filename)
 

@@ -30,7 +30,7 @@ type Configuration struct {
 
 // Config retrieves the app's configuration form config.json.
 func Config() Configuration {
-	file, err := os.Open("config.json")
+	file, err := os.Open(LocGet("config.json"))
 	Check(err)
 	defer file.Close()
 
