@@ -27,6 +27,9 @@ if ! [ -f config.json ]; then
     cp config.example.json config.json
 fi
 
-tar $TAR_FLAGS persephone.tar.gz $EXE_NAME temp/ static/ config.json artists.json
+# NOTAR will prevent compressing files
+if ! [ ${NOTAR+x} ]; then
+    tar $TAR_FLAGS persephone.tar.gz $EXE_NAME temp/ static/ config.json artists.json
+fi
 
 mv gkt temp/.gitkeep
