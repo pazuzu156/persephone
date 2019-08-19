@@ -9,7 +9,7 @@ install:
 	mkdir -pv ${HOME}/persephone/temp
 	mkdir -pv ${HOME}/persephone/static/fonts
 	mkdir -pv ${HOME}/persephone/static/images
-	install -D -m644 config.example.json ${HOME}/persephone/config.json
+	if ! [ -f ${HOME}/persephone/config.json ]; then install -D -m644 config.example.json ${HOME}/persephone/config.json; fi
 	install -D -m644 static/fonts/NotoSans-Bold.ttf ${HOME}/persephone/static/fonts/NotoSans-Bold.ttf
 	install -D -m644 static/fonts/NotoSans-Regular.ttf ${HOME}/persephone/static/fonts/NotoSans-Regular.ttf
 	install -D -m644 static/images/background.png ${HOME}/persephone/static/images/background.png
@@ -21,3 +21,5 @@ uninstall:
 
 clean:
 	if [ -f persephone ]; then rm persephone; fi
+
+.PHONY: all persephone install uninstall clean
