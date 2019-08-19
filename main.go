@@ -1,11 +1,9 @@
 package main
 
 import (
-	"fmt"
 	"persephone/commands"
 	"persephone/database"
 	"persephone/lib"
-	"runtime"
 
 	"github.com/andersfylling/disgord"
 	"github.com/pazuzu156/aurora"
