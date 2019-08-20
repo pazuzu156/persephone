@@ -6,7 +6,6 @@ import (
 	"strconv"
 
 	"github.com/andersfylling/disgord"
-	"github.com/andersfylling/snowflake/v3"
 	"github.com/pazuzu156/aurora"
 )
 
@@ -28,7 +27,7 @@ func InitAbout() About {
 func (c About) Register() *aurora.Command {
 	c.Command.CommandInterface.Run = func(ctx aurora.Context) {
 		id, _ := strconv.Atoi(config.BotID)
-		bot, _ := ctx.Aurora.GetMember(ctx.Message.GuildID, snowflake.NewSnowflake(uint64(id)))
+		bot, _ := ctx.Aurora.GetMember(ctx.Message.GuildID, disgord.NewSnowflake(uint64(id)))
 
 		// Gets roles the bot has, so they can be displayed in
 		// the embed
