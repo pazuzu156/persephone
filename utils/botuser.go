@@ -5,7 +5,6 @@ import (
 	"strconv"
 
 	"github.com/andersfylling/disgord"
-	"github.com/andersfylling/snowflake/v3"
 	"github.com/pazuzu156/aurora"
 )
 
@@ -13,7 +12,7 @@ import (
 func GetBot(ctx aurora.Context) *disgord.Member {
 	config := lib.Config()
 	id, _ := strconv.Atoi(config.BotID)
-	bot, _ := ctx.Aurora.GetMember(ctx.Message.GuildID, snowflake.NewSnowflake(uint64(id)))
+	bot, _ := ctx.Aurora.GetMember(ctx.Message.GuildID, disgord.NewSnowflake(uint64(id)))
 
 	return bot
 }

@@ -11,7 +11,6 @@ import (
 	"time"
 
 	"github.com/andersfylling/disgord"
-	"github.com/andersfylling/snowflake/v3"
 	"github.com/pazuzu156/aurora"
 )
 
@@ -63,7 +62,7 @@ func (c Crowns) Register() *aurora.Command {
 				// Check if a user is supplied
 				if strings.Contains(arg, "<@") {
 					did, _ := strconv.Atoi(strings.TrimLeft(strings.TrimRight(arg, ">"), "<@"))
-					discordid := snowflake.NewSnowflake(uint64(did))
+					discordid := disgord.NewSnowflake(uint64(did))
 					user, err = ctx.Aurora.GetUser(discordid)
 
 					if err != nil {
