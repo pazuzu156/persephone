@@ -31,9 +31,9 @@ func InitNowPlaying() Nowplaying {
 
 // Register registers and runs the nowplaying command.
 func (c Nowplaying) Register() *aurora.Command {
-	c.Command.CommandInterface.Run = func(ctx aurora.Context) {
-		track, err := utils.GetNowPlayingTrack(ctx.Message.Author, c.Command.Lastfm)
-		lfmuser, _ := database.GetLastfmUserInfo(ctx.Message.Author, c.Command.Lastfm)
+	c.CommandInterface.Run = func(ctx aurora.Context) {
+		track, err := utils.GetNowPlayingTrack(ctx.Message.Author, c.Lastfm)
+		lfmuser, _ := database.GetLastfmUserInfo(ctx.Message.Author, c.Lastfm)
 
 		if err == nil {
 			res, _ := grab.Get(lib.LocGet("temp/"), track.Images[3].URL)
@@ -93,7 +93,7 @@ func (c Nowplaying) Register() *aurora.Command {
 			// images + text for each
 			// tracks are layered in reverse order 3 -> 2 -> 1 displayed
 			// in ascending order
-			tracks, _ := utils.GetRecentTracks(ctx.Message.Author, c.Command.Lastfm, "3")
+			tracks, _ := utils.GetRecentTracks(ctx.Message.Author, c.Lastfm, "3")
 			if len(tracks) > 3 {
 				t1 := tracks[1] // most recent track
 				t2 := tracks[2] // second most recent track
@@ -195,5 +195,5 @@ func (c Nowplaying) Register() *aurora.Command {
 		}
 	}
 
-	return c.Command.CommandInterface
+	return c.CommandInterface
 }

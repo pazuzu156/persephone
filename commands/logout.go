@@ -21,7 +21,7 @@ func InitLogout() Logout {
 
 // Register registers and runs the logout command.
 func (c Logout) Register() *aurora.Command {
-	c.Command.CommandInterface.Run = func(ctx aurora.Context) {
+	c.CommandInterface.Run = func(ctx aurora.Context) {
 		db, _ := database.OpenDB()
 		defer db.Close()
 
@@ -38,5 +38,5 @@ func (c Logout) Register() *aurora.Command {
 		}
 	}
 
-	return c.Command.CommandInterface
+	return c.CommandInterface
 }

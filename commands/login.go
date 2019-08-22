@@ -22,14 +22,14 @@ func InitLogin() Login {
 
 // Register registers and runs the login command.
 func (c Login) Register() *aurora.Command {
-	c.Command.CommandInterface.Run = func(ctx aurora.Context) {
+	c.CommandInterface.Run = func(ctx aurora.Context) {
 		db, _ := database.OpenDB()
 		defer db.Close()
 
 		if len(ctx.Args) > 0 {
 			if user := database.GetUser(ctx.Message.Author); user.Username == "" {
 				lfmun := ctx.Args[0]
-				lfmuser, err := c.Command.Lastfm.User.GetInfo(lastfm.P{"user": lfmun})
+				lfmuser, err := c.Lastfm.User.GetInfo(lastfm.P{"user": lfmun})
 
 				if err != nil {
 					ctx.Message.Reply(ctx.Aurora, "A user with that username could not be found")
@@ -60,5 +60,5 @@ func (c Login) Register() *aurora.Command {
 		}
 	}
 
-	return c.Command.CommandInterface
+	return c.CommandInterface
 }
