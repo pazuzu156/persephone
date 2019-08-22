@@ -16,17 +16,17 @@ package commands
 import "github.com/pazuzu156/aurora"
 
 // ${COMMAND_NAME^} command.
-type ${COMMAND_NAME^} struct {
-    Command Command
-}
+type ${COMMAND_NAME^} struct{ Command }
 
 // Init${COMMAND_NAME^} initializes the ${COMMAND_NAME,,} command.
 func Init${COMMAND_NAME^}() ${COMMAND_NAME^} {
-    return ${COMMAND_NAME^}{Init(
-        "${COMMAND_NAME,,}",
-        "${COMMAND_DESCRIPTION}",
-        []UsageItem{},
-    )}
+    return ${COMMAND_NAME^}{Init(&CommandItem{
+        Name: "${COMMAND_NAME,,}",
+        Description: "${COMMAND_DESCRIPTION}",
+        Aliases: []string{},
+        Usage: "${COMMAND_NAME,,} ...",
+        Parameters: []Parameter{},
+    })}
 }
 
 // Register registers and runs the ${COMMAND_NAME,,} command.
