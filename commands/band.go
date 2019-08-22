@@ -1,6 +1,7 @@
 package commands
 
 import (
+	"errors"
 	"fmt"
 	"image"
 	"net/url"
@@ -135,7 +136,7 @@ type Band struct{ Command }
 
 // InitBand initializes the band command.
 func InitBand() Band {
-	return Band{InitCmd(&CommandItem2{
+	return Band{Init(&CommandItem{
 		Name:        "band",
 		Description: "Gets information on the artist you're currently listening to",
 		Aliases:     []string{"b"},
@@ -194,8 +195,15 @@ func (c Band) Register() *aurora.Command {
 }
 
 func (c Band) displayArtistInfo(ctx aurora.Context, artist lastfm.ArtistGetInfo) {
-	albums := c.getAlbumsList(ctx, artist) // gets users albums from artist
-	tracks := c.getTracksList(ctx, artist) // gets users tracks from artist
+	albums := c.getAlbumsList(ctx, artist)      // gets users albums from artist
+	tracks, err := c.getTracksList(ctx, artist) // gets users tracks from artist
+
+	if err != nil {
+		ctx.Message.Reply(ctx.Aurora, err.Error())
+
+		return
+	}
+
 	lfmuser, _ := database.GetLastfmUserInfo(ctx.Message.Author, c.Command.Lastfm)
 
 	aimg := c.getArtistImage(artist) // artist image is scraped from metal-archives
@@ -385,7 +393,7 @@ func (c Band) getAlbumsList(ctx aurora.Context, artist lastfm.ArtistGetInfo) []l
 }
 
 // getTracksList gets the users top tracks for a given artist.
-func (c Band) getTracksList(ctx aurora.Context, artist lastfm.ArtistGetInfo) []lib.TopTrack {
+func (c Band) getTracksList(ctx aurora.Context, artist lastfm.ArtistGetInfo) ([]lib.TopTrack, error) {
 	// this method works like getAlbumsList, won't comment
 	user := database.GetUser(ctx.Message.Author)
 	tlist, _ := c.Command.Lastfm.User.GetTopTracks(lastfm.P{"user": user.Lastfm, "limit": "1000"})
@@ -399,7 +407,11 @@ func (c Band) getTracksList(ctx aurora.Context, artist lastfm.ArtistGetInfo) []l
 
 	if tlist.TotalPages > 1 {
 		for i := 1; i <= tlist.TotalPages; i++ {
-			tl, _ := c.Command.Lastfm.User.GetTopTracks(lastfm.P{"user": user.Lastfm, "limit": "1000", "page": strconv.Itoa(i)})
+			tl, err := c.Command.Lastfm.User.GetTopTracks(lastfm.P{"user": user.Lastfm, "limit": "1000", "page": strconv.Itoa(i)})
+
+			if err != nil {
+				return nil, errors.New("An error occurred while trying to retireve this info. Please try again later")
+			}
 
 			if tl.Tracks[i].Artist.Name == artist.Name {
 				tracks = append(tracks, tl.Tracks[i])
@@ -407,5 +419,5 @@ func (c Band) getTracksList(ctx aurora.Context, artist lastfm.ArtistGetInfo) []l
 		}
 	}
 
-	return tracks
+	return tracks, nil
 }
