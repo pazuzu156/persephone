@@ -21,7 +21,7 @@ const Version string = "0.1.0"
 // InitAbout initialized the about command.
 func InitAbout() About {
 	return About{
-		Command: InitCmd(&CommandItem2{
+		Command: Init(&CommandItem{
 			Name:        "about",
 			Description: "Gets information about the bot",
 		}),

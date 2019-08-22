@@ -13,7 +13,7 @@ type Help struct{ Command }
 
 // InitHelp initializes the help command.
 func InitHelp() Help {
-	return Help{InitCmd(&CommandItem2{
+	return Help{Init(&CommandItem{
 		Name:        "help",
 		Description: "Shows help message",
 		Aliases:     []string{"h", "hh"},
@@ -34,7 +34,7 @@ func (c Help) Register() *aurora.Command {
 		if len(ctx.Args) > 0 {
 			argcmd := ctx.Args[0]
 
-			for _, command := range commands2 {
+			for _, command := range commands {
 				// if argcmd == command.Name then
 				// run help, otherwise, likely an
 				// alias was used instead
@@ -55,7 +55,7 @@ func (c Help) Register() *aurora.Command {
 		} else {
 			var cmdstrslc []string
 
-			for _, command := range commands2 {
+			for _, command := range commands {
 				cmdstrslc = append(cmdstrslc, fmt.Sprintf("`%s%s` - %s", config.Prefix, command.Name, command.Description))
 			}
 
@@ -81,7 +81,7 @@ func (c Help) Register() *aurora.Command {
 }
 
 // processHelp processes help info defined in each command for command specific help pages
-func (c Help) processHelp(ctx aurora.Context, command CommandItem2) {
+func (c Help) processHelp(ctx aurora.Context, command CommandItem) {
 	embedFields := []*disgord.EmbedField{
 		{
 			Name:  fmt.Sprintf("%s Help", utils.Ucwords(command.Name)),

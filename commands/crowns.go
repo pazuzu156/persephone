@@ -19,7 +19,7 @@ type Crowns struct{ Command }
 
 // InitCrowns initializes the crowns command.
 func InitCrowns() Crowns {
-	return Crowns{InitCmd(&CommandItem2{
+	return Crowns{Init(&CommandItem{
 		Name:        "crowns",
 		Description: "Shows a list of all your crowns (limit 10 per page)",
 		Usage:       "crowns @Apollyon#6666",

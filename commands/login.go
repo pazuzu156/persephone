@@ -13,7 +13,7 @@ type Login struct{ Command }
 
 // InitLogin initializes the login command.
 func InitLogin() Login {
-	return Login{InitCmd(&CommandItem2{
+	return Login{Init(&CommandItem{
 		Name:        "login",
 		Description: "Log into the bot with your Last.fm username",
 		Aliases:     []string{"li"},

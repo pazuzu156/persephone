@@ -19,7 +19,7 @@ type Whoknows struct{ Command }
 
 // InitWhoknows initialized the whoknows command.
 func InitWhoknows() Whoknows {
-	return Whoknows{InitCmd(&CommandItem2{
+	return Whoknows{Init(&CommandItem{
 		Name:        "whoknows",
 		Description: "Shows who knows a specific artist",
 		Aliases:     []string{"wk"},

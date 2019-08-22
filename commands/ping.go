@@ -11,7 +11,7 @@ type Ping struct{ Command }
 
 // InitPing initializes the ping command.
 func InitPing() Ping {
-	return Ping{InitCmd(&CommandItem2{
+	return Ping{Init(&CommandItem{
 		Name:        "ping",
 		Description: "Ping/Pong",
 		Usage:       "ping Pong!",

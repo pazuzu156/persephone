@@ -24,7 +24,7 @@ func InitYoutube() Youtube {
 	config := lib.Config()
 
 	return Youtube{
-		Command: InitCmd(&CommandItem2{
+		Command: Init(&CommandItem{
 			Name:        "youtube",
 			Description: "Gets a youtube link to your current playing track",
 			Aliases:     []string{"yt"},

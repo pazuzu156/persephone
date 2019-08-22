@@ -22,7 +22,7 @@ type Nowplaying struct{ Command }
 
 // InitNowPlaying initializes the nowplaying command.
 func InitNowPlaying() Nowplaying {
-	return Nowplaying{InitCmd(&CommandItem2{
+	return Nowplaying{Init(&CommandItem{
 		Name:        "nowplaying",
 		Description: "Shows what you're currently listening to",
 		Aliases:     []string{"np"},
