@@ -38,13 +38,14 @@ func main() {
 // Initializes all commands (register them here)
 func init() {
 	aurora.Use(commands.InitAbout().Register())
-	aurora.Use(commands.InitBand().Register())
+	// aurora.Use(commands.InitBand().Register())
 	aurora.Use(commands.InitCrowns().Register())
 	aurora.Use(commands.InitHelp().Register())
 	aurora.Use(commands.InitLogin().Register())
 	aurora.Use(commands.InitLogout().Register())
 	aurora.Use(commands.InitNowPlaying().Register())
 	aurora.Use(commands.InitPing().Register())
+	aurora.Use(commands.InitPlays().Register())
 	aurora.Use(commands.InitWhoknows().Register())
 	aurora.Use(commands.InitYoutube().Register())
 }
