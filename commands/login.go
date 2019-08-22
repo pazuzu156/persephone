@@ -9,13 +9,15 @@ import (
 )
 
 // Login command.
-type Login struct {
-	Command Command
-}
+type Login struct{ Command }
 
 // InitLogin initializes the login command.
 func InitLogin() Login {
-	return Login{Init("login", "Login to the bot with your Lastfm Username", []UsageItem{}, []Parameter{}, "li")}
+	return Login{InitCmd(&CommandItem2{
+		Name:        "login",
+		Description: "Log into the bot with your Last.fm username",
+		Aliases:     []string{"li"},
+	})}
 }
 
 // Register registers and runs the login command.

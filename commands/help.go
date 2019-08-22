@@ -3,37 +3,29 @@ package commands
 import (
 	"fmt"
 	"persephone/utils"
-	"strings"
 
 	"github.com/andersfylling/disgord"
 	"github.com/pazuzu156/aurora"
 )
 
 // Help command.
-type Help struct {
-	Command Command
-}
+type Help struct{ Command }
 
 // InitHelp initializes the help command.
 func InitHelp() Help {
-	return Help{Init(
-		"help",
-		"Displays help information for commands",
-		[]UsageItem{
-			{
-				Command:     "help",
-				Description: "Shows the master help list",
-			},
-		},
-		[]Parameter{
+	return Help{InitCmd(&CommandItem2{
+		Name:        "help",
+		Description: "Shows help message",
+		Aliases:     []string{"h", "hh"},
+		Usage:       "help whoknows",
+		Parameters: []Parameter{
 			{
 				Name:        "command",
 				Description: "Gets help on a specific command",
 				Required:    false,
 			},
 		},
-		"h", "hh",
-	)}
+	})}
 }
 
 // Register registers and runs the help command.
@@ -42,17 +34,19 @@ func (c Help) Register() *aurora.Command {
 		if len(ctx.Args) > 0 {
 			argcmd := ctx.Args[0]
 
-			for _, command := range commands {
+			for _, command := range commands2 {
 				// if argcmd == command.Name then
 				// run help, otherwise, likely an
 				// alias was used instead
 				// which should also work
 				if argcmd == command.Name {
+					// c.processHelp(ctx, command)
 					c.processHelp(ctx, command)
 				} else {
 					// check if argument was an alias
 					for _, alias := range command.Aliases {
 						if argcmd == alias {
+							// c.processHelp(ctx, command)
 							c.processHelp(ctx, command)
 						}
 					}
@@ -61,11 +55,9 @@ func (c Help) Register() *aurora.Command {
 		} else {
 			var cmdstrslc []string
 
-			for _, command := range commands {
-				cmdstrslc = append(cmdstrslc, fmt.Sprintf("`%s%s`", config.Prefix, command.Name))
+			for _, command := range commands2 {
+				cmdstrslc = append(cmdstrslc, fmt.Sprintf("`%s%s` - %s", config.Prefix, command.Name, command.Description))
 			}
-
-			cmdstr := strings.Join(cmdstrslc, ", ")
 
 			ctx.Aurora.CreateMessage(ctx.Message.ChannelID, &disgord.CreateMessageParams{
 				Embed: &disgord.Embed{
@@ -75,12 +67,8 @@ func (c Help) Register() *aurora.Command {
 							Value: "Listing all top-level commands. Specify a command to see more information.",
 						},
 						{
-							Name:  "Command Prefix",
-							Value: "`.`",
-						},
-						{
 							Name:  "Commands",
-							Value: strings.TrimRight(cmdstr, ", "),
+							Value: utils.JoinString(cmdstrslc, "\n"),
 						},
 					},
 					Color: 0x007FFF,
@@ -92,36 +80,32 @@ func (c Help) Register() *aurora.Command {
 	return c.Command.CommandInterface
 }
 
-// processHelp processes help info defined in each command for command specific help pages.
-func (c Help) processHelp(ctx aurora.Context, command CommandItem) {
+// processHelp processes help info defined in each command for command specific help pages
+func (c Help) processHelp(ctx aurora.Context, command CommandItem2) {
 	embedFields := []*disgord.EmbedField{
 		{
-			Name:  "Help",
+			Name:  fmt.Sprintf("%s Help", utils.Ucwords(command.Name)),
 			Value: fmt.Sprintf("`%s%s`: %s", config.Prefix, command.Name, command.Description),
 		},
 	}
 
 	// Usage
-	if len(command.Usage) > 0 {
-		var usage []string
-
-		for _, i := range command.Usage {
-			usage = append(usage, fmt.Sprintf("`%s%s` - %s", config.Prefix, i.Command, i.Description))
-		}
-
+	if command.Usage != "" {
 		embedFields = append(embedFields, &disgord.EmbedField{
-			Name:  "Usage",
-			Value: strings.Join(usage, "\n"),
+			Name:  "Example Usage",
+			Value: fmt.Sprintf("`%s%s`", config.Prefix, command.Usage),
 		})
 	}
 
-	// Command parameters
+	// Parameters
 	if len(command.Parameters) > 0 {
 		var params []string
 
 		for _, param := range command.Parameters {
-			var paramStr string
-			var paramName string
+			var (
+				paramStr  string
+				paramName string
+			)
 
 			if param.Value != "" {
 				paramName = fmt.Sprintf("%s:%s", param.Name, param.Value)
@@ -135,7 +119,10 @@ func (c Help) processHelp(ctx aurora.Context, command CommandItem) {
 				paramStr = fmt.Sprintf("[%s]", paramName)
 			}
 
-			params = append(params, fmt.Sprintf("`%s` - %s", paramStr, param.Description))
+			params = append(params, fmt.Sprintf("`%s` - %s",
+				paramStr,
+				param.Description,
+			))
 		}
 
 		embedFields = append(embedFields, &disgord.EmbedField{

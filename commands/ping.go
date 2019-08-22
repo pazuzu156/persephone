@@ -7,28 +7,22 @@ import (
 )
 
 // Ping is a simple testing command.
-type Ping struct {
-	Command Command
-}
+type Ping struct{ Command }
 
 // InitPing initializes the ping command.
 func InitPing() Ping {
-	return Ping{Init("ping",
-		"Ping/Pong",
-		[]UsageItem{
-			{
-				Command:     "ping",
-				Description: "Sends `pong` back",
-			},
-		},
-		[]Parameter{
+	return Ping{InitCmd(&CommandItem2{
+		Name:        "ping",
+		Description: "Ping/Pong",
+		Usage:       "ping Pong!",
+		Parameters: []Parameter{
 			{
 				Name:        "string",
 				Description: "A string to send back to yourself",
 				Required:    false,
 			},
 		},
-	)}
+	})}
 }
 
 // Register registers and runs the ping command.

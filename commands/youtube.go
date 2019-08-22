@@ -14,7 +14,7 @@ import (
 
 // Youtube command.
 type Youtube struct {
-	Command Command
+	Command
 	APIKey  string
 	RootURL string
 }
@@ -24,19 +24,18 @@ func InitYoutube() Youtube {
 	config := lib.Config()
 
 	return Youtube{
-		Command: Init(
-			"youtube",
-			"Gets a youtube video from query or current playing tack",
-			[]UsageItem{},
-			[]Parameter{
+		Command: InitCmd(&CommandItem2{
+			Name:        "youtube",
+			Description: "Gets a youtube link to your current playing track",
+			Aliases:     []string{"yt"},
+			Parameters: []Parameter{
 				{
 					Name:        "query",
-					Description: "Gets a youtube video from the given search query",
+					Description: "Gets a youtube link from the given search query",
 					Required:    false,
 				},
 			},
-			"yt",
-		),
+		}),
 		APIKey:  config.YouTube.APIKey,
 		RootURL: "https://www.googleapis.com/youtube/v3/search",
 	}

@@ -27,7 +27,7 @@ type CommandItem2 struct {
 	Name        string
 	Description string
 	Aliases     []string
-	Usage       []UsageItem
+	Usage       string
 	Parameters  []Parameter
 }
 

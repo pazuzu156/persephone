@@ -131,30 +131,23 @@ var (
 )
 
 // Band command.
-type Band struct {
-	Command Command
-}
+type Band struct{ Command }
 
 // InitBand initializes the band command.
 func InitBand() Band {
-	return Band{Init(
-		"band",
-		"Gets information on the artist you're currently listening to",
-		[]UsageItem{
-			{
-				Command:     "band",
-				Description: "Gets information on the artist you're currently listening to",
-			},
-		},
-		[]Parameter{
+	return Band{InitCmd(&CommandItem2{
+		Name:        "band",
+		Description: "Gets information on the artist you're currently listening to",
+		Aliases:     []string{"b"},
+		Usage:       "band Gorguts",
+		Parameters: []Parameter{
 			{
 				Name:        "artist",
 				Description: "Gets information on a requested artist",
 				Required:    false,
 			},
 		},
-		"b", "band",
-	)}
+	})}
 }
 
 // Register registers and runs the help command.

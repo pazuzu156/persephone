@@ -15,22 +15,15 @@ import (
 )
 
 // Crowns command.
-type Crowns struct {
-	Command Command
-}
+type Crowns struct{ Command }
 
 // InitCrowns initializes the crowns command.
 func InitCrowns() Crowns {
-	return Crowns{Init(
-		"crowns",
-		"List your crowns",
-		[]UsageItem{
-			{
-				Command:     "crowns",
-				Description: "Shows a list of all your crowns (limit 10 per page)",
-			},
-		},
-		[]Parameter{
+	return Crowns{InitCmd(&CommandItem2{
+		Name:        "crowns",
+		Description: "Shows a list of all your crowns (limit 10 per page)",
+		Usage:       "crowns @Apollyon#6666",
+		Parameters: []Parameter{
 			{
 				Name:        "member",
 				Description: "Shows a list of crowns for the requested user",
@@ -43,7 +36,7 @@ func InitCrowns() Crowns {
 				Required:    false,
 			},
 		},
-	)}
+	})}
 }
 
 // Register registers and runs the crowns command.
