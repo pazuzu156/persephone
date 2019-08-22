@@ -27,3 +27,8 @@ func JoinString(strs []string, char string) string {
 func GenAvatarURL(user *disgord.User) string {
 	return fmt.Sprintf("https://cdn.discordapp.com/avatars/%s/%s.png", user.ID.String(), *user.Avatar)
 }
+
+// Ucwords capitalizes the first letter in each word (Mirror's PHP's ucwords function)
+func Ucwords(str string) string {
+	return strings.Title(str)
+}

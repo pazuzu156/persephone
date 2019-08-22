@@ -18,24 +18,15 @@ import (
 )
 
 // Nowplaying command.
-type Nowplaying struct {
-	Command Command
-}
+type Nowplaying struct{ Command }
 
 // InitNowPlaying initializes the nowplaying command.
 func InitNowPlaying() Nowplaying {
-	return Nowplaying{Init(
-		"nowplaying",
-		"Shows what you're currently listening to",
-		[]UsageItem{
-			{
-				Command:     "nowplaying",
-				Description: "shows current song",
-			},
-		},
-		[]Parameter{},
-		"np",
-	)}
+	return Nowplaying{InitCmd(&CommandItem2{
+		Name:        "nowplaying",
+		Description: "Shows what you're currently listening to",
+		Aliases:     []string{"np"},
+	})}
 }
 
 // Register registers and runs the nowplaying command.

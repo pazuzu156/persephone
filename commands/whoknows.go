@@ -15,29 +15,23 @@ import (
 )
 
 // Whoknows command.
-type Whoknows struct {
-	Command Command
-}
+type Whoknows struct{ Command }
 
 // InitWhoknows initialized the whoknows command.
 func InitWhoknows() Whoknows {
-	return Whoknows{Init("whoknows",
-		"Shows who knows a specific artist",
-		[]UsageItem{
-			{
-				Command:     "whoknows",
-				Description: "Shows a list of users who know the current playing artist",
-			},
-		},
-		[]Parameter{
+	return Whoknows{InitCmd(&CommandItem2{
+		Name:        "whoknows",
+		Description: "Shows who knows a specific artist",
+		Aliases:     []string{"wk"},
+		Usage:       "whoknows Judas Iscariot",
+		Parameters: []Parameter{
 			{
 				Name:        "artist",
-				Description: "Shows a list of users who know the requested artist",
+				Description: "shows a list of users who know the requested artist",
 				Required:    false,
 			},
 		},
-		"wk",
-	)}
+	})}
 }
 
 // Register registers and runs the whoknows command.
