@@ -121,11 +121,18 @@ func (c Help) processHelp(ctx aurora.Context, command CommandItem) {
 
 		for _, param := range command.Parameters {
 			var paramStr string
+			var paramName string
+
+			if param.Value != "" {
+				paramName = fmt.Sprintf("%s:%s", param.Name, param.Value)
+			} else {
+				paramName = param.Name
+			}
 
 			if param.Required {
-				paramStr = fmt.Sprintf("<%s>", param.Name)
+				paramStr = fmt.Sprintf("<%s>", paramName)
 			} else {
-				paramStr = fmt.Sprintf("[%s]", param.Name)
+				paramStr = fmt.Sprintf("[%s]", paramName)
 			}
 
 			params = append(params, fmt.Sprintf("`%s` - %s", paramStr, param.Description))
