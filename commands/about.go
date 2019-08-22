@@ -11,16 +11,19 @@ import (
 
 // About command.
 type About struct {
-	Command Command
+	Command
 	Version string
 }
 
 // Version holds the bot's version number
-const Version = "0.0.1"
+const Version string = "0.0.1"
 
 // InitAbout initialized the about command.
 func InitAbout() About {
-	return About{Init("about", "Gets information about the bot", []UsageItem{}, []Parameter{}), Version}
+	return About{InitCmd(&CommandItem2{
+		Name:        "about",
+		Description: "Gets information about the bot",
+	}), Version}
 }
 
 // Register registers and runs the about command.
