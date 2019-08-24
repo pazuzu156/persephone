@@ -3,6 +3,7 @@ package commands
 import (
 	"fmt"
 	"persephone/utils"
+	"time"
 
 	"github.com/andersfylling/disgord"
 	"github.com/pazuzu156/aurora"
@@ -51,6 +52,13 @@ func (c Recent) Register() *aurora.Command {
 					},
 					Fields: tracks,
 					Color:  utils.RandomColor(),
+					Footer: &disgord.EmbedFooter{
+						IconURL: utils.GenAvatarURL(utils.GetBotUser(ctx)),
+						Text:    fmt.Sprintf("Command invoked by: %s#%s", ctx.Message.Author.Username, ctx.Message.Author.Discriminator),
+					},
+					Timestamp: disgord.Time{
+						Time: time.Now(),
+					},
 				},
 			})
 		}
