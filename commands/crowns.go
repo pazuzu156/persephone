@@ -41,7 +41,7 @@ func InitCrowns() Crowns {
 
 // Register registers and runs the crowns command.
 func (c Crowns) Register() *aurora.Command {
-	c.Command.CommandInterface.Run = func(ctx aurora.Context) {
+	c.CommandInterface.Run = func(ctx aurora.Context) {
 		// check for command arguments
 		if len(ctx.Args) > 0 {
 			var (
@@ -94,7 +94,7 @@ func (c Crowns) Register() *aurora.Command {
 
 	}
 
-	return c.Command.CommandInterface
+	return c.CommandInterface
 }
 
 // displayCrowns displays all crowns for users logged in with lastfm.

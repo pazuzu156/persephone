@@ -27,7 +27,7 @@ func InitPing() Ping {
 
 // Register registers and runs the ping command.
 func (c Ping) Register() *aurora.Command {
-	c.Command.CommandInterface.Run = func(ctx aurora.Context) {
+	c.CommandInterface.Run = func(ctx aurora.Context) {
 		if len(ctx.Args) > 0 {
 			fmt.Println(ctx.Message.Content)
 			ctx.Message.Reply(ctx.Aurora, ctx.Message.Content)
@@ -36,5 +36,5 @@ func (c Ping) Register() *aurora.Command {
 		}
 	}
 
-	return c.Command.CommandInterface
+	return c.CommandInterface
 }

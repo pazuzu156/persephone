@@ -43,13 +43,13 @@ func InitYoutube() Youtube {
 
 // Register registers and runs the youtube command.
 func (c Youtube) Register() *aurora.Command {
-	c.Command.CommandInterface.Run = func(ctx aurora.Context) {
+	c.CommandInterface.Run = func(ctx aurora.Context) {
 		ss := map[string]string{"key": c.APIKey, "part": "snippet", "type": "video"}
 
 		if len(ctx.Args) > 0 {
 			ss["q"] = utils.JoinString(ctx.Args, " ")
 		} else {
-			track, err := utils.GetNowPlayingTrack(ctx.Message.Author, c.Command.Lastfm)
+			track, err := utils.GetNowPlayingTrack(ctx.Message.Author, c.Lastfm)
 
 			if err != nil {
 				ctx.Message.Reply(ctx.Aurora, err.Error())
@@ -63,7 +63,7 @@ func (c Youtube) Register() *aurora.Command {
 		c.displayResults(ctx, ss)
 	}
 
-	return c.Command.CommandInterface
+	return c.CommandInterface
 }
 
 // displayResults displays the results of a youtube search.

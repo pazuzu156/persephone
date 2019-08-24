@@ -30,7 +30,7 @@ func InitHelp() Help {
 
 // Register registers and runs the help command.
 func (c Help) Register() *aurora.Command {
-	c.Command.CommandInterface.Run = func(ctx aurora.Context) {
+	c.CommandInterface.Run = func(ctx aurora.Context) {
 		if len(ctx.Args) > 0 {
 			argcmd := ctx.Args[0]
 
@@ -77,7 +77,7 @@ func (c Help) Register() *aurora.Command {
 		}
 	}
 
-	return c.Command.CommandInterface
+	return c.CommandInterface
 }
 
 // processHelp processes help info defined in each command for command specific help pages

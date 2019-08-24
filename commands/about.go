@@ -31,7 +31,7 @@ func InitAbout() About {
 
 // Register registers and runs the about command.
 func (c About) Register() *aurora.Command {
-	c.Command.CommandInterface.Run = func(ctx aurora.Context) {
+	c.CommandInterface.Run = func(ctx aurora.Context) {
 		id, _ := strconv.Atoi(config.BotID)
 		bot, _ := ctx.Aurora.GetMember(ctx.Message.GuildID, disgord.NewSnowflake(uint64(id)))
 
@@ -71,5 +71,5 @@ func (c About) Register() *aurora.Command {
 		})
 	}
 
-	return c.Command.CommandInterface
+	return c.CommandInterface
 }

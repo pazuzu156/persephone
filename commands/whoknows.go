@@ -36,12 +36,12 @@ func InitWhoknows() Whoknows {
 
 // Register registers and runs the whoknows command.
 func (c Whoknows) Register() *aurora.Command {
-	c.Command.CommandInterface.Run = func(ctx aurora.Context) {
+	c.CommandInterface.Run = func(ctx aurora.Context) {
 		// if args > 0, an artist is likely provided
 		// so .wk <artist> runs the command on a requested artist
 		if len(ctx.Args) > 0 {
 			artist := strings.TrimRight(strings.Join(ctx.Args, " "), " ")
-			a, err := c.Command.Lastfm.Artist.GetInfo(lastfm.P{"artist": artist})
+			a, err := c.Lastfm.Artist.GetInfo(lastfm.P{"artist": artist})
 
 			if err != nil {
 				ctx.Message.Reply(ctx.Aurora, "Artist could not be found on Last.fm")
@@ -53,7 +53,7 @@ func (c Whoknows) Register() *aurora.Command {
 		} else {
 			// get the user from the sender
 			if user := database.GetUser(ctx.Message.Author); user.Username != "" {
-				np, err := c.Command.Lastfm.User.GetRecentTracks(lastfm.P{"user": user.Lastfm, "limit": "2"})
+				np, err := c.Lastfm.User.GetRecentTracks(lastfm.P{"user": user.Lastfm, "limit": "2"})
 
 				if err != nil {
 					ctx.Message.Reply(ctx.Aurora, "Artist could not be found on Last.fm")
@@ -64,7 +64,7 @@ func (c Whoknows) Register() *aurora.Command {
 				// Loop through their recent tracks
 				for _, track := range np.Tracks {
 					if track.NowPlaying == "true" {
-						npa, _ := c.Command.Lastfm.Artist.GetInfo(lastfm.P{"artist": track.Artist.Name})
+						npa, _ := c.Lastfm.Artist.GetInfo(lastfm.P{"artist": track.Artist.Name})
 						go c.displayWhoKnows(ctx, npa) // runs the whoknows logic and displays the embed
 						break
 					}
@@ -75,7 +75,7 @@ func (c Whoknows) Register() *aurora.Command {
 		}
 	}
 
-	return c.Command.CommandInterface
+	return c.CommandInterface
 }
 
 // displayWhoKnows displays an embed with a list of top users who have scrobbled a given artist.
@@ -92,7 +92,7 @@ func (c Whoknows) displayWhoKnows(ctx aurora.Context, artist lastfm.ArtistGetInf
 	// Gets all logged in users
 	var wk = []U{}
 	for _, user := range users {
-		a, _ := c.Command.Lastfm.Artist.GetInfo(lastfm.P{"username": user.Lastfm, "artist": artist.Name})
+		a, _ := c.Lastfm.Artist.GetInfo(lastfm.P{"username": user.Lastfm, "artist": artist.Name})
 		plays, _ := strconv.Atoi(a.Stats.UserPlays)
 
 		// add all users who have scrobbled the artist to the slice
