@@ -44,6 +44,7 @@ func init() {
 	aurora.Use(commands.InitLogin().Register())
 	aurora.Use(commands.InitLogout().Register())
 	aurora.Use(commands.InitNowPlaying().Register())
+	aurora.Use(commands.InitRecent().Register())
 	aurora.Use(commands.InitPing().Register())
 	aurora.Use(commands.InitPlays().Register())
 	aurora.Use(commands.InitWhoknows().Register())
