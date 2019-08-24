@@ -40,7 +40,7 @@ func OpenImage(filename string) image.Image {
 
 // BrandImage tags an image with a discord link and bot's name
 func BrandImage(dc *gg.Context) {
-	dc.LoadFontFace("static/fonts/NotoSans-Regular.ttf", 14)
+	dc.LoadFontFace(LocGet("static/fonts/NotoSans-Regular.ttf"), 14)
 	dc.SetRGB(0.9, 0.9, 0.9)
 	dc.DrawStringAnchored(
 		"Persephone: discord.gg/BtqjBDu",
