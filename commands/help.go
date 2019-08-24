@@ -3,6 +3,7 @@ package commands
 import (
 	"fmt"
 	"persephone/utils"
+	"strings"
 
 	"github.com/andersfylling/disgord"
 	"github.com/pazuzu156/aurora"
@@ -56,7 +57,8 @@ func (c Help) Register() *aurora.Command {
 			var cmdstrslc []string
 
 			for _, command := range commands {
-				cmdstrslc = append(cmdstrslc, fmt.Sprintf("`%s%s` - %s", config.Prefix, command.Name, command.Description))
+				descslc := strings.Split(command.Description, "\n") // don't want all lines of a command description, just the first
+				cmdstrslc = append(cmdstrslc, fmt.Sprintf("`%s%s` - %s", config.Prefix, command.Name, descslc[0]))
 			}
 
 			ctx.Aurora.CreateMessage(ctx.Message.ChannelID, &disgord.CreateMessageParams{
