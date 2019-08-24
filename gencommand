@@ -31,11 +31,11 @@ func Init${COMMAND_NAME^}() ${COMMAND_NAME^} {
 
 // Register registers and runs the ${COMMAND_NAME,,} command.
 func (c ${COMMAND_NAME^}) Register() *aurora.Command {
-    c.Command.CommandInterface.Run = func(ctx aurora.Context) {
+    c.CommandInterface.Run = func(ctx aurora.Context) {
         ctx.Message.Reply(ctx.Aurora, "Hello, ${COMMAND_NAME^}!")
     }
 
-    return c.Command.CommandInterface
+    return c.CommandInterface
 }
 EOC
 
