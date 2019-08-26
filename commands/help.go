@@ -2,7 +2,7 @@ package commands
 
 import (
 	"fmt"
-	"persephone/utils"
+	"persephone/lib"
 	"strings"
 
 	"github.com/andersfylling/disgord"
@@ -61,6 +61,7 @@ func (c Help) Register() *aurora.Command {
 				cmdstrslc = append(cmdstrslc, fmt.Sprintf("`%s%s` - %s", config.Prefix, command.Name, descslc[0]))
 			}
 
+			f, t := c.embedFooter(ctx)
 			ctx.Aurora.CreateMessage(ctx.Message.ChannelID, &disgord.CreateMessageParams{
 				Embed: &disgord.Embed{
 					Fields: []*disgord.EmbedField{
@@ -70,10 +71,11 @@ func (c Help) Register() *aurora.Command {
 						},
 						{
 							Name:  "Commands",
-							Value: utils.JoinString(cmdstrslc, "\n"),
+							Value: lib.JoinString(cmdstrslc, "\n"),
 						},
 					},
-					Color: 0x007FFF,
+					Color:  0x007FFF,
+					Footer: f, Timestamp: t,
 				},
 			})
 		}
@@ -86,7 +88,7 @@ func (c Help) Register() *aurora.Command {
 func (c Help) processHelp(ctx aurora.Context, command CommandItem) {
 	embedFields := []*disgord.EmbedField{
 		{
-			Name:  fmt.Sprintf("%s Help", utils.Ucwords(command.Name)),
+			Name:  fmt.Sprintf("%s Help", lib.Ucwords(command.Name)),
 			Value: fmt.Sprintf("`%s%s`: %s", config.Prefix, command.Name, command.Description),
 		},
 	}
@@ -129,7 +131,7 @@ func (c Help) processHelp(ctx aurora.Context, command CommandItem) {
 
 		embedFields = append(embedFields, &disgord.EmbedField{
 			Name:  "Parameters",
-			Value: utils.JoinString(params, "\n"),
+			Value: lib.JoinString(params, "\n"),
 		})
 	}
 
@@ -143,14 +145,16 @@ func (c Help) processHelp(ctx aurora.Context, command CommandItem) {
 
 		embedFields = append(embedFields, &disgord.EmbedField{
 			Name:  "Aliases",
-			Value: utils.JoinString(aliases, ", "),
+			Value: lib.JoinString(aliases, ", "),
 		})
 	}
 
+	f, t := c.embedFooter(ctx)
 	ctx.Aurora.CreateMessage(ctx.Message.ChannelID, &disgord.CreateMessageParams{
 		Embed: &disgord.Embed{
 			Fields: embedFields,
 			Color:  0x007FFF,
+			Footer: f, Timestamp: t,
 		},
 	})
 }

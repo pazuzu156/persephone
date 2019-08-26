@@ -7,8 +7,8 @@ import (
 	"net/url"
 	"os"
 	"persephone/database"
+	"persephone/fm"
 	"persephone/lib"
-	"persephone/utils"
 	"strconv"
 	"strings"
 
@@ -25,19 +25,19 @@ import (
 
 // album and track positions for grids
 var (
-	albumPositions = []lib.AlbumPosition{
+	albumPositions = []fm.AlbumPosition{
 		{
 			X: 355,
 			Y: 170,
-			Shadow: lib.Shadow{
+			Shadow: fm.Shadow{
 				X: 350,
 				Y: 165,
 				R: 10,
 			},
-			Info: lib.InfoText{
+			Info: fm.InfoText{
 				X: 350,
 				Y: 340,
-				Plays: lib.PlaysText{
+				Plays: fm.PlaysText{
 					X: 350,
 					Y: 360,
 				},
@@ -46,15 +46,15 @@ var (
 		{
 			X: 555,
 			Y: 170,
-			Shadow: lib.Shadow{
+			Shadow: fm.Shadow{
 				X: 550,
 				Y: 165,
 				R: 10,
 			},
-			Info: lib.InfoText{
+			Info: fm.InfoText{
 				X: 550,
 				Y: 340,
-				Plays: lib.PlaysText{
+				Plays: fm.PlaysText{
 					X: 550,
 					Y: 360,
 				},
@@ -63,15 +63,15 @@ var (
 		{
 			X: 355,
 			Y: 390,
-			Shadow: lib.Shadow{
+			Shadow: fm.Shadow{
 				X: 350,
 				Y: 385,
 				R: 10,
 			},
-			Info: lib.InfoText{
+			Info: fm.InfoText{
 				X: 350,
 				Y: 560,
-				Plays: lib.PlaysText{
+				Plays: fm.PlaysText{
 					X: 350,
 					Y: 580,
 				},
@@ -80,26 +80,26 @@ var (
 		{
 			X: 555,
 			Y: 390,
-			Shadow: lib.Shadow{
+			Shadow: fm.Shadow{
 				X: 550,
 				Y: 385,
 				R: 10,
 			},
-			Info: lib.InfoText{
+			Info: fm.InfoText{
 				X: 550,
 				Y: 560,
-				Plays: lib.PlaysText{
+				Plays: fm.PlaysText{
 					X: 550,
 					Y: 580,
 				},
 			},
 		},
 	}
-	trackPositions = []lib.TrackPosition{
+	trackPositions = []fm.TrackPosition{
 		{
 			X: 720,
 			Y: 180,
-			Plays: lib.PlaysText{
+			Plays: fm.PlaysText{
 				X: 870,
 				Y: 180,
 			},
@@ -107,7 +107,7 @@ var (
 		{
 			X: 720,
 			Y: 210,
-			Plays: lib.PlaysText{
+			Plays: fm.PlaysText{
 				X: 870,
 				Y: 210,
 			},
@@ -115,7 +115,7 @@ var (
 		{
 			X: 720,
 			Y: 240,
-			Plays: lib.PlaysText{
+			Plays: fm.PlaysText{
 				X: 870,
 				Y: 240,
 			},
@@ -123,7 +123,7 @@ var (
 		{
 			X: 720,
 			Y: 270,
-			Plays: lib.PlaysText{
+			Plays: fm.PlaysText{
 				X: 870,
 				Y: 270,
 			},
@@ -173,7 +173,7 @@ func (c Band) Register() *aurora.Command {
 			c.displayArtistInfo(ctx, artist) // display info with requested artist
 		} else {
 			// current track should have the artist info we need to do a new artist query
-			track, err := utils.GetNowPlayingTrack(ctx.Message.Author, c.Lastfm)
+			track, err := fm.GetNowPlayingTrack(ctx.Message.Author, c.Lastfm)
 
 			if err != nil {
 				ctx.Message.Reply(ctx.Aurora, err.Error())
@@ -207,7 +207,7 @@ func (c Band) displayArtistInfo(ctx aurora.Context, artist lastfm.ArtistGetInfo)
 	lfmuser, _ := database.GetLastfmUserInfo(ctx.Message.Author, c.Lastfm)
 
 	aimg := c.getArtistImage(artist) // artist image is scraped from metal-archives
-	avres, _ := grab.Get(lib.LocGet("temp/"), utils.GenAvatarURL(ctx.Message.Author))
+	avres, _ := grab.Get(lib.LocGet("temp/"), lib.GenAvatarURL(ctx.Message.Author))
 	bg := lib.OpenImage(lib.LocGet("static/images/background.png"))
 	av := lib.OpenImage(avres.Filename)
 	os.Remove(avres.Filename)
@@ -249,7 +249,7 @@ func (c Band) displayArtistInfo(ctx aurora.Context, artist lastfm.ArtistGetInfo)
 	}
 
 	// tags
-	dc.DrawStringWrapped(utils.JoinString(tags, ", "), 50, 380, 0, 0, 235, 1.5, gg.AlignCenter)
+	dc.DrawStringWrapped(lib.JoinString(tags, ", "), 50, 380, 0, 0, 235, 1.5, gg.AlignCenter)
 
 	// user avatar/info
 	dc.DrawImage(avr, 315, 50)
@@ -285,7 +285,7 @@ func (c Band) displayArtistInfo(ctx aurora.Context, artist lastfm.ArtistGetInfo)
 			// album name/play count
 			dc.SetRGBA(1, 1, 1, 0.9)
 			dc.LoadFontFace(FontRegular, 20)
-			dc.DrawString(utils.ShortStr(album.Name, 15), pos.Info.X, pos.Info.Y)
+			dc.DrawString(lib.ShortStr(album.Name, 15), pos.Info.X, pos.Info.Y)
 			dc.LoadFontFace(FontRegular, 16)
 			dc.DrawString(fmt.Sprintf("%s plays", album.PlayCount), pos.Info.Plays.X, pos.Info.Plays.Y)
 		}
@@ -300,7 +300,7 @@ func (c Band) displayArtistInfo(ctx aurora.Context, artist lastfm.ArtistGetInfo)
 			pos := trackPositions[i]
 			dc.SetRGB(0.9, 0.9, 0.9)
 			dc.LoadFontFace(FontRegular, 16)
-			dc.DrawString(utils.ShortStr(track.Name, 15), pos.X, pos.Y)
+			dc.DrawString(lib.ShortStr(track.Name, 15), pos.X, pos.Y)
 			dc.LoadFontFace(FontBold, 16)
 			dc.DrawString(fmt.Sprintf("%s plays", track.PlayCount), pos.Plays.X, pos.Plays.Y)
 		}
@@ -339,7 +339,7 @@ func (c Band) getArtistImage(artist lastfm.ArtistGetInfo) image.Image {
 		imgsrc = e.ChildAttr("img", "src")
 	})
 
-	maartist := lib.GetMaArtist(artist.Name) // look up a band from artists.json
+	maartist := fm.GetMaArtist(artist.Name) // look up a band from artists.json
 
 	if maartist.ID != 0 {
 		col.Visit(fmt.Sprintf("https://metal-archives.com/bands/%s/%d", url.QueryEscape(maartist.Name), maartist.ID))
@@ -364,11 +364,11 @@ func (c Band) getArtistImage(artist lastfm.ArtistGetInfo) image.Image {
 }
 
 // getAlbumsList gets albums for a user for a given artist.
-func (c Band) getAlbumsList(ctx aurora.Context, artist lastfm.ArtistGetInfo) []lib.TopAlbum {
+func (c Band) getAlbumsList(ctx aurora.Context, artist lastfm.ArtistGetInfo) []fm.TopAlbum {
 	user := database.GetUser(ctx.Message.Author)
 	// kinda gotta get as many albums as possible. we'll use totalPages to make more queries if need be
 	alist, _ := c.Lastfm.User.GetTopAlbums(lastfm.P{"user": user.Lastfm, "limit": "1000"}) // limit max = 1000
-	var albums = []lib.TopAlbum{}
+	var albums = []fm.TopAlbum{}
 
 	// add first batch of albums for artist into slice
 	for _, album := range alist.Albums {
@@ -393,11 +393,11 @@ func (c Band) getAlbumsList(ctx aurora.Context, artist lastfm.ArtistGetInfo) []l
 }
 
 // getTracksList gets the users top tracks for a given artist.
-func (c Band) getTracksList(ctx aurora.Context, artist lastfm.ArtistGetInfo) ([]lib.TopTrack, error) {
+func (c Band) getTracksList(ctx aurora.Context, artist lastfm.ArtistGetInfo) ([]fm.TopTrack, error) {
 	// this method works like getAlbumsList, won't comment
 	user := database.GetUser(ctx.Message.Author)
 	tlist, _ := c.Lastfm.User.GetTopTracks(lastfm.P{"user": user.Lastfm, "limit": "1000"})
-	var tracks = []lib.TopTrack{}
+	var tracks = []fm.TopTrack{}
 
 	for _, track := range tlist.Tracks {
 		if track.Artist.Name == artist.Name {

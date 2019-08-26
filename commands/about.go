@@ -2,7 +2,7 @@ package commands
 
 import (
 	"fmt"
-	"persephone/utils"
+	"persephone/lib"
 	"strconv"
 
 	"github.com/andersfylling/disgord"
@@ -48,6 +48,7 @@ func (c About) Register() *aurora.Command {
 			}
 		}
 
+		f, t := c.embedFooter(ctx)
 		ctx.Aurora.CreateMessage(ctx.Message.ChannelID, &disgord.CreateMessageParams{
 			Embed: &disgord.Embed{
 				Title:       "About Persephone",
@@ -64,9 +65,10 @@ func (c About) Register() *aurora.Command {
 					},
 					{
 						Name:  "Roles",
-						Value: utils.JoinString(roles, ", "),
+						Value: lib.JoinString(roles, ", "),
 					},
 				},
+				Footer: f, Timestamp: t,
 			},
 		})
 	}

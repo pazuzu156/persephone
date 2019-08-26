@@ -3,7 +3,8 @@ package commands
 import (
 	"fmt"
 	"persephone/database"
-	"persephone/utils"
+	"persephone/fm"
+	"persephone/lib"
 	"strconv"
 	"strings"
 
@@ -43,13 +44,13 @@ Passing no value to a parameter will get the plays for said parameter using the 
 // Register registers and runs the plays command.
 func (c Plays) Register() *aurora.Command {
 	c.CommandInterface.Run = func(ctx aurora.Context) {
-		np, _ := utils.GetNowPlayingTrack(ctx.Message.Author, c.Lastfm)
+		np, _ := fm.GetNowPlayingTrack(ctx.Message.Author, c.Lastfm)
 		leave := false
 
 		if len(ctx.Args) > 0 {
 			for _, arg := range ctx.Args {
 				if strings.Contains(arg, ":") {
-					arg = utils.JoinString(ctx.Args, " ")
+					arg = lib.JoinString(ctx.Args, " ")
 					as := strings.Split(arg, ":")
 
 					switch strings.ToLower(as[0]) {

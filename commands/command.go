@@ -1,8 +1,12 @@
 package commands
 
 import (
+	"fmt"
 	"persephone/lib"
+	"strconv"
+	"time"
 
+	"github.com/andersfylling/disgord"
 	"github.com/pazuzu156/aurora"
 	"github.com/pazuzu156/lastfm-go"
 )
@@ -54,4 +58,32 @@ func Init(t *CommandItem) Command {
 	lfm := lastfm.New(config.Lastfm.APIKey, config.Lastfm.Secret)
 
 	return Command{cmd, lfm}
+}
+
+// embedFooter returns a footer and timestamp for disgord embeds
+func (c Command) embedFooter(ctx aurora.Context) (f *disgord.EmbedFooter, t disgord.Time) {
+	f = &disgord.EmbedFooter{
+		IconURL: lib.GenAvatarURL(c.getBotUser(ctx)),
+		Text:    fmt.Sprintf("Command invoked by: %s#%s", ctx.Message.Author.Username, ctx.Message.Author.Discriminator),
+	}
+
+	t = disgord.Time{
+		Time: time.Now(),
+	}
+
+	return
+}
+
+// getBot returns the bot object.
+func (c Command) getBot(ctx aurora.Context) *disgord.Member {
+	config := lib.Config()
+	id, _ := strconv.Atoi(config.BotID)
+	bot, _ := ctx.Aurora.GetMember(ctx.Message.GuildID, disgord.NewSnowflake(uint64(id)))
+
+	return bot
+}
+
+// getBotUser returns the bot User object.
+func (c Command) getBotUser(ctx aurora.Context) *disgord.User {
+	return c.getBot(ctx).User
 }

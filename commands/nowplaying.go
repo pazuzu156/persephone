@@ -4,8 +4,8 @@ import (
 	"fmt"
 	"os"
 	"persephone/database"
+	"persephone/fm"
 	"persephone/lib"
-	"persephone/utils"
 	"strconv"
 
 	"github.com/andersfylling/disgord"
@@ -32,7 +32,7 @@ func InitNowPlaying() Nowplaying {
 // Register registers and runs the nowplaying command.
 func (c Nowplaying) Register() *aurora.Command {
 	c.CommandInterface.Run = func(ctx aurora.Context) {
-		track, err := utils.GetNowPlayingTrack(ctx.Message.Author, c.Lastfm)
+		track, err := fm.GetNowPlayingTrack(ctx.Message.Author, c.Lastfm)
 		lfmuser, _ := database.GetLastfmUserInfo(ctx.Message.Author, c.Lastfm)
 
 		if err == nil {
@@ -93,7 +93,7 @@ func (c Nowplaying) Register() *aurora.Command {
 			// images + text for each
 			// tracks are layered in reverse order 3 -> 2 -> 1 displayed
 			// in ascending order
-			tracks, _ := utils.GetRecentTracks(ctx.Message.Author, c.Lastfm, "3")
+			tracks, _ := fm.GetRecentTracks(ctx.Message.Author, c.Lastfm, "3")
 			if len(tracks) > 3 {
 				t1 := tracks[1] // most recent track
 				t2 := tracks[2] // second most recent track
@@ -183,7 +183,7 @@ func (c Nowplaying) Register() *aurora.Command {
 				Embed: &disgord.Embed{
 					Title: fmt.Sprintf("View %s's Profile on Last.fm", ctx.Message.Author.Username),
 					URL:   fmt.Sprintf("https://last.fm/user/%s", lfmuser.Name),
-					Color: utils.RandomColor(),
+					Color: lib.RandomColor(),
 				},
 			})
 
