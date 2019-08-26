@@ -117,7 +117,6 @@ func (c Whoknows) displayWhoKnows(ctx aurora.Context, artist lastfm.ArtistGetInf
 					db, _ := database.OpenDB()
 					defer db.Close()
 					crowns := database.GetCrownsList()
-					fmt.Println(user)
 
 					updated := false
 					for _, crown := range crowns {

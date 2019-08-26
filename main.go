@@ -25,6 +25,13 @@ func main() {
 			DisgordOptions: &disgord.Config{
 				BotToken: config.Token,
 				Logger:   disgord.DefaultLogger(false),
+				Presence: &disgord.UpdateStatusCommand{
+					Game: &disgord.Activity{
+						Name: "Metal",
+						Type: 2,
+					},
+					Status: disgord.StatusOnline,
+				},
 			},
 			OwnerID: config.BotOwner,
 		})
