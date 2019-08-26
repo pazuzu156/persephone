@@ -63,7 +63,7 @@ func Init(t *CommandItem) Command {
 // embedFooter returns a footer and timestamp for disgord embeds
 func (c Command) embedFooter(ctx aurora.Context) (f *disgord.EmbedFooter, t disgord.Time) {
 	f = &disgord.EmbedFooter{
-		IconURL: lib.GenAvatarURL(c.getBotUser(ctx)),
+		IconURL: lib.GenAvatarURL(ctx.Message.Author),
 		Text:    fmt.Sprintf("Command invoked by: %s#%s", ctx.Message.Author.Username, ctx.Message.Author.Discriminator),
 	}
 

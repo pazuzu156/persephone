@@ -1,6 +1,9 @@
 package commands
 
-import "github.com/pazuzu156/aurora"
+import (
+	"github.com/andersfylling/disgord"
+	"github.com/pazuzu156/aurora"
+)
 
 // Bandinfo command.
 type Bandinfo struct{ Command }
@@ -19,7 +22,8 @@ func InitBandinfo() Bandinfo {
 // Register registers and runs the bandinfo command.
 func (c Bandinfo) Register() *aurora.Command {
 	c.CommandInterface.Run = func(ctx aurora.Context) {
-		ctx.Message.Reply(ctx.Aurora, "Hello, Bandinfo!")
+		// ctx.Message.Reply(ctx.Aurora, "Hello, Bandinfo!")
+		ctx.Aurora.CreateMessage(ctx.Message.ChannelID, &disgord.CreateMessageParams{})
 	}
 
 	return c.CommandInterface
