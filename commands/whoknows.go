@@ -3,11 +3,10 @@ package commands
 import (
 	"fmt"
 	"persephone/database"
-	"persephone/utils"
+	"persephone/lib"
 	"sort"
 	"strconv"
 	"strings"
-	"time"
 
 	"github.com/andersfylling/disgord"
 	"github.com/pazuzu156/aurora"
@@ -148,19 +147,14 @@ func (c Whoknows) displayWhoKnows(ctx aurora.Context, artist lastfm.ArtistGetInf
 			}
 		}
 
+		f, t := c.embedFooter(ctx)
 		ctx.Aurora.CreateMessage(ctx.Message.ChannelID, &disgord.CreateMessageParams{
 			Embed: &disgord.Embed{
 				Title:       fmt.Sprintf("Who knows %s?", artist.Name),
 				URL:         fmt.Sprintf("https://last.fm/music/%s", strings.Replace(artist.Name, " ", "+", len(artist.Name))),
 				Description: desc,
-				Color:       utils.RandomColor(),
-				Footer: &disgord.EmbedFooter{
-					IconURL: utils.GenAvatarURL(utils.GetBotUser(ctx)),
-					Text:    fmt.Sprintf("Command invoked by: %s#%s", ctx.Message.Author.Username, ctx.Message.Author.Discriminator),
-				},
-				Timestamp: disgord.Time{
-					Time: time.Now(),
-				},
+				Color:       lib.RandomColor(),
+				Footer:      f, Timestamp: t,
 			},
 		})
 	} else {

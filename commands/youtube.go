@@ -6,8 +6,8 @@ import (
 	"io/ioutil"
 	"net/http"
 	"net/url"
+	"persephone/fm"
 	"persephone/lib"
-	"persephone/utils"
 
 	"github.com/pazuzu156/aurora"
 )
@@ -47,9 +47,9 @@ func (c Youtube) Register() *aurora.Command {
 		ss := map[string]string{"key": c.APIKey, "part": "snippet", "type": "video"}
 
 		if len(ctx.Args) > 0 {
-			ss["q"] = utils.JoinString(ctx.Args, " ")
+			ss["q"] = lib.JoinString(ctx.Args, " ")
 		} else {
-			track, err := utils.GetNowPlayingTrack(ctx.Message.Author, c.Lastfm)
+			track, err := fm.GetNowPlayingTrack(ctx.Message.Author, c.Lastfm)
 
 			if err != nil {
 				ctx.Message.Reply(ctx.Aurora, err.Error())
@@ -81,7 +81,7 @@ func (c Youtube) displayResults(ctx aurora.Context, ss map[string]string) {
 	defer resp.Body.Close()
 
 	buf, _ := ioutil.ReadAll(resp.Body)
-	var body lib.YouTubeResponse
+	var body fm.YouTubeResponse
 	json.Unmarshal(buf, &body)
 
 	if len(body.Items) > 0 {
@@ -104,7 +104,7 @@ func (c Youtube) stringify(ss map[string]string) (enc string) {
 		}
 	}
 
-	enc = fmt.Sprintf("?%s", utils.JoinString(urlss, "&"))
+	enc = fmt.Sprintf("?%s", lib.JoinString(urlss, "&"))
 
 	return
 }

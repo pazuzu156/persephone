@@ -2,8 +2,8 @@ package commands
 
 import (
 	"fmt"
-	"persephone/utils"
-	"time"
+	"persephone/fm"
+	"persephone/lib"
 
 	"github.com/andersfylling/disgord"
 	"github.com/pazuzu156/aurora"
@@ -23,7 +23,7 @@ func InitRecent() Recent {
 // Register registers and runs the recent command.
 func (c Recent) Register() *aurora.Command {
 	c.CommandInterface.Run = func(ctx aurora.Context) {
-		recent, _ := utils.GetRecentTracks(ctx.Message.Author, c.Lastfm, "4")
+		recent, _ := fm.GetRecentTracks(ctx.Message.Author, c.Lastfm, "4")
 		var tracks []*disgord.EmbedField
 
 		if len(recent) > 0 {
@@ -41,24 +41,19 @@ func (c Recent) Register() *aurora.Command {
 
 			tracks = append(tracks, &disgord.EmbedField{
 				Name:  "Previous Tracks",
-				Value: utils.JoinString(tracksslc, "\n"),
+				Value: lib.JoinString(tracksslc, "\n"),
 			})
 
+			footer, time := c.embedFooter(ctx)
 			ctx.Aurora.CreateMessage(ctx.Message.ChannelID, &disgord.CreateMessageParams{
 				Embed: &disgord.Embed{
 					Title: "Recent Tracks",
 					Thumbnail: &disgord.EmbedThumbnail{
-						URL: utils.GenAvatarURL(ctx.Message.Author),
+						URL: lib.GenAvatarURL(ctx.Message.Author),
 					},
 					Fields: tracks,
-					Color:  utils.RandomColor(),
-					Footer: &disgord.EmbedFooter{
-						IconURL: utils.GenAvatarURL(utils.GetBotUser(ctx)),
-						Text:    fmt.Sprintf("Command invoked by: %s#%s", ctx.Message.Author.Username, ctx.Message.Author.Discriminator),
-					},
-					Timestamp: disgord.Time{
-						Time: time.Now(),
-					},
+					Color:  lib.RandomColor(),
+					Footer: footer, Timestamp: time,
 				},
 			})
 		}

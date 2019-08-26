@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"math"
 	"persephone/database"
-	"persephone/utils"
+	"persephone/lib"
 	"sort"
 	"strconv"
 	"strings"
@@ -77,8 +77,6 @@ func (c Crowns) Register() *aurora.Command {
 							return
 						}
 					}
-
-					fmt.Println(page)
 				}
 
 				if user == nil {
@@ -136,10 +134,10 @@ func (c Crowns) displayCrowns(ctx aurora.Context, user *disgord.User, page int) 
 			ctx.Aurora.CreateMessage(ctx.Message.ChannelID, &disgord.CreateMessageParams{
 				Embed: &disgord.Embed{
 					Title:       fmt.Sprintf("%d crowns for %s", count, user.Username),
-					Description: utils.JoinString(descar, "\n"),
-					Color:       utils.RandomColor(),
+					Description: lib.JoinString(descar, "\n"),
+					Color:       lib.RandomColor(),
 					Footer: &disgord.EmbedFooter{
-						IconURL: utils.GenAvatarURL(utils.GetBotUser(ctx)),
+						IconURL: lib.GenAvatarURL(c.getBotUser(ctx)),
 						Text: fmt.Sprintf("Command invoked by: %s#%s | Page %d/%d",
 							ctx.Message.Author.Username,
 							ctx.Message.Author.Discriminator,

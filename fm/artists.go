@@ -1,9 +1,10 @@
-package lib
+package fm
 
 import (
 	"encoding/json"
 	"io/ioutil"
 	"os"
+	"persephone/lib"
 )
 
 // MaArtist is an artist struct for metal-archives artist
@@ -16,15 +17,15 @@ type MaArtist struct {
 // artists.json for metal-archives
 func GetMaArtistList() []MaArtist {
 	file, err := os.Open("artists.json")
-	Check(err)
+	lib.Check(err)
 	defer file.Close()
 
 	contents, err := ioutil.ReadAll(file)
-	Check(err)
+	lib.Check(err)
 
 	var artists []MaArtist
 	err = json.Unmarshal(contents, &artists)
-	Check(err)
+	lib.Check(err)
 
 	return artists
 }

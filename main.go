@@ -9,15 +9,18 @@ import (
 	"github.com/pazuzu156/aurora"
 )
 
-var migrate = false
+// var migrate = false
+
+var (
+	migrate = false
+	config  = lib.Config()
+)
 
 // main entry point
 func main() {
 	if migrate {
 		database.Migrate()
 	} else {
-		config := lib.Config()
-
 		client := aurora.New(&aurora.Options{
 			DisgordOptions: &disgord.Config{
 				BotToken: config.Token,
@@ -38,6 +41,7 @@ func main() {
 // Initializes all commands (register them here)
 func init() {
 	aurora.Use(commands.InitAbout().Register())
+	aurora.Use(commands.InitBandinfo().Register())
 	// aurora.Use(commands.InitBand().Register())
 	aurora.Use(commands.InitCrowns().Register())
 	aurora.Use(commands.InitHelp().Register())

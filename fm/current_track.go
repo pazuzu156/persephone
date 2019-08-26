@@ -1,16 +1,15 @@
-package utils
+package fm
 
 import (
 	"errors"
 	"persephone/database"
-	"persephone/lib"
 
 	"github.com/andersfylling/disgord"
 	"github.com/pazuzu156/lastfm-go"
 )
 
 // GetNowPlayingTrack returns the currently playing track
-func GetNowPlayingTrack(author *disgord.User, lfm *lastfm.API) (lib.Track, error) {
+func GetNowPlayingTrack(author *disgord.User, lfm *lastfm.API) (Track, error) {
 	tracks, err := GetRecentTracks(author, lfm, "3")
 
 	if err == nil {
@@ -21,22 +20,22 @@ func GetNowPlayingTrack(author *disgord.User, lfm *lastfm.API) (lib.Track, error
 				return track, nil
 			}
 
-			return lib.Track{}, errors.New("You're not currently listening to anything")
+			return Track{}, errors.New("You're not currently listening to anything")
 		}
 	}
 
-	return lib.Track{}, err
+	return Track{}, err
 }
 
 // GetRecentTracks retrieves a users recently scrobbled tracks.
-func GetRecentTracks(author *disgord.User, lfm *lastfm.API, limit string) ([]lib.Track, error) {
+func GetRecentTracks(author *disgord.User, lfm *lastfm.API, limit string) ([]Track, error) {
 	if user := database.GetUser(author); user.Username != "" {
 		np, _ := lfm.User.GetRecentTracks(lastfm.P{
 			"user":  user.Lastfm,
 			"limit": limit,
 		})
 
-		var tracks = []lib.Track{} // for the return
+		var tracks = []Track{} // for the return
 
 		if len(np.Tracks) > 0 {
 			for _, track := range np.Tracks {
@@ -47,5 +46,5 @@ func GetRecentTracks(author *disgord.User, lfm *lastfm.API, limit string) ([]lib
 		}
 	}
 
-	return []lib.Track{}, errors.New("You're not currently logged in with Last.fm")
+	return []Track{}, errors.New("You're not currently logged in with Last.fm")
 }
