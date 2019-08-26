@@ -9,10 +9,8 @@ import (
 	"github.com/pazuzu156/aurora"
 )
 
-// var migrate = false
-
 var (
-	migrate = false
+	migrate = false // make true to migrate databases
 	config  = lib.Config()
 )
 

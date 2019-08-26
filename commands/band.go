@@ -3,8 +3,6 @@ package commands
 import (
 	"errors"
 	"fmt"
-	"image"
-	"net/url"
 	"os"
 	"persephone/database"
 	"persephone/fm"
@@ -15,7 +13,6 @@ import (
 	"github.com/andersfylling/disgord"
 	"github.com/cavaliercoder/grab"
 	"github.com/fogleman/gg"
-	"github.com/gocolly/colly"
 	"github.com/nfnt/resize"
 	"github.com/pazuzu156/aurora"
 	"github.com/pazuzu156/lastfm-go"
@@ -206,7 +203,7 @@ func (c Band) displayArtistInfo(ctx aurora.Context, artist lastfm.ArtistGetInfo)
 
 	lfmuser, _ := database.GetLastfmUserInfo(ctx.Message.Author, c.Lastfm)
 
-	aimg := c.getArtistImage(artist) // artist image is scraped from metal-archives
+	aimg := lib.GetArtistImage(artist) // artist image is scraped from metal-archives
 	avres, _ := grab.Get(lib.LocGet("temp/"), lib.GenAvatarURL(ctx.Message.Author))
 	bg := lib.OpenImage(lib.LocGet("static/images/background.png"))
 	av := lib.OpenImage(avres.Filename)
@@ -328,39 +325,6 @@ func (c Band) displayArtistInfo(ctx aurora.Context, artist lastfm.ArtistGetInfo)
 func (c Band) getArtistInfo(artist string, user *disgord.User) (lastfm.ArtistGetInfo, error) {
 	dbu := database.GetUser(user)
 	return c.Lastfm.Artist.GetInfo(lastfm.P{"artist": artist, "username": dbu.Lastfm})
-}
-
-// getArtistImage scrapes metal-archives for an artist image.
-func (c Band) getArtistImage(artist lastfm.ArtistGetInfo) image.Image {
-	// what shall we scrape for?
-	col := colly.NewCollector()
-	var imgsrc string
-	col.OnHTML(".band_img a#photo", func(e *colly.HTMLElement) {
-		imgsrc = e.ChildAttr("img", "src")
-	})
-
-	maartist := fm.GetMaArtist(artist.Name) // look up a band from artists.json
-
-	if maartist.ID != 0 {
-		col.Visit(fmt.Sprintf("https://metal-archives.com/bands/%s/%d", url.QueryEscape(maartist.Name), maartist.ID))
-	} else {
-		col.Visit(fmt.Sprintf("https://metal-archives.com/bands/%s", url.QueryEscape(artist.Name)))
-	}
-
-	if imgsrc != "" {
-		res, _ := grab.Get(lib.LocGet("temp/"), imgsrc)
-		img := lib.OpenImage(res.Filename)
-
-		os.Remove(res.Filename)
-
-		return img
-	}
-
-	ares, _ := grab.Get(lib.LocGet("temp/"), artist.Images[3].URL)
-	aimg := lib.OpenImage(ares.Filename)
-	os.Remove(ares.Filename)
-
-	return aimg
 }
 
 // getAlbumsList gets albums for a user for a given artist.

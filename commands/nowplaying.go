@@ -6,15 +6,12 @@ import (
 	"persephone/database"
 	"persephone/fm"
 	"persephone/lib"
-	"strconv"
 
 	"github.com/andersfylling/disgord"
 	"github.com/cavaliercoder/grab"
 	"github.com/fogleman/gg"
 	"github.com/nfnt/resize"
 	"github.com/pazuzu156/aurora"
-	"golang.org/x/text/language"
-	"golang.org/x/text/message"
 )
 
 // Nowplaying command.
@@ -69,9 +66,7 @@ func (c Nowplaying) Register() *aurora.Command {
 			// scrobble count
 			dc.LoadFontFace(FontRegular, 20)
 			dc.SetRGB(0.9, 0.9, 0.9)
-			printer := message.NewPrinter(language.English)
-			pc, _ := strconv.Atoi(lfmuser.PlayCount)
-			dc.DrawString(fmt.Sprintf("%s scrobbles", printer.Sprintf("%d", pc)), 390, 160)
+			dc.DrawString(fmt.Sprintf("%s scrobbles", lib.HumanNumber(lfmuser.PlayCount)), 390, 160)
 
 			// Draw white box that goes behind album art + draw album art
 			dc.SetRGBA(1, 1, 1, 0.2)

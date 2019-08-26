@@ -19,6 +19,7 @@ func Migrate() {
 	db, _ = OpenDB()
 	db.CreateTableIfNotExists(&Crown{})
 	db.CreateTableIfNotExists(&User{})
+	db.CreateTableIfNotExists(&ArtistImage{})
 	db.Close()
 }
 
