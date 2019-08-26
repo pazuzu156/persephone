@@ -3,10 +3,17 @@ package database
 import (
 	"fmt"
 	"persephone/lib"
+	"time"
 
 	_ "github.com/go-sql-driver/mysql" // required for mysql driver
 	"github.com/naoina/genmai"
 )
+
+// Time is a timestamp struct for models.
+type Time struct {
+	CreatedAt *time.Time
+	UpdatedAt *time.Time
+}
 
 var (
 	db     *genmai.DB

@@ -5,7 +5,8 @@ import "persephone/lib"
 type ArtistImage struct {
 	ID     int64 `db:"pk"`
 	Artist string
-	MaID   int64
+	MaID   int64 `db:"unique"`
+	Time
 }
 
 func init() {

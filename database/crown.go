@@ -10,6 +10,7 @@ type Crown struct {
 	DiscordID uint64
 	Artist    string
 	PlayCount int
+	Time
 }
 
 func init() {
