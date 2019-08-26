@@ -10,10 +10,13 @@ import (
 
 // User object.
 type User struct {
-	ID        int64 `db:"pk"`
-	Username  string
-	DiscordID uint64
-	Lastfm    string
+	ID            int64 `db:"pk"`
+	Username      string
+	Email         string
+	DiscordID     uint64 `db:"unique"`
+	Lastfm        string
+	RememberToken *string
+	Time
 }
 
 func init() {
