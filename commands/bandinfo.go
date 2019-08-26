@@ -18,7 +18,7 @@ func InitBandinfo() Bandinfo {
 	return Bandinfo{Init(&CommandItem{
 		Name:        "bandinfo",
 		Description: "Gets information on the current playing band",
-		Aliases:     []string{"bi"},
+		Aliases:     []string{"bi", "artistinfo", "ai"},
 		Usage:       "bandinfo Darkthrone",
 		Parameters:  []Parameter{},
 	})}
