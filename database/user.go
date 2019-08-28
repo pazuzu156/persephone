@@ -14,7 +14,9 @@ type User struct {
 	Username      string
 	Email         string
 	DiscordID     uint64 `db:"unique"`
+	DiscordToken  string
 	Lastfm        string
+	LastfmToken   string
 	RememberToken *string
 	Time
 }

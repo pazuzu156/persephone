@@ -7,6 +7,7 @@ import (
 	"sort"
 	"strconv"
 	"strings"
+	"time"
 
 	"github.com/andersfylling/disgord"
 	"github.com/pazuzu156/aurora"
@@ -117,6 +118,7 @@ func (c Whoknows) displayWhoKnows(ctx aurora.Context, artist lastfm.ArtistGetInf
 					db, _ := database.OpenDB()
 					defer db.Close()
 					crowns := database.GetCrownsList()
+					now := time.Now()
 
 					updated := false
 					for _, crown := range crowns {
@@ -124,6 +126,7 @@ func (c Whoknows) displayWhoKnows(ctx aurora.Context, artist lastfm.ArtistGetInf
 							updated = true
 							crown.DiscordID = user.DiscordID
 							crown.PlayCount = user.Plays
+							crown.Time.UpdatedAt = &now
 							db.Update(crown)
 						}
 					}
@@ -134,6 +137,10 @@ func (c Whoknows) displayWhoKnows(ctx aurora.Context, artist lastfm.ArtistGetInf
 								DiscordID: database.GetUInt64ID(ctx.Message.Author),
 								Artist:    artist.Name,
 								PlayCount: user.Plays,
+								Time: database.Time{
+									CreatedAt: &now,
+									UpdatedAt: &now,
+								},
 							},
 						}
 						db.Insert(crown)

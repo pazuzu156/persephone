@@ -32,7 +32,7 @@ func Migrate() {
 
 // OpenDB opens a database connection
 func OpenDB() (*genmai.DB, error) {
-	db, err := genmai.New(&genmai.MySQLDialect{}, fmt.Sprintf("%s:%s@(%s:%d)/%s",
+	db, err := genmai.New(&genmai.MySQLDialect{}, fmt.Sprintf("%s:%s@(%s:%d)/%s?parseTime=true",
 		config.Database.Username,
 		config.Database.Password,
 		config.Database.Hostname,

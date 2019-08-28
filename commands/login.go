@@ -1,7 +1,10 @@
 package commands
 
 import (
-	"persephone/database"
+	"encoding/json"
+	"fmt"
+	"io/ioutil"
+	"net/http"
 
 	"github.com/pazuzu156/aurora"
 )
@@ -18,44 +21,42 @@ func InitLogin() Login {
 	})}
 }
 
+type LoginResponse struct {
+	Token         string `json:"request_token"`
+	Expires       int32  `json:"expires"`
+	ExpiresString string `json:"expires_string"`
+	Error         bool   `json:"error"`
+	ErrorMessage  string `json:"message"`
+}
+
 // Register registers and runs the login command.
 func (c Login) Register() *aurora.Command {
 	c.CommandInterface.Run = func(ctx aurora.Context) {
-		db, _ := database.OpenDB()
-		defer db.Close()
 
-		// if len(ctx.Args) > 0 {
-		// 	if user := database.GetUser(ctx.Message.Author); user.Username == "" {
-		// 		lfmun := ctx.Args[0]
-		// 		lfmuser, err := c.Lastfm.User.GetInfo(lastfm.P{"user": lfmun})
+		res, err := http.Get(fmt.Sprintf("%s/login/request_token/%s", config.Website.APIURL, ctx.Message.Author.ID.String()))
 
-		// 		if err != nil {
-		// 			ctx.Message.Reply(ctx.Aurora, "A user with that username could not be found")
+		if err != nil {
+			ctx.Message.Reply(ctx.Aurora, "An error occurred when attempting to communitate with the authentication server. Please try again later")
 
-		// 			return
-		// 		}
+			return
+		}
 
-		// 		newuser := []database.User{
-		// 			{
-		// 				Username:  ctx.Message.Author.Username,
-		// 				DiscordID: database.GetUInt64ID(ctx.Message.Author),
-		// 				Lastfm:    lfmuser.Name,
-		// 			},
-		// 		}
+		defer res.Body.Close()
 
-		// 		n, _ := db.Insert(newuser)
+		var lr LoginResponse
+		body, _ := ioutil.ReadAll(res.Body)
+		json.Unmarshal(body, &lr)
 
-		// 		if n > 0 {
-		// 			ctx.Message.Reply(ctx.Aurora, fmt.Sprintf("%s You have logged in with your Last.fm username: `%s`", ctx.Message.Author.Mention(), lfmuser.Name))
-		// 		} else {
-		// 			ctx.Message.Reply(ctx.Aurora, "There was a problem saving your information. Please try again later")
-		// 		}
-		// 	} else {
-		// 		ctx.Message.Reply(ctx.Aurora, "You are already logged in with Last.fm")
-		// 	}
-		// } else {
-		// 	ctx.Message.Reply(ctx.Aurora, "You need to provide your Last.fm username to log in")
-		// }
+		if lr.Error == true {
+			ctx.Message.Reply(ctx.Aurora, lr.ErrorMessage)
+
+			return
+		}
+
+		url := fmt.Sprintf("%s/auth/authenticate/%s/%s", config.Website.AppURL, ctx.Message.Author.ID.String(), lr.Token)
+
+		ctx.Message.Reply(ctx.Aurora, fmt.Sprintf("Your login request was received. Use this link to begin the login process: %s", url))
+		ctx.Message.Reply(ctx.Aurora, fmt.Sprintf("This link %s", lr.ExpiresString))
 	}
 
 	return c.CommandInterface
