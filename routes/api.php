@@ -19,5 +19,5 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 Route::prefix('login')->group(function ($route) {
     $route->get('/request_token/{discordId}', 'Api\Auth\LoginController@createLoginRequestToken');
-    $route->get('/authenticate/{discordId}/{token}', 'Api\Auth\LoginController@authenticateUserWithToken');
+    // $route->get('/authenticate/{discordId}/{token}', 'Api\Auth\LoginController@authenticateUserWithToken');
 });

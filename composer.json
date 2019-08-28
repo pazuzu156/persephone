@@ -12,6 +12,8 @@
         "fideloper/proxy": "^4.0",
         "laravel/framework": "5.8.*",
         "laravel/tinker": "^1.0",
+        "php-curl-class/php-curl-class": "^8.6",
+        "restcord/restcord": "^0.3.2",
         "socialiteproviders/discord": "^2.0"
     },
     "require-dev": {
