@@ -1,5 +1,11 @@
 <?php
 
+// Force HTTPS
+if (!isset($_SERVER['HTTPS']) && ($_SERVER['HTTP_HOST'] !== 'localhost')) {
+    header('Location: https://'.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI']);
+    exit;
+}
+
 /**
  * Laravel - A PHP Framework For Web Artisans
  *
