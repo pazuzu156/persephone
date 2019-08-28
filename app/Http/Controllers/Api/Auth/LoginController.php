@@ -41,7 +41,7 @@ class LoginController extends Controller
 
         if ($login->save()) {
             $response = [
-                'request_token' => $token,
+                // 'request_token' => $token,
                 'expires' => $login->expires->timestamp,
                 'expires_string' => "expires in {$login->expires->diff()->i} minutes",
                 'error' => false,
