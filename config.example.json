@@ -16,5 +16,9 @@
     },
     "youtube": {
         "apikey": ""
+    },
+    "website": {
+        "app_url": "",
+        "api_url": ""
     }
 }
