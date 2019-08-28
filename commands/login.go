@@ -1,11 +1,8 @@
 package commands
 
 import (
-	"encoding/json"
 	"fmt"
-	"io/ioutil"
 	"net/http"
-	"persephone/database"
 
 	"github.com/pazuzu156/aurora"
 )
@@ -43,22 +40,22 @@ func (c Login) Register() *aurora.Command {
 
 		defer res.Body.Close()
 
-		var lr LoginResponse
-		body, _ := ioutil.ReadAll(res.Body)
-		json.Unmarshal(body, &lr)
+		// var lr LoginResponse
+		// body, _ := ioutil.ReadAll(res.Body)
+		// json.Unmarshal(body, &lr)
 
-		if lr.Error == true {
-			ctx.Message.Reply(ctx.Aurora, lr.ErrorMessage)
+		// if lr.Error == true {
+		// 	ctx.Message.Reply(ctx.Aurora, lr.ErrorMessage)
 
-			return
-		}
+		// 	return
+		// }
 
-		login := database.GetUserLogin(ctx.Message.Author)
+		// login := database.GetUserLogin(ctx.Message.Author)
 
-		url := fmt.Sprintf("%s/auth/authenticate/%s/%s", config.Website.AppURL, ctx.Message.Author.ID.String(), login.RequestToken)
+		// url := fmt.Sprintf("%s/auth/authenticate/%s/%s", config.Website.AppURL, ctx.Message.Author.ID.String(), login.RequestToken)
 
-		ctx.Message.Reply(ctx.Aurora, fmt.Sprintf("Your login request was received. Use this link to begin the login process: %s", url))
-		ctx.Message.Reply(ctx.Aurora, fmt.Sprintf("This link %s", lr.ExpiresString))
+		// ctx.Message.Reply(ctx.Aurora, fmt.Sprintf("Your login request was received. Use this link to begin the login process: %s", url))
+		// ctx.Message.Reply(ctx.Aurora, fmt.Sprintf("This link %s", lr.ExpiresString))
 	}
 
 	return c.CommandInterface
