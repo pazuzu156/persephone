@@ -3,6 +3,7 @@ package database
 import (
 	"persephone/lib"
 	"strconv"
+	"time"
 
 	"github.com/andersfylling/disgord"
 	"github.com/pazuzu156/lastfm-go"
@@ -18,6 +19,15 @@ type User struct {
 	Lastfm        string
 	LastfmToken   string
 	RememberToken *string
+	Time
+}
+
+// Login object.
+type Login struct {
+	ID           int64  `db:"pk"`
+	DiscordID    uint64 `db:"unique"`
+	RequestToken string
+	Expires      *time.Time
 	Time
 }
 
@@ -37,6 +47,17 @@ func GetUser(user *disgord.User) User {
 	}
 
 	return User{}
+}
+
+func GetUserLogin(user *disgord.User) Login {
+	var dbl []Login
+	db.Select(&dbl, db.Where("discord_id", "=", GetUInt64ID(user)))
+
+	if len(dbl) > 0 {
+		return dbl[0]
+	}
+
+	return Login{}
 }
 
 // GetUsers returns all the users in the database.
