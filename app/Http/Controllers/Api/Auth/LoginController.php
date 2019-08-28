@@ -41,7 +41,7 @@ class LoginController extends Controller
 
         if ($login->save()) {
             $response = [
-                // 'request_token' => $token,
+                'request_token' => $token,
                 'expires' => $login->expires->timestamp,
                 'expires_string' => "expires in {$login->expires->diff()->i} minutes",
                 'error' => false,
@@ -55,22 +55,4 @@ class LoginController extends Controller
 
         return response($response)->header('Content-type', 'application/json');
     }
-
-    // public function authenticateUserWithToken($discordId, $token)
-    // {
-    //     $login = Login::where('discord_id', '=', $discordId)->where('request_token', '=', $token);
-
-    //     if ($login->count()) {
-    //         $request = $login->first();
-    //         $request->delete();
-
-    //         if ($request->expires <= now()) {
-    //             return redirect('/auth/api/expired');
-    //         }
-
-    //         return redirect('/auth/api/continue')->with('token', $token);
-    //     }
-
-    //     return redirect('/auth/api/failed');
-    // }
 }
