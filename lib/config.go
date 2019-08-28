@@ -26,6 +26,10 @@ type Configuration struct {
 	YouTube struct {
 		APIKey string `json:"apikey"`
 	} `json:"youtube"`
+	Website struct {
+		AppURL string `json:"app_url"`
+		APIURL string `json:"api_url"`
+	} `json:"website"`
 }
 
 // Config retrieves the app's configuration form config.json.

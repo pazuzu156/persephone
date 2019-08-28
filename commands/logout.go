@@ -26,9 +26,14 @@ func (c Logout) Register() *aurora.Command {
 		defer db.Close()
 
 		if user := database.GetUser(ctx.Message.Author); user.Username != "" {
+			crowns := user.Crowns()
 			n, _ := db.Delete(&user)
 
 			if n > 0 {
+				for _, crown := range crowns {
+					db.Delete(&crown)
+				}
+
 				ctx.Message.Reply(ctx.Aurora, fmt.Sprintf("%s You have logged out successfully", ctx.Message.Author.Mention()))
 			} else {
 				ctx.Message.Reply(ctx.Aurora, "There was an issue logging you out. Please try again later")
