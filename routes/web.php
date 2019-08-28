@@ -14,10 +14,14 @@
 use RestCord\DiscordClient;
 
 Route::get('/', function () {
-    return view('welcome');
-});
+    return view('home')->with('pageTitle', 'Home');
+})->name('home');
 
 Route::name('auth.')->prefix('auth')->group(function ($route) {
+    $route->get('/login', function () {
+        return redirect()->route('auth.discord.begin');
+    })->name('login');
+
     $route->get('/authenticate/{discordId}/{token}', 'Auth\LoginController@authenticateUserWithToken');
     $route->get('/continue', 'Auth\LoginController@beginAuthFlow');
 

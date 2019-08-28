@@ -5,6 +5,23 @@
  */
 
 require('./bootstrap');
+require('bootstrap4-notify')
+
+$.notifyDefaults({
+    position: 'fixed',
+    element: 'body',
+    placement: {
+        from: 'top',
+        align: 'center'
+    },
+    animate: {
+		enter: 'animated fadeInDown',
+		exit: 'animated fadeOutUp'
+    },
+    template: `<div data-notify="container" class="alert alert-{0} col-xs-11 col-sm-3" role="alert">
+    <span data-notify="message">{2}</span>
+</div>`
+})
 
 window.Vue = require('vue');
 

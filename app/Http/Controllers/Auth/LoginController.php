@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Auth;
 
+use Auth;
 use Curl\Curl;
 use Illuminate\Http\Request;
 use App\Login;
@@ -61,6 +62,23 @@ class LoginController extends Controller
                 $r = Socialite::with('discord')->user();
             } catch (\Exception $ex) {
                 return view('auth.error')->with('reason', 'An internal server error ocurred. You\'ll have to try the process again');
+            }
+
+            $user = User::where('discord_id', '=', $r->id);
+
+            if ($user->count()) {
+                $user = $user->first();
+
+                if (isset($user->lastfm)) {
+                    if (Auth::loginUsingId($user->id)) {
+                        return redirect()->route('home')->with([
+                            'alert' => 'success',
+                            'message' => 'You are now logged in to the site and bot. You may now use the bot\'s many commands!',
+                        ]);
+                    }
+
+                    return view('auth.error')->with('reason', 'There was an issue logging you in. Please try again later');
+                }
             }
 
             $discord = new DiscordClient([
