@@ -39,7 +39,6 @@ class LoginController extends Controller
 
         if ($login->count()) {
             $request = $login->first();
-            $request->delete();
 
             if ($request->expires <= now()) {
                 return redirect('/auth/api/expired');
@@ -110,6 +109,9 @@ class LoginController extends Controller
                 $user->lastfm_token = $c->response->session->key;
 
                 if ($user->save()) {
+                    $login = Login::where('discord_id', '=', $discordId);
+                    $login->delete();
+
                     return redirect('/auth/complete');
                 }
 
