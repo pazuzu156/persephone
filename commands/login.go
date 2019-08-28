@@ -1,7 +1,9 @@
 package commands
 
 import (
+	"encoding/json"
 	"fmt"
+	"io/ioutil"
 	"net/http"
 
 	"github.com/pazuzu156/aurora"
@@ -21,6 +23,7 @@ func InitLogin() Login {
 
 // LoginResponse represents the login API response body.
 type LoginResponse struct {
+	Token         string `json:"request_token"`
 	Expires       int32  `json:"expires"`
 	ExpiresString string `json:"expires_string"`
 	Error         bool   `json:"error"`
@@ -30,6 +33,7 @@ type LoginResponse struct {
 // Register registers and runs the login command.
 func (c Login) Register() *aurora.Command {
 	c.CommandInterface.Run = func(ctx aurora.Context) {
+
 		res, err := http.Get(fmt.Sprintf("%s/login/request_token/%s", config.Website.APIURL, ctx.Message.Author.ID.String()))
 
 		if err != nil {
@@ -40,22 +44,20 @@ func (c Login) Register() *aurora.Command {
 
 		defer res.Body.Close()
 
-		// var lr LoginResponse
-		// body, _ := ioutil.ReadAll(res.Body)
-		// json.Unmarshal(body, &lr)
+		var lr LoginResponse
+		body, _ := ioutil.ReadAll(res.Body)
+		json.Unmarshal(body, &lr)
 
-		// if lr.Error == true {
-		// 	ctx.Message.Reply(ctx.Aurora, lr.ErrorMessage)
+		if lr.Error == true {
+			ctx.Message.Reply(ctx.Aurora, lr.ErrorMessage)
 
-		// 	return
-		// }
+			return
+		}
 
-		// login := database.GetUserLogin(ctx.Message.Author)
+		url := fmt.Sprintf("%s/auth/authenticate/%s/%s", config.Website.AppURL, ctx.Message.Author.ID.String(), lr.Token)
 
-		// url := fmt.Sprintf("%s/auth/authenticate/%s/%s", config.Website.AppURL, ctx.Message.Author.ID.String(), login.RequestToken)
-
-		// ctx.Message.Reply(ctx.Aurora, fmt.Sprintf("Your login request was received. Use this link to begin the login process: %s", url))
-		// ctx.Message.Reply(ctx.Aurora, fmt.Sprintf("This link %s", lr.ExpiresString))
+		ctx.Message.Reply(ctx.Aurora, fmt.Sprintf("Your login request was received. Use this link to begin the login process: %s", url))
+		ctx.Message.Reply(ctx.Aurora, fmt.Sprintf("This link %s", lr.ExpiresString))
 	}
 
 	return c.CommandInterface
