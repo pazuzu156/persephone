@@ -21,6 +21,7 @@ func InitLogin() Login {
 	})}
 }
 
+// LoginResponse represents the login API response body.
 type LoginResponse struct {
 	Token         string `json:"request_token"`
 	Expires       int32  `json:"expires"`
