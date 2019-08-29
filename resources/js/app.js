@@ -10,6 +10,7 @@ require('bootstrap4-notify')
 $.notifyDefaults({
     position: 'fixed',
     element: 'body',
+    width: 'auto',
     placement: {
         from: 'top',
         align: 'center'

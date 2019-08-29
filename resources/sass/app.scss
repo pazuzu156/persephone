@@ -13,3 +13,9 @@
 // FontAwesome
 @import '~@fortawesome/fontawesome-free/scss/fontawesome';
 @import '~@fortawesome/fontawesome-free/scss/brands';
+
+.user-avatar {
+    width: 24px;
+    height: 24px;
+    border-radius: 24px;
+}

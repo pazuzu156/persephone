@@ -73,7 +73,7 @@ class LoginController extends Controller
                     if (Auth::loginUsingId($user->id)) {
                         return redirect()->route('home')->with([
                             'alert' => 'success',
-                            'message' => 'You are now logged in to the site and bot. You may now use the bot\'s many commands!',
+                            'message' => 'You have successfully logged in.',
                         ]);
                     }
 

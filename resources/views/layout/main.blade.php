@@ -17,7 +17,27 @@
                 <div class="collapse navbar-collapse" id="navbarDropMenu">
                     <div class="navbar-nav ml-auto">
                         <a href="{{ url('/') }}" class="nav-link nav-item active">Home</a>
-                        <a href="{{ route('auth.login') }}" class="nav-link nav-item">Login</a>
+                        @if(Auth::check())
+                            @php
+                                $discord = new RestCord\DiscordClient([
+                                    'token' => Auth::user()->discord_token,
+                                    'tokenType' => 'OAuth',
+                                ]);
+                                $user = $discord->user->getCurrentUser();
+                            @endphp
+                            <div class="dropdown">
+                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                                    {{ $user->username }}
+                                    <img src="https://cdn.discordapp.com/avatars/{{ $user->id }}/{{ $user->avatar }}.png" class="user-avatar">
+                                </a>
+
+                                <div class="dropdown-menu">
+                                    <a href="{{ route('auth.logout') }}" class="dropdown-item">Logout</a>
+                                </div>
+                            </div>
+                        @else
+                            <a href="{{ route('auth.login') }}" class="nav-link nav-item">Login</a>
+                        @endif
                     </div>
                 </div>
             </div>

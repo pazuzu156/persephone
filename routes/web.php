@@ -21,6 +21,11 @@ Route::name('auth.')->prefix('auth')->group(function ($route) {
     $route->get('/login', function () {
         return redirect()->route('auth.discord.begin');
     })->name('login');
+    $route->get('/logout', function() {
+        Auth::logout();
+
+        return redirect()->route('home')->with(['alert' => 'success', 'message' => 'You have successfully logged out!']);
+    })->name('logout');
 
     $route->get('/authenticate/{discordId}/{token}', 'Auth\LoginController@authenticateUserWithToken');
     $route->get('/continue', 'Auth\LoginController@beginAuthFlow');
