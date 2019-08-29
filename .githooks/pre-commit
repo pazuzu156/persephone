@@ -1,5 +1,5 @@
 #!/bin/bash
 
-if ! test -z `which npm`; then
-	npm run prod
+if ! test -z '`which npm`'; then
+    npm run prod
 fi
