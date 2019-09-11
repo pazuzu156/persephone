@@ -2,7 +2,8 @@ package database
 
 import "persephone/lib"
 
-type ArtistImage struct {
+// ArtistImages object.
+type ArtistImages struct {
 	ID     int64 `db:"pk"`
 	Artist string
 	MaID   int64 `db:"unique"`

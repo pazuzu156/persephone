@@ -9,20 +9,19 @@ import (
 	"github.com/pazuzu156/aurora"
 )
 
-// Login command.
-type Login struct{ Command }
+// Register command.
+type Register struct{ Command }
 
-// InitLogin initializes the login command.
-func InitLogin() Login {
-	return Login{Init(&CommandItem{
-		Name:        "login",
-		Description: "Log into the bot with your Last.fm username",
-		Aliases:     []string{"li"},
+// InitRegister initializes the login command.
+func InitRegister() Register {
+	return Register{Init(&CommandItem{
+		Name:        "register",
+		Description: "Register with the bot with your Last.fm username",
 	})}
 }
 
-// LoginResponse represents the login API response body.
-type LoginResponse struct {
+// RegisterResponse represents the login API response body.
+type RegisterResponse struct {
 	Token         string `json:"request_token"`
 	Expires       int32  `json:"expires"`
 	ExpiresString string `json:"expires_string"`
@@ -31,7 +30,7 @@ type LoginResponse struct {
 }
 
 // Register registers and runs the login command.
-func (c Login) Register() *aurora.Command {
+func (c Register) Register() *aurora.Command {
 	c.CommandInterface.Run = func(ctx aurora.Context) {
 
 		res, err := http.Get(fmt.Sprintf("%s/login/request_token/%s", config.Website.APIURL, ctx.Message.Author.ID.String()))
@@ -44,9 +43,11 @@ func (c Login) Register() *aurora.Command {
 
 		defer res.Body.Close()
 
-		var lr LoginResponse
+		var lr RegisterResponse
 		body, _ := ioutil.ReadAll(res.Body)
 		json.Unmarshal(body, &lr)
+
+		fmt.Println(lr)
 
 		if lr.Error == true {
 			ctx.Message.Reply(ctx.Aurora, lr.ErrorMessage)
