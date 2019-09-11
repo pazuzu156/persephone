@@ -4,8 +4,8 @@ import (
 	"persephone/lib"
 )
 
-// Crown object.
-type Crown struct {
+// Crowns object.
+type Crowns struct {
 	ID        int64 `db:"pk"`
 	DiscordID uint64
 	Artist    string
@@ -20,24 +20,24 @@ func init() {
 }
 
 // GetCrownsList returns a list of all crowns in database
-func GetCrownsList() (crowns []Crown) {
-	err := db.Select(&crowns, db.From(Crown{}))
+func GetCrownsList() (crowns []Crowns) {
+	err := db.Select(&crowns, db.From(Crowns{}))
 	lib.Check(err)
 
 	return
 }
 
 // User is a relational method to retrieve the user from a given crown.
-func (c Crown) User() (user User) {
-	err := db.Select(&user, db.From(User{}), db.Where("discord_id", "=", c.DiscordID))
+func (c Crowns) User() (user Users) {
+	err := db.Select(&user, db.From(Users{}), db.Where("discord_id", "=", c.DiscordID))
 	lib.Check(err)
 
 	return
 }
 
 // GetUserCrowns is a relational method that returns a list of crowns for a given user.
-func (c Crown) GetUserCrowns(sql ...interface{}) (crowns []Crown) {
+func (c Crowns) GetUserCrowns(sql ...interface{}) (crowns []Crowns) {
 	user := c.User()
-	db.Select(&crowns, db.From(Crown{}), db.Where("discord_id", "=", user.DiscordID))
+	db.Select(&crowns, db.From(Crowns{}), db.Where("discord_id", "=", user.DiscordID))
 	return
 }

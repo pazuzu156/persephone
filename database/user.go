@@ -8,8 +8,8 @@ import (
 	"github.com/pazuzu156/lastfm-go"
 )
 
-// User object.
-type User struct {
+// Users object.
+type Users struct {
 	ID            int64 `db:"pk"`
 	Username      string
 	Email         string
@@ -28,20 +28,20 @@ func init() {
 }
 
 // GetUser gets the database user via a Discord user.
-func GetUser(user *disgord.User) User {
-	var dbu []User
+func GetUser(user *disgord.User) Users {
+	var dbu []Users
 	db.Select(&dbu, db.Where("discord_id", "=", GetUInt64ID(user)))
 
 	if len(dbu) > 0 {
 		return dbu[0]
 	}
 
-	return User{}
+	return Users{}
 }
 
 // GetUsers returns all the users in the database.
-func GetUsers() []User {
-	var dbu []User
+func GetUsers() []Users {
+	var dbu []Users
 	db.Select(&dbu)
 
 	return dbu
@@ -62,7 +62,7 @@ func GetUInt64ID(user *disgord.User) uint64 {
 }
 
 // Crown is a relational function to get crowns model
-func (c User) Crown(id int64) Crown {
+func (c Users) Crown(id int64) Crowns {
 	crowns := GetCrownsList()
 
 	for _, crown := range crowns {
@@ -71,11 +71,11 @@ func (c User) Crown(id int64) Crown {
 		}
 	}
 
-	return Crown{}
+	return Crowns{}
 }
 
 // Crowns is a relational function to get crowns model
-func (c User) Crowns() (crowns []Crown) {
+func (c Users) Crowns() (crowns []Crowns) {
 	dbc := GetCrownsList()
 
 	for _, crown := range dbc {

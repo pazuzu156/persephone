@@ -132,7 +132,7 @@ func (c Whoknows) displayWhoKnows(ctx aurora.Context, artist lastfm.ArtistGetInf
 					}
 
 					if !updated {
-						crown := []database.Crown{
+						crown := []database.Crowns{
 							{
 								DiscordID: database.GetUInt64ID(ctx.Message.Author),
 								Artist:    artist.Name,

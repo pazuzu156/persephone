@@ -24,9 +24,9 @@ var (
 func Migrate() {
 	var db *genmai.DB
 	db, _ = OpenDB()
-	db.CreateTableIfNotExists(&Crown{})
-	db.CreateTableIfNotExists(&User{})
-	db.CreateTableIfNotExists(&ArtistImage{})
+	db.CreateTableIfNotExists(&Crowns{})
+	db.CreateTableIfNotExists(&Users{})
+	db.CreateTableIfNotExists(&ArtistImages{})
 	db.Close()
 }
 
