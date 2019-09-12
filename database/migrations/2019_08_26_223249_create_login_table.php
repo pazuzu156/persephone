@@ -13,7 +13,7 @@ class CreateLoginTable extends Migration
      */
     public function up()
     {
-        Schema::create('login', function (Blueprint $table) {
+        Schema::create('logins', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->unsignedBigInteger('discord_id');
             $table->string('request_token');
@@ -29,6 +29,6 @@ class CreateLoginTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('login');
+        Schema::dropIfExists('logins');
     }
 }

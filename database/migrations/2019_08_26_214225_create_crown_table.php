@@ -13,7 +13,7 @@ class CreateCrownTable extends Migration
      */
     public function up()
     {
-        Schema::create('crown', function (Blueprint $table) {
+        Schema::create('crowns', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->unsignedBigInteger('discord_id');
             $table->string('artist');
@@ -29,6 +29,6 @@ class CreateCrownTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('crown');
+        Schema::dropIfExists('crowns');
     }
 }

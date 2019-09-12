@@ -64,22 +64,25 @@ class LoginController extends Controller
                 return view('auth.error')->with('reason', 'An internal server error ocurred. You\'ll have to try the process again');
             }
 
-            $user = User::where('discord_id', '=', $r->id);
-
-            if ($user->count()) {
-                $user = $user->first();
-
-                if (isset($user->lastfm)) {
-                    if (Auth::loginUsingId($user->id)) {
-                        return redirect()->route('home')->with([
-                            'alert' => 'success',
-                            'message' => 'You have successfully logged in.',
-                        ]);
-                    }
-
-                    return view('auth.error')->with('reason', 'There was an issue logging you in. Please try again later');
-                }
-            }
+            /**
+             * Broken code
+             * // $user = User::where('discord_id', '=', $r->id);
+             *
+             * // if ($user->count()) {
+             * //     $user = $user->first();
+             *
+             * //     if (isset($user->lastfm)) {
+             * //         if (Auth::loginUsingId($user->id)) {
+             * //             return redirect()->route('home')->with([
+             * //                 'alert' => 'success',
+             * //                 'message' => 'You have successfully logged in.',
+             * //             ]);
+             * //         }
+             *
+             * //         return view('auth.error')->with('reason', 'There was an issue logging you in. Please try again later');
+             * //     }
+             * // }
+             */
 
             $discord = new DiscordClient([
                 'token' => $r->token,
@@ -88,10 +91,17 @@ class LoginController extends Controller
 
             foreach ($discord->user->getCurrentUserGuilds() as $guild) {
                 if ($guild->id == (int)env('DISCORD_GUILD_ID')) {
-                    $user = new User();
-                    $user->username = $r->name;
-                    $user->email = $r->email;
-                    $user->discord_id = $r->id;
+                    $user = User::where('discord_id', '=', $r->id);
+
+                    if ($user->count()) {
+                        $user = $user->first();
+                    } else {
+                        $user = new User();
+                        $user->username = $r->name;
+                        $user->email = $r->email;
+                        $user->discord_id = $r->id;
+                    }
+
                     $user->discord_token = $r->token;
 
                     if ($user->save()) {
@@ -123,14 +133,35 @@ class LoginController extends Controller
             $c->get('?method=auth.getSession&format=json&api_key='.env('LASTFM_KEY').'&token='.$request->token.'&api_sig='.$this->genApiSignature($request->token));
 
             if (isset($c->response->session)) {
-                $user->lastfm = $c->response->session->name;
+                // $user->lastfm = $c->response->session->name;
+                // $user->lastfm_token = $c->response->session->key;
+
+                // if ($user->save()) {
+                //     $login = Login::where('discord_id', '=', $discordId);
+                //     $login->delete();
+
+                //     return redirect('/auth/complete');
+                // }
+
+                if (!isset($user->lastfm)) {
+                    $user->lastfm = $c->response->session->name;
+                }
+
                 $user->lastfm_token = $c->response->session->key;
 
                 if ($user->save()) {
                     $login = Login::where('discord_id', '=', $discordId);
-                    $login->delete();
 
-                    return redirect('/auth/complete');
+                    if ($login->delete()) {
+                        return redirect('/auth/complete');
+                    }
+
+                    Auth::loginUsingId($user->id);
+
+                    return redirect()->route('home')->with([
+                        'alert' => 'success',
+                        'message' => 'You have successfully logged in.',
+                    ]);
                 }
 
                 return view('auth.error')->with('reason', 'There was an issue saving your lastfm data. Please try again later.');
@@ -140,6 +171,25 @@ class LoginController extends Controller
         }
 
         return view('auth.error')->with('reason', 'You do not have access to this page!');
+    }
+
+    public function getLogout()
+    {
+        $user = User::where('discord_id', '=', Auth::user()->discord_id);
+
+        if ($user->count()) {
+            $user = $user->first();
+            $user->discord_token = '';
+            $user->lastfm_token = '';
+
+            if ($user->save()) {
+                Auth::logout();
+
+                return redirect()->route('home')->with(['alert' => 'success', 'message' => 'You have logged out successfully']);
+            }
+        }
+
+        return redirect()->route('home')->with(['alert' => 'danger', 'message' => 'You are not logged in']);
     }
 
     private function genApiSignature($token)

@@ -13,7 +13,7 @@ class CreateArtistImageTable extends Migration
      */
     public function up()
     {
-        Schema::create('artist_image', function (Blueprint $table) {
+        Schema::create('artist_images', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('artist');
             $table->bigInteger('md_id')->unique();
@@ -28,6 +28,6 @@ class CreateArtistImageTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('artist_image');
+        Schema::dropIfExists('artist_images');
     }
 }

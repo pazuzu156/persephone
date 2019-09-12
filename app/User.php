@@ -19,6 +19,4 @@ class User extends Authenticatable
         'username', 'email', 'discord_id',
         'discord_token', 'lastfm', 'lastfm_token',
     ];
-
-    protected $table = 'user';
 }
