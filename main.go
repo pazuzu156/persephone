@@ -50,7 +50,7 @@ func main() {
 				if len(message.Reactions) >= config.Starboard.ActivationCount {
 					for _, channel := range guild.Channels {
 						if channel.Name == config.Starboard.Channel {
-							f, t := lib.AddEmbedFooter(message)
+							_, t := lib.AddEmbedFooter(message)
 							client.CreateMessage(channel.ID, &disgord.CreateMessageParams{
 								Embed: &disgord.Embed{
 									Title:       "Content",
@@ -63,7 +63,7 @@ func main() {
 											Inline: true,
 										},
 										{
-											Name:   "Channe",
+											Name:   "Channel",
 											Value:  currentChannel.Name,
 											Inline: true,
 										},
