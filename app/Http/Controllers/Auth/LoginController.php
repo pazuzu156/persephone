@@ -143,7 +143,7 @@ class LoginController extends Controller
                 //     return redirect('/auth/complete');
                 // }
 
-                if (!isset($user->lastfm)) {
+                if (!isset($user->lastfm) || $user->lastfm == '') {
                     $user->lastfm = $c->response->session->name;
                 }
 
