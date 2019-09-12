@@ -15,7 +15,7 @@ type MaArtist struct {
 // GetMaArtistList returns a list of artists defined in
 // artists.json for metal-archives
 func GetMaArtistList() []MaArtist {
-	file, err := os.Open("artists.json")
+	file, err := os.Open(LocGet("artists.json"))
 	Check(err)
 	defer file.Close()
 
