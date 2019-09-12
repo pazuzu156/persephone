@@ -56,11 +56,11 @@
             <div class="container navbar-text">
                 <div class="col-lg-10">
                     Made for Untrodden Corridors of Hades.
-                    <a href="https://discord.gg/{{ env('DISCORD_GUILD_INVITE_CODE') }}"><i class="fab fa-discord"></i></a> |
-                    <a href="https://github.com/pazuzu156/persephone"><i class="fab fa-github"></i></a>
+                    <a href="https://discord.gg/{{ env('DISCORD_GUILD_INVITE_CODE') }}" target="_blank"><i class="fab fa-discord"></i></a> |
+                    <a href="https://github.com/pazuzu156/persephone" target="_blank"><i class="fab fa-github"></i></a>
                 </div>
                 <div class="col-lg-2 text-right">
-                    &copy; 2019 <a href="https://kalebklein.com">Kaleb Klein</a>.
+                    &copy; 2019 <a href="https://kalebklein.com" target="_blank">Kaleb Klein</a>.
                 </div>
             </div>
         </nav>
