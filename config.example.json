@@ -3,6 +3,10 @@
     "bot_owner": "",
     "bot_id": "",
     "prefix": "-",
+    "starboard": {
+        "channel": "starboard",
+        "activation_count": 5
+    },
     "lastfm": {
         "apikey": "",
         "secret": ""

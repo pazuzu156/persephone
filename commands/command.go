@@ -1,10 +1,8 @@
 package commands
 
 import (
-	"fmt"
 	"persephone/lib"
 	"strconv"
-	"time"
 
 	"github.com/andersfylling/disgord"
 	"github.com/pazuzu156/aurora"
@@ -62,14 +60,7 @@ func Init(t *CommandItem) Command {
 
 // embedFooter returns a footer and timestamp for disgord embeds
 func (c Command) embedFooter(ctx aurora.Context) (f *disgord.EmbedFooter, t disgord.Time) {
-	f = &disgord.EmbedFooter{
-		IconURL: lib.GenAvatarURL(ctx.Message.Author),
-		Text:    fmt.Sprintf("Command invoked by: %s#%s", ctx.Message.Author.Username, ctx.Message.Author.Discriminator),
-	}
-
-	t = disgord.Time{
-		Time: time.Now(),
-	}
+	f, t = lib.AddEmbedFooter(ctx.Message)
 
 	return
 }

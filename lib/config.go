@@ -12,7 +12,12 @@ type Configuration struct {
 	BotOwner string `json:"bot_owner"`
 	BotID    string `json:"bot_id"`
 	Prefix   string `json:"prefix"`
-	Lastfm   struct {
+	// Starboard string `json:"starboard"`
+	Starboard struct {
+		Channel         string `json:"channel"`
+		ActivationCount int    `json:"activation_count"`
+	} `json:"starboard"`
+	Lastfm struct {
 		APIKey string `json:"apikey"`
 		Secret string `json:"secret"`
 	} `json:"lastfm"`
