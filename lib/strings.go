@@ -53,3 +53,8 @@ func HumanNumber(i interface{}) string {
 
 	return printer.Sprintf("%d", i)
 }
+
+// GenerateMessageURL returns the URL for a specific Discord message.
+func GenerateMessageURL(guildID disgord.Snowflake, msg *disgord.Message) string {
+	return fmt.Sprintf("https://discordapp.com/channels/%s/%s/%s", guildID, msg.ChannelID, msg.ID)
+}

@@ -57,6 +57,7 @@ func (c Bandinfo) Register() *aurora.Command {
 }
 
 func (c Bandinfo) displayBandInfo(ctx aurora.Context, artist lastfm.ArtistGetInfo) {
+	f, t := c.embedFooter(ctx)
 	ctx.Aurora.CreateMessage(ctx.Message.ChannelID, &disgord.CreateMessageParams{
 		Embed: &disgord.Embed{
 			Title: artist.Name,
@@ -89,6 +90,7 @@ func (c Bandinfo) displayBandInfo(ctx aurora.Context, artist lastfm.ArtistGetInf
 					Inline: true,
 				},
 			},
+			Footer: f, Timestamp: t,
 		},
 	})
 }
