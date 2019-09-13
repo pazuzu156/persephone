@@ -54,6 +54,9 @@ func (c About) Register() *aurora.Command {
 				Title:       "About Persephone",
 				Description: fmt.Sprintf("Persephone is a bot written in Go. Version v%s", c.Version),
 				Color:       0x7FFF00,
+				Thumbnail: &disgord.EmbedThumbnail{
+					URL: lib.GenAvatarURL(bot.User),
+				},
 				Fields: []*disgord.EmbedField{
 					{
 						Name:  "Name",
