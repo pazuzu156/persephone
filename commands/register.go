@@ -47,8 +47,6 @@ func (c Register) Register() *aurora.Command {
 		body, _ := ioutil.ReadAll(res.Body)
 		json.Unmarshal(body, &lr)
 
-		fmt.Println(lr)
-
 		if lr.Error == true {
 			ctx.Message.Reply(ctx.Aurora, lr.ErrorMessage)
 
