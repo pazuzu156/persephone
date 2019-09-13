@@ -2,6 +2,7 @@ package commands
 
 import (
 	"fmt"
+	"image"
 	"os"
 	"persephone/database"
 	"persephone/fm"
@@ -47,7 +48,12 @@ func (c Nowplaying) Register() *aurora.Command {
 
 			// Some resizing for avatar and album art
 			aar := resize.Resize(240, 240, aa, resize.Bicubic)
-			avr := resize.Resize(72, 72, av, resize.Bicubic)
+			// avr := resize.Resize(72, 72, av, resize.Bicubic)
+			var avr image.Image
+
+			if av != nil {
+				avr = resize.Resize(72, 72, av, resize.Bicubic)
+			}
 
 			// New image context, and add background image
 			dc := gg.NewContext(1000, 600)
@@ -59,7 +65,12 @@ func (c Nowplaying) Register() *aurora.Command {
 			dc.Fill()
 
 			// Draw avatar and add username + scrobble count
-			dc.DrawImage(avr, 315, 100)
+			// dc.DrawImage(avr, 315, 100)
+
+			if avr != nil {
+				dc.DrawImage(avr, 315, 100)
+			}
+
 			dc.LoadFontFace(FontBold, 26)
 			dc.SetRGB(0.9, 0.9, 0.9)
 			dc.DrawString(ctx.Message.Author.Username+" ("+lfmuser.Name+")", 390, 130)
