@@ -9,7 +9,7 @@ import (
 // Storage returns storage locations for configuration and static folders
 func Storage() string {
 	if runtime.GOOS == "linux" {
-		return fmt.Sprintf("%s/persephone", os.Getenv("HOME"))
+		return fmt.Sprintf("%s/.config/persephone", os.Getenv("HOME"))
 	}
 
 	return ""
