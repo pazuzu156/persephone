@@ -23,10 +23,10 @@ func InitPlays() Plays {
 Giving no parameters will get the play count for the current playing track.
 Passing no value to a parameter will get the plays for said parameter using the current playing track`,
 		Aliases: []string{"p"},
-		Usage:   "plays band:Grabak",
+		Usage:   "plays artist:Grabak",
 		Parameters: []Parameter{
 			{
-				Name:        "band",
+				Name:        "artist",
 				Value:       "name",
 				Description: "Gets play count for a given artist",
 				Required:    false,
@@ -54,7 +54,7 @@ func (c Plays) Register() *aurora.Command {
 					as := strings.Split(arg, ":")
 
 					switch strings.ToLower(as[0]) {
-					case "band": // show play count for requested artist
+					case "artist": // show play count for requested artist
 						a := as[1]
 						artist, _ := c.Lastfm.Artist.GetInfo(lastfm.P{"artist": a, "username": database.GetUser(ctx.Message.Author).Lastfm})
 						plays, _ := strconv.Atoi(artist.Stats.UserPlays)
