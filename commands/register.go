@@ -16,7 +16,7 @@ type Register struct{ Command }
 func InitRegister() Register {
 	return Register{Init(&CommandItem{
 		Name:        "register",
-		Description: "Register with the bot with your Last.fm username",
+		Description: "Starts the bot's registration flow",
 	})}
 }
 
