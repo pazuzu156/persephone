@@ -13,6 +13,7 @@ install:
 	install -D -m644 static/fonts/NotoSans-Bold.ttf ${HOME}/persephone/static/fonts/NotoSans-Bold.ttf
 	install -D -m644 static/fonts/NotoSans-Regular.ttf ${HOME}/persephone/static/fonts/NotoSans-Regular.ttf
 	install -D -m644 static/images/background.png ${HOME}/persephone/static/images/background.png
+	install -D -m644 artists.json ${HOME}/persephone/artists.json
 
 uninstall:
 	sudo rm -rf /usr/bin/persephone
