@@ -11,6 +11,7 @@ import (
 	"time"
 
 	"github.com/andersfylling/disgord"
+	"github.com/naoina/genmai"
 	"github.com/pazuzu156/aurora"
 )
 
@@ -117,7 +118,7 @@ func (c Crowns) displayCrowns(ctx aurora.Context, user *disgord.User, page int) 
 
 			// query database with limit/offset for each page
 			db, _ := database.OpenDB()
-			db.Select(&crowns, db.Where("discord_id", "=", database.GetUInt64ID(user)), db.From(database.Crowns{}), db.Limit(maxPerPage), db.Offset(offset))
+			db.Select(&crowns, db.Where("discord_id", "=", database.GetUInt64ID(user)), db.From(database.Crowns{}), db.Limit(maxPerPage), db.Offset(offset), db.OrderBy("play_count", genmai.DESC))
 
 			// Sorts the slice in descending order by number of plays
 			sort.SliceStable(crowns, func(i, j int) bool {
