@@ -120,6 +120,8 @@ func (c Whoknows) displayWhoKnows(ctx aurora.Context, artist lastfm.ArtistGetInf
 					crowns := database.GetCrownsList()
 					now := time.Now()
 
+					fmt.Println(user)
+
 					updated := false
 					for _, crown := range crowns {
 						if artist.Name == crown.Artist {
@@ -134,7 +136,7 @@ func (c Whoknows) displayWhoKnows(ctx aurora.Context, artist lastfm.ArtistGetInf
 					if !updated {
 						crown := []database.Crowns{
 							{
-								DiscordID: database.GetUInt64ID(ctx.Message.Author),
+								DiscordID: user.DiscordID,
 								Artist:    artist.Name,
 								PlayCount: user.Plays,
 								Time: database.Time{
