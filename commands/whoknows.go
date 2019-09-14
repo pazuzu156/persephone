@@ -22,7 +22,7 @@ func InitWhoknows() Whoknows {
 	return Whoknows{Init(&CommandItem{
 		Name:        "whoknows",
 		Description: "Shows who knows a specific artist",
-		Aliases:     []string{"wk"},
+		Aliases:     []string{"wk", "npwk"},
 		Usage:       "whoknows Judas Iscariot",
 		Parameters: []Parameter{
 			{
