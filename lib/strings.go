@@ -58,3 +58,10 @@ func HumanNumber(i interface{}) string {
 func GenerateMessageURL(guildID disgord.Snowflake, msg *disgord.Message) string {
 	return fmt.Sprintf("https://discordapp.com/channels/%s/%s/%s", guildID, msg.ChannelID, msg.ID)
 }
+
+// GetDiscordIDFromMention gets the snowflake id from a mention.
+func GetDiscordIDFromMention(mention string) disgord.Snowflake {
+	did, _ := strconv.Atoi(strings.TrimLeft(strings.TrimLeft(strings.TrimRight(mention, ">"), "<@"), "!"))
+
+	return disgord.NewSnowflake(uint64(did))
+}
