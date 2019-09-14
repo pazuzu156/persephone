@@ -56,12 +56,20 @@ func (c Crowns) Register() *aurora.Command {
 			for _, arg := range ctx.Args {
 				// Check if a user is supplied
 				if strings.Contains(arg, "<@") {
-					did, _ := strconv.Atoi(strings.TrimLeft(strings.TrimRight(arg, ">"), "<@"))
+					did, _ := strconv.Atoi(strings.TrimLeft(strings.TrimLeft(strings.TrimRight(arg, ">"), "<@"), "!"))
 					discordid := disgord.NewSnowflake(uint64(did))
 					user, err = ctx.Aurora.GetUser(discordid)
 
 					if err != nil {
-						ctx.Message.Reply(ctx.Aurora, "That user could not be found in the server")
+						ctx.Message.Reply(ctx.Aurora, fmt.Sprint("Error: %s", err.Error()))
+
+						return
+					}
+
+					if err != nil {
+						ctx.Message.Reply(ctx.Aurora, "That user hasn't logged in to the bot yet.")
+
+						return
 					}
 				}
 
@@ -113,8 +121,6 @@ func (c Crowns) displayCrowns(ctx aurora.Context, user *disgord.User, page int) 
 			if page > 1 {
 				offset = (page-1)*maxPerPage + 1 // fucking pagination
 			}
-
-			fmt.Println(offset)
 
 			// query database with limit/offset for each page
 			db, _ := database.OpenDB()
