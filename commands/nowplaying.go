@@ -126,7 +126,7 @@ func (c Nowplaying) Register() *aurora.Command {
 					dc.DrawString(t3.Artist.Name, 510, 480)
 
 					dc.LoadFontFace(FontRegular, 25)
-					dc.DrawString(t3.Name, 510, 520)
+					dc.DrawString(lib.ShortStr(t3.Name, 33), 510, 520)
 				}
 
 				// Track 2
@@ -149,7 +149,7 @@ func (c Nowplaying) Register() *aurora.Command {
 					dc.DrawString(t2.Artist.Name, 510, 380)
 
 					dc.LoadFontFace(FontRegular, 25)
-					dc.DrawString(t2.Name, 510, 420)
+					dc.DrawString(lib.ShortStr(t2.Name, 33), 510, 420)
 				}
 
 				// First most recent track
@@ -172,7 +172,7 @@ func (c Nowplaying) Register() *aurora.Command {
 					dc.DrawString(t1.Artist.Name, 510, 280)
 
 					dc.LoadFontFace(FontRegular, 25)
-					dc.DrawString(t1.Name, 510, 320)
+					dc.DrawString(lib.ShortStr(t1.Name, 33), 510, 320)
 				}
 			}
 
