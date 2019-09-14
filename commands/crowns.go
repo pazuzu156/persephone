@@ -56,15 +56,7 @@ func (c Crowns) Register() *aurora.Command {
 			for _, arg := range ctx.Args {
 				// Check if a user is supplied
 				if strings.Contains(arg, "<@") {
-					did, _ := strconv.Atoi(strings.TrimLeft(strings.TrimLeft(strings.TrimRight(arg, ">"), "<@"), "!"))
-					discordid := disgord.NewSnowflake(uint64(did))
-					user, err = ctx.Aurora.GetUser(discordid)
-
-					if err != nil {
-						ctx.Message.Reply(ctx.Aurora, fmt.Sprint("Error: %s", err.Error()))
-
-						return
-					}
+					user, err = ctx.Aurora.GetUser(lib.GetDiscordIDFromMention(arg))
 
 					if err != nil {
 						ctx.Message.Reply(ctx.Aurora, "That user hasn't logged in to the bot yet.")
