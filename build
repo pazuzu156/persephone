@@ -24,7 +24,9 @@ go build -o $EXE_NAME -i -v
 mv temp/.gitkeep gkt
 
 if ! [ -f config.json ]; then
-    cp config.example.json config.json
+    if ! [ ${NOTAR+x} ]; then
+        cp config.example.json config.json
+    fi
 fi
 
 # NOTAR will prevent compressing files
