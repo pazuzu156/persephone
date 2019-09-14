@@ -87,7 +87,7 @@ func init() {
 	// aurora.Use(commands.InitBand().Register())
 	aurora.Use(commands.InitCrowns().Register())
 	aurora.Use(commands.InitHelp().Register())
-	aurora.Use(commands.InitLogout().Register())
+	aurora.Use(commands.InitUnregister().Register())
 	aurora.Use(commands.InitNowPlaying().Register())
 	aurora.Use(commands.InitRecent().Register())
 	// aurora.Use(commands.InitPing().Register())
