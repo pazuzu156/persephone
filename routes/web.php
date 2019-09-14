@@ -13,17 +13,9 @@
 
 use RestCord\DiscordClient;
 
-// Route::get('/', function () {
-//     return view('home')->with('pageTitle', 'Home');
-// })->name('home');
-
-Route::get('/', function () {
-    if (Auth::check()) {
-        // return redirect()->route('');
-    }
-
-    return view('home')->with('pageTitle', 'Home');
-})->name('home');
+Route::get('/', 'HomeController@index')->name('home');
+Route::get('/help', 'HomeController@help')->name('help');
+Route::get('/help/{command}', 'HomeController@getDoc')->name('getdoc');
 
 Route::name('auth.')->prefix('auth')->group(function ($route) {
     $route->get('/login', function () {

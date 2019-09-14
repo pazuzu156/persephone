@@ -46,13 +46,13 @@
         <div class="container mt-md-3">
             <div class="content">
                 @if(isset($pageTitle))
-                <h1>{{ $pageTitle }}</h1>
+                <h1 class="text-center">{{ $pageTitle }}</h1>
                 @endif
 
                 @yield('content')
             </div>
         </div>
-        <nav class="navbar navbar-expanded-lg navbar-dark bg-dark fixed-bottom">
+        <nav class="footer navbar navbar-expanded-lg navbar-dark bg-dark">
             <div class="container navbar-text">
                 <div class="col-lg-10">
                     Made for Untrodden Corridors of Hades.
@@ -70,5 +70,6 @@
                 type: "{{ Session::get('alert') }}"
             })</script>
         @endif
+        <a id="backToTopA" href="#"></a>
     </body>
 </html>
