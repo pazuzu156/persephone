@@ -16,7 +16,7 @@ type About struct {
 }
 
 // Version holds the bot's version number
-const Version string = "1.0.2"
+const Version string = "1.0.3"
 
 // InitAbout initialized the about command.
 func InitAbout() About {
