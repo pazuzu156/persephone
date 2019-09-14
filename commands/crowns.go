@@ -118,7 +118,7 @@ func (c Crowns) displayCrowns(ctx aurora.Context, user *disgord.User, page int) 
 
 			// query database with limit/offset for each page
 			db, _ := database.OpenDB()
-			db.Select(&crowns, db.Where("discor_id", "=", database.GetUInt64ID(user)).OrderBy("play_count", genmai.DESC).Limit(maxPerPage).Offset(offset), db.From(database.Crowns{}))
+			db.Select(&crowns, db.Where("discord_id", "=", database.GetUInt64ID(user)).OrderBy("play_count", genmai.DESC), db.From(database.Crowns{}), db.Limit(maxPerPage).Offset(offset))
 
 			// Sorts the slice in descending order by number of plays
 			sort.SliceStable(crowns, func(i, j int) bool {

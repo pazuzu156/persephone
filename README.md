@@ -40,3 +40,14 @@ Please refer to [CONTRIBUTING.md](CONTRIBUTING.md) for more info
 ## Planned Features
 
 Theres a fair bit I want to do with this bot, I'll add a list of features here when I think of them, and if I find them an obtainable goal
+
+## Donations
+
+Not everyone wants to do a whole lot. But, you can do a small ;) A donation helps keep the bot alive by paying for the server it and it's website run on. And of course, I could always use a beer.
+
+If you want to help out with a small donation, the best ways are the following:
+
+- [PayPal](https://paypal.me/pazuzu156/1)
+- Bitcoin: 16vSYHE6Y1icSoFPdc76B32n552YvzZGh6
+- Stellar: GCHEI6MJ3QTNEVMK3JB66YT7AHJ7UFTVUY7UDF7TXA3ZGZQOMHVT2AUL
+- ZCash: t1eXVKCNwzVYUiT2QS97mr1yBGDbHG2kJfR
