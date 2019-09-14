@@ -16,7 +16,7 @@ type About struct {
 }
 
 // Version holds the bot's version number
-const Version string = "1.0.3"
+const Version string = "1.0.4"
 
 // InitAbout initialized the about command.
 func InitAbout() About {
@@ -69,6 +69,16 @@ func (c About) Register() *aurora.Command {
 					{
 						Name:  "Roles",
 						Value: lib.JoinString(roles, ", "),
+					},
+					{
+						Name:   "Source",
+						Value:  "https://github.com/pazuzu156/persephone",
+						Inline: true,
+					},
+					{
+						Name:   "Website",
+						Value:  "https://persephonebot.net",
+						Inline: true,
 					},
 				},
 				Footer: f, Timestamp: t,
