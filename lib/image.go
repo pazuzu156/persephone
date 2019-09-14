@@ -17,7 +17,7 @@ import (
 
 // NoArtistURL is the URL to a blank image for no artist images found
 // on metal archives.
-const NoArtistURL = "https://cdn.kalebklein.com/images/bm.png"
+const NoArtistURL = "https://cdn.persephonebot.net/images/bm.png"
 
 // GetExt returns the extension of a given file name
 func GetExt(filename string) string {

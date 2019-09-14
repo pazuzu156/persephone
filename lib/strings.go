@@ -34,6 +34,10 @@ func JoinString(strs []string, char string) string {
 
 // GenAvatarURL generates a URL used to get a user avatar.
 func GenAvatarURL(user *disgord.User) string {
+	if user.Avatar == nil {
+		return NoArtistURL
+	}
+
 	return fmt.Sprintf("https://cdn.discordapp.com/avatars/%s/%s.png", user.ID.String(), *user.Avatar)
 }
 
