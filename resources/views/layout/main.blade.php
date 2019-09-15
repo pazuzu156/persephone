@@ -17,7 +17,8 @@
                 </button>
                 <div class="collapse navbar-collapse" id="navbarDropMenu">
                     <div class="navbar-nav ml-auto">
-                        <a href="{{ url('/') }}" class="nav-link nav-item active">Home</a>
+                        <a href="{{ url('/') }}" class="nav-link nav-item">Home</a>
+                        <a href="{{ url('/help') }}" class="nav-link nav-item">Documentation</a>
                         @if(Auth::check())
                             <div class="dropdown">
                                 <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
