@@ -49,11 +49,16 @@ func (c Taste) Register() *aurora.Command {
 			}
 
 			if user == nil {
-				dbu := database.GetUserFromString(ctx.Args[0])
+				// TODO: bug with string usernames....
+				// dbu := database.GetUserFromString(ctx.Args[0])
 
-				if dbu.Username != "" {
-					user, _ = ctx.Aurora.GetUser(dbu.GetDiscordID())
-				}
+				// if dbu.Username != "" {
+				// 	user, _ = ctx.Aurora.GetUser(dbu.GetDiscordID())
+				// }
+
+				ctx.Message.Reply(ctx.Aurora, "You need to supply a user to taste!")
+
+				return
 			}
 
 			if user.ID == ctx.Message.Author.ID {

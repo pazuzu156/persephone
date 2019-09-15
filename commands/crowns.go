@@ -72,14 +72,25 @@ func (c Crowns) Register() *aurora.Command {
 				}
 
 				if user == nil {
-					dbu := database.GetUserFromString(arg)
+					// TODO: bug with string usernames....
+					// dbu := database.GetUserFromString(ctx.Args[0])
 
-					if dbu.Username != "" {
-						user, _ = ctx.Aurora.GetUser(dbu.GetDiscordID())
-					} else {
-						user = ctx.Message.Author
-					}
+					// if dbu.Username != "" {
+					// 	user, _ = ctx.Aurora.GetUser(dbu.GetDiscordID())
+					// }
+
+					user = ctx.Message.Author
 				}
+
+				// if user == nil {
+				// 	dbu := database.GetUserFromString(arg)
+
+				// 	if dbu.Username != "" {
+				// 		user, _ = ctx.Aurora.GetUser(dbu.GetDiscordID())
+				// 	} else {
+				// 		user = ctx.Message.Author
+				// 	}
+				// }
 				c.displayCrowns(ctx, user, page)
 			}
 		} else {
