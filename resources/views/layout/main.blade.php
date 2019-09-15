@@ -19,13 +19,6 @@
                     <div class="navbar-nav ml-auto">
                         <a href="{{ url('/') }}" class="nav-link nav-item active">Home</a>
                         @if(Auth::check())
-                            @php
-                                $discord = new RestCord\DiscordClient([
-                                    'token' => Auth::user()->discord_token,
-                                    'tokenType' => 'OAuth',
-                                ]);
-                                $user = $discord->user->getCurrentUser();
-                            @endphp
                             <div class="dropdown">
                                 <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
                                     {{ $user->username }}

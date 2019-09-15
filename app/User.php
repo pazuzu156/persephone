@@ -17,6 +17,7 @@ class User extends Authenticatable
      */
     protected $fillable = [
         'username', 'email', 'discord_id',
-        'discord_token', 'lastfm', 'lastfm_token',
+        'discord_token', 'discord_refresh_token',
+        'lastfm', 'lastfm_token',
     ];
 }

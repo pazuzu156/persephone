@@ -46,6 +46,8 @@ Route::name('auth.')->prefix('auth')->group(function ($route) {
     $route->get('/complete', function () {
         return view('auth.complete');
     });
+
+    $route->get('/reauth', 'Auth\LoginController@getReauthDiscord')->name('reauthDiscord');
 });
 
 Route::name('auth.api.')->group(function ($route) {
