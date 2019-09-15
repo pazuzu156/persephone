@@ -98,8 +98,8 @@ func (c Taste) Register() *aurora.Command {
 					descar = append(descar, &disgord.EmbedField{
 						Name: match.UserArtistData.Name,
 						Value: fmt.Sprintf("%s plays - %s plays",
-							match.UserArtistData.PlayCount,
 							match.AuthorArtistData.PlayCount,
+							match.UserArtistData.PlayCount,
 						),
 						Inline: true,
 					})
