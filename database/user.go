@@ -10,14 +10,15 @@ import (
 
 // Users object.
 type Users struct {
-	ID            int64 `db:"pk"`
-	Username      string
-	Email         string
-	DiscordID     uint64 `db:"unique"`
-	DiscordToken  string
-	Lastfm        string
-	LastfmToken   string
-	RememberToken *string
+	ID                  int64 `db:"pk"`
+	Username            string
+	Email               string
+	DiscordID           uint64 `db:"unique"`
+	DiscordToken        string
+	DiscordRefreshToken string
+	Lastfm              string
+	LastfmToken         string
+	RememberToken       *string
 	Time
 }
 
