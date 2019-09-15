@@ -62,26 +62,6 @@ class LoginController extends Controller
                 return view('auth.error')->with('reason', 'An internal server error ocurred. You\'ll have to try the process again');
             }
 
-            /**
-             * Broken code
-             * // $user = User::where('discord_id', '=', $r->id);
-             *
-             * // if ($user->count()) {
-             * //     $user = $user->first();
-             *
-             * //     if (isset($user->lastfm)) {
-             * //         if (Auth::loginUsingId($user->id)) {
-             * //             return redirect()->route('home')->with([
-             * //                 'alert' => 'success',
-             * //                 'message' => 'You have successfully logged in.',
-             * //             ]);
-             * //         }
-             *
-             * //         return view('auth.error')->with('reason', 'There was an issue logging you in. Please try again later');
-             * //     }
-             * // }
-             */
-
             $discord = new DiscordClient([
                 'token' => $r->token,
                 'tokenType' => 'OAuth',
