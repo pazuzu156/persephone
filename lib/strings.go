@@ -1,6 +1,7 @@
 package lib
 
 import (
+	"errors"
 	"fmt"
 	"reflect"
 	"strconv"
@@ -64,8 +65,18 @@ func GenerateMessageURL(guildID disgord.Snowflake, msg *disgord.Message) string 
 }
 
 // GetDiscordIDFromMention gets the snowflake id from a mention.
-func GetDiscordIDFromMention(mention string) disgord.Snowflake {
-	did, _ := strconv.Atoi(strings.TrimLeft(strings.TrimLeft(strings.TrimRight(mention, ">"), "<@"), "!"))
+func GetDiscordIDFromMention(mention string) (ID disgord.Snowflake, err error) {
+	if IsMention(mention) {
+		did, _ := strconv.Atoi(strings.TrimLeft(strings.TrimLeft(strings.TrimRight(mention, ">"), "<@"), "!"))
+		ID = disgord.NewSnowflake(uint64(did))
+	} else {
+		err = errors.New("given string is not a Discord mention")
+	}
 
-	return disgord.NewSnowflake(uint64(did))
+	return
+}
+
+// IsMention checks if a string is a discord mention.
+func IsMention(mention string) bool {
+	return strings.HasPrefix(mention, "<@")
 }
