@@ -51,22 +51,13 @@ func (c Crowns) Register() *aurora.Command {
 				err  error
 			)
 
-			// loop through arguments
-			// they don't have a particular order
 			for _, arg := range ctx.Args {
-				// Check if a user is supplied
-				if strings.Contains(arg, "<@") {
-					user, err = ctx.Aurora.GetUser(lib.GetDiscordIDFromMention(arg))
-
-					if err != nil {
-						ctx.Message.Reply(ctx.Aurora, "That user hasn't logged in to the bot yet.")
-
-						return
-					}
+				if strings.HasPrefix(arg, "<@") {
+					mention, _ := lib.GetDiscordIDFromMention(arg)
+					user, _ = ctx.Aurora.GetUser(mention)
 				}
 
-				// check if a page number is requested
-				if strings.Contains(arg, "page:") {
+				if strings.HasPrefix(arg, "page:") {
 					a := strings.Split(arg, ":")
 
 					if a[1] != "" {
@@ -81,14 +72,18 @@ func (c Crowns) Register() *aurora.Command {
 				}
 
 				if user == nil {
-					user = ctx.Message.Author
+					dbu := database.GetUserFromString(arg)
+
+					if dbu.Username != "" {
+						user, _ = ctx.Aurora.GetUser(dbu.GetDiscordID())
+					} else {
+						user = ctx.Message.Author
+					}
 				}
-
-				c.displayCrowns(ctx, user, page) // display crowns
-
+				c.displayCrowns(ctx, user, page)
 			}
 		} else {
-			c.displayCrowns(ctx, ctx.Message.Author, 1) // display crowns
+			c.displayCrowns(ctx, ctx.Message.Author, 1)
 		}
 
 	}
@@ -98,6 +93,12 @@ func (c Crowns) Register() *aurora.Command {
 
 // displayCrowns displays all crowns for users logged in with lastfm.
 func (c Crowns) displayCrowns(ctx aurora.Context, user *disgord.User, page int) {
+	if user == nil {
+		ctx.Message.Reply(ctx.Aurora, "That username couldn't be found")
+
+		return
+	}
+
 	crowns := database.GetUser(user).Crowns() // get crowns
 
 	if len(crowns) > 0 {
@@ -153,5 +154,9 @@ func (c Crowns) displayCrowns(ctx aurora.Context, user *disgord.User, page int) 
 		}
 
 		ctx.Message.Reply(ctx.Aurora, fmt.Sprintf("%s Invalid page count", ctx.Message.Author.Mention()))
+
+		return
 	}
+
+	ctx.Message.Reply(ctx.Aurora, "That user hasn't logged in to the bot yet.")
 }

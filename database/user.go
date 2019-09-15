@@ -62,6 +62,23 @@ func GetUInt64ID(user *disgord.User) uint64 {
 	return uint64(did)
 }
 
+func GetUserFromString(username string) Users {
+	var dbu []Users
+	db.Select(&dbu, db.Where("username", "=", username))
+
+	if len(dbu) > 0 {
+		return dbu[0]
+	}
+
+	db.Select(&dbu, db.Where("lastfm", "=", username))
+
+	if len(dbu) > 0 {
+		return dbu[0]
+	}
+
+	return Users{}
+}
+
 // Crown is a relational function to get crowns model
 func (c Users) Crown(id int64) Crowns {
 	crowns := GetCrownsList()
@@ -86,4 +103,8 @@ func (c Users) Crowns() (crowns []Crowns) {
 	}
 
 	return
+}
+
+func (c Users) GetDiscordID() disgord.Snowflake {
+	return disgord.NewSnowflake(c.DiscordID)
 }
