@@ -120,8 +120,6 @@ func (c Whoknows) displayWhoKnows(ctx aurora.Context, artist lastfm.ArtistGetInf
 					crowns := database.GetCrownsList()
 					now := time.Now()
 
-					fmt.Println(user)
-
 					updated := false
 					for _, crown := range crowns {
 						if artist.Name == crown.Artist {
