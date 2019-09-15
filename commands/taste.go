@@ -56,6 +56,12 @@ func (c Taste) Register() *aurora.Command {
 				}
 			}
 
+			if user.ID == ctx.Message.Author.ID {
+				ctx.Message.Reply(ctx.Aurora, "You cannot taste yourself")
+
+				return
+			}
+
 			dba := database.GetUser(ctx.Message.Author)
 			dbu := database.GetUser(user)
 			authorData, _ := c.Lastfm.User.GetTopArtists(lastfm.P{"user": dba.Lastfm, "period": "overall", "limit": "150"})
