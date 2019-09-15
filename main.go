@@ -93,7 +93,7 @@ func init() {
 	// aurora.Use(commands.InitPing().Register())
 	aurora.Use(commands.InitPlays().Register())
 	aurora.Use(commands.InitRegister().Register())
-	// aurora.Use(commands.InitTaste().Register())
+	aurora.Use(commands.InitTaste().Register())
 	aurora.Use(commands.InitWhoknows().Register())
 	aurora.Use(commands.InitYoutube().Register())
 }

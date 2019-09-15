@@ -66,6 +66,32 @@ type TopTrack struct {
 	} `xml:"image"`
 }
 
+type Artist struct {
+	Rank       string `xml:"rank,attr"`
+	Name       string `xml:"name"`
+	PlayCount  string `xml:"playcount"`
+	Mbid       string `xml:"mbid"`
+	URL        string `xml:"url"`
+	Streamable string `xml:"streamable"`
+	Images     []struct {
+		Size string `xml:"size,attr"`
+		URL  string `xml:",chardata"`
+	} `xml:"image"`
+}
+
+type Artists []struct {
+	Rank       string `xml:"rank,attr"`
+	Name       string `xml:"name"`
+	PlayCount  string `xml:"playcount"`
+	Mbid       string `xml:"mbid"`
+	URL        string `xml:"url"`
+	Streamable string `xml:"streamable"`
+	Images     []struct {
+		Size string `xml:"size,attr"`
+		URL  string `xml:",chardata"`
+	} `xml:"image"`
+}
+
 // AlbumPosition holds album art positions.
 type AlbumPosition struct {
 	X      int
