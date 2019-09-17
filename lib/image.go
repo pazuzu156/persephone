@@ -9,9 +9,11 @@ import (
 	"os"
 	"strings"
 
+	"github.com/andersfylling/disgord"
 	"github.com/cavaliercoder/grab"
 	"github.com/fogleman/gg"
 	"github.com/gocolly/colly"
+	"github.com/pazuzu156/aurora"
 	"github.com/pazuzu156/lastfm-go"
 )
 
@@ -27,7 +29,7 @@ func GetExt(filename string) string {
 }
 
 // OpenImage returns an image.Image instance of a given file
-func OpenImage(filename string) image.Image {
+func OpenImage(filename string) (image.Image, *os.File) {
 	in, _ := os.Open(filename)
 	defer in.Close()
 	var img image.Image
@@ -44,7 +46,21 @@ func OpenImage(filename string) image.Image {
 		break
 	}
 
-	return img
+	return img, in
+}
+
+// SaveImage saves a generated image.
+func SaveImage(dc *gg.Context, ctx aurora.Context, name string) (*os.File, error) {
+	filename := fmt.Sprintf(LocGet("temp/%s.png"), TagImageName(ctx, name))
+	dc.SavePNG(filename)
+	file, err := os.Open(filename)
+
+	return file, err
+}
+
+// TagImageName generates an image filename to uniquely identify it.
+func TagImageName(ctx aurora.Context, name string) string {
+	return fmt.Sprintf("%s_%s", ctx.Message.Author.ID.String(), name)
 }
 
 // BrandImage tags an image with a discord link and bot's name
@@ -89,13 +105,20 @@ func GetArtistImage(artist lastfm.ArtistGetInfo) image.Image {
 
 	if imgsrc != NoArtistURL {
 		res, _ := grab.Get(LocGet("temp/"), imgsrc)
-		img := OpenImage(res.Filename)
+		img, _ := OpenImage(res.Filename)
 
 		os.Remove(res.Filename)
 
 		return img
 	}
-	aimg := OpenImage(LocGet("static/images/bm.png"))
+	aimg, _ := OpenImage(LocGet("static/images/bm.png"))
 
 	return aimg
+}
+
+// GetAvatarImage returns an image.Image of a user's avatar.
+func GetAvatarImage(user *disgord.User) (image.Image, *os.File) {
+	res, _ := grab.Get(LocGet("temp/"), GenAvatarURL(user))
+
+	return OpenImage(res.Filename)
 }
