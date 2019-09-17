@@ -21,11 +21,11 @@ type ${COMMAND_NAME^} struct{ Command }
 // Init${COMMAND_NAME^} initializes the ${COMMAND_NAME,,} command.
 func Init${COMMAND_NAME^}() ${COMMAND_NAME^} {
     return ${COMMAND_NAME^}{Init(&CommandItem{
-        Name: "${COMMAND_NAME,,}",
+        Name:        "${COMMAND_NAME,,}",
         Description: "${COMMAND_DESCRIPTION}",
-        Aliases: []string{},
-        Usage: "${COMMAND_NAME,,} ...",
-        Parameters: []Parameter{},
+        Aliases:     []string{},
+        Usage:       "${COMMAND_NAME,,} ...",
+        Parameters:  []Parameter{},
     })}
 }
 

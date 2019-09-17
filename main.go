@@ -96,4 +96,6 @@ func init() {
 	aurora.Use(commands.InitTaste().Register())
 	aurora.Use(commands.InitWhoknows().Register())
 	aurora.Use(commands.InitYoutube().Register())
+
+	// aurora.Use(commands.InitNewtaste().Register())
 }
