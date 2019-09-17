@@ -27,6 +27,7 @@ func InitTaste() Taste {
 	})}
 }
 
+// MatchData holds data of matched artists for caller and recipient.
 type MatchData struct {
 	UserArtistData   fm.Artist
 	AuthorArtistData fm.Artist

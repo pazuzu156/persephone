@@ -12,6 +12,7 @@ import (
 	"github.com/cavaliercoder/grab"
 	"github.com/fogleman/gg"
 	"github.com/gocolly/colly"
+	"github.com/pazuzu156/aurora"
 	"github.com/pazuzu156/lastfm-go"
 )
 
@@ -45,6 +46,14 @@ func OpenImage(filename string) image.Image {
 	}
 
 	return img
+}
+
+func SaveImage(dc *gg.Context, ctx aurora.Context, name string) error {
+	return dc.SavePNG(LocGet(fmt.Sprintf("temp/%s.png", TagImageName(ctx, name))))
+}
+
+func TagImageName(ctx aurora.Context, name string) string {
+	return fmt.Sprintf("%s_%s", ctx.Message.Author.ID.String(), name)
 }
 
 // BrandImage tags an image with a discord link and bot's name

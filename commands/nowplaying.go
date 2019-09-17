@@ -178,8 +178,12 @@ func (c Nowplaying) Register() *aurora.Command {
 
 			lib.BrandImage(dc) // brand image
 
-			dc.SavePNG(lib.LocGet("temp/" + ctx.Message.Author.ID.String() + "_np.png"))      // save generated image
-			r, _ := os.Open(lib.LocGet("temp/" + ctx.Message.Author.ID.String() + "_np.png")) // open generated image into memory
+			// lib.SaveImage(dc, lib.TagImageName(ctx, "np"))
+			lib.SaveImage(dc, ctx, "np")
+			r, _ := os.Open(fmt.Sprintf("temp/%s.png", lib.TagImageName(ctx, "np")))
+
+			// dc.SavePNG(lib.LocGet("temp/" + ctx.Message.Author.ID.String() + "_np.png"))      // save generated image
+			// r, _ := os.Open(lib.LocGet("temp/" + ctx.Message.Author.ID.String() + "_np.png")) // open generated image into memory
 
 			// create new message with the image + embed with a link to the user's Last.fm profile page
 			ctx.Aurora.CreateMessage(ctx.Message.ChannelID, &disgord.CreateMessageParams{
@@ -195,7 +199,7 @@ func (c Nowplaying) Register() *aurora.Command {
 
 			// Close and delete the image
 			r.Close()
-			os.Remove(lib.LocGet("temp/" + ctx.Message.Author.ID.String() + "_np.png"))
+			os.Remove(lib.LocGet("temp/" + lib.TagImageName(ctx, "np")))
 		} else {
 			ctx.Message.Reply(ctx.Aurora, err.Error())
 		}
