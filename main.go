@@ -6,7 +6,7 @@ import (
 	"persephone/lib"
 
 	"github.com/andersfylling/disgord"
-	"github.com/pazuzu156/aurora"
+	"github.com/pazuzu156/atlas"
 )
 
 var (
@@ -19,7 +19,7 @@ func main() {
 	if migrate {
 		database.Migrate()
 	} else {
-		client := aurora.New(&aurora.Options{
+		client := atlas.New(&atlas.Options{
 			DisgordOptions: &disgord.Config{
 				BotToken: config.Token,
 				Logger:   disgord.DefaultLogger(false),
@@ -34,7 +34,7 @@ func main() {
 			OwnerID: config.BotOwner,
 		})
 
-		client.Use(aurora.DefaultLogger())
+		client.Use(atlas.DefaultLogger())
 		client.GetPrefix = func(m *disgord.Message) string {
 			return config.Prefix
 		}
@@ -82,21 +82,21 @@ func main() {
 
 // Initializes all commands (register them here)
 func init() {
-	aurora.Use(commands.InitAbout().Register())
-	aurora.Use(commands.InitBandinfo().Register())
-	// aurora.Use(commands.InitBand().Register())
-	aurora.Use(commands.InitCrowns().Register())
-	aurora.Use(commands.InitHelp().Register())
-	aurora.Use(commands.InitUnregister().Register())
-	aurora.Use(commands.InitNowPlaying().Register())
-	aurora.Use(commands.InitRecent().Register())
-	// aurora.Use(commands.InitPing().Register())
-	aurora.Use(commands.InitPlays().Register())
-	aurora.Use(commands.InitRegister().Register())
-    aurora.Use(commands.InitTaste().Register())
-    aurora.Use(commands.InitTopCrowns().Register())
-	aurora.Use(commands.InitWhoknows().Register())
-	aurora.Use(commands.InitYoutube().Register())
+	atlas.Use(commands.InitAbout().Register())
+	atlas.Use(commands.InitBandinfo().Register())
+	// atlas.Use(commands.InitBand().Register())
+	atlas.Use(commands.InitCrowns().Register())
+	atlas.Use(commands.InitHelp().Register())
+	atlas.Use(commands.InitUnregister().Register())
+	atlas.Use(commands.InitNowPlaying().Register())
+	atlas.Use(commands.InitRecent().Register())
+	// atlas.Use(commands.InitPing().Register())
+	atlas.Use(commands.InitPlays().Register())
+	atlas.Use(commands.InitRegister().Register())
+	atlas.Use(commands.InitTaste().Register())
+	atlas.Use(commands.InitTopCrowns().Register())
+	atlas.Use(commands.InitWhoknows().Register())
+	atlas.Use(commands.InitYoutube().Register())
 
-	// aurora.Use(commands.InitNewtaste().Register())
+	// atlas.Use(commands.InitNewtaste().Register())
 }

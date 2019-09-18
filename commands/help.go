@@ -6,7 +6,7 @@ import (
 	"strings"
 
 	"github.com/andersfylling/disgord"
-	"github.com/pazuzu156/aurora"
+	"github.com/pazuzu156/atlas"
 )
 
 // Help command.
@@ -30,8 +30,8 @@ func InitHelp() Help {
 }
 
 // Register registers and runs the help command.
-func (c Help) Register() *aurora.Command {
-	c.CommandInterface.Run = func(ctx aurora.Context) {
+func (c Help) Register() *atlas.Command {
+	c.CommandInterface.Run = func(ctx atlas.Context) {
 		if len(ctx.Args) > 0 {
 			argcmd := ctx.Args[0]
 
@@ -62,7 +62,7 @@ func (c Help) Register() *aurora.Command {
 			}
 
 			f, t := c.embedFooter(ctx)
-			ctx.Aurora.CreateMessage(ctx.Message.ChannelID, &disgord.CreateMessageParams{
+			ctx.Atlas.CreateMessage(ctx.Message.ChannelID, &disgord.CreateMessageParams{
 				Embed: &disgord.Embed{
 					Fields: []*disgord.EmbedField{
 						{
@@ -85,7 +85,7 @@ func (c Help) Register() *aurora.Command {
 }
 
 // processHelp processes help info defined in each command for command specific help pages
-func (c Help) processHelp(ctx aurora.Context, command CommandItem) {
+func (c Help) processHelp(ctx atlas.Context, command CommandItem) {
 	embedFields := []*disgord.EmbedField{
 		{
 			Name:  fmt.Sprintf("%s Help", lib.Ucwords(command.Name)),
@@ -150,7 +150,7 @@ func (c Help) processHelp(ctx aurora.Context, command CommandItem) {
 	}
 
 	f, t := c.embedFooter(ctx)
-	ctx.Aurora.CreateMessage(ctx.Message.ChannelID, &disgord.CreateMessageParams{
+	ctx.Atlas.CreateMessage(ctx.Message.ChannelID, &disgord.CreateMessageParams{
 		Embed: &disgord.Embed{
 			Fields: embedFields,
 			Color:  0x007FFF,

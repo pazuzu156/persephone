@@ -3,7 +3,7 @@ package commands
 import (
 	"fmt"
 
-	"github.com/pazuzu156/aurora"
+	"github.com/pazuzu156/atlas"
 )
 
 // Ping is a simple testing command.
@@ -26,13 +26,13 @@ func InitPing() Ping {
 }
 
 // Register registers and runs the ping command.
-func (c Ping) Register() *aurora.Command {
-	c.CommandInterface.Run = func(ctx aurora.Context) {
+func (c Ping) Register() *atlas.Command {
+	c.CommandInterface.Run = func(ctx atlas.Context) {
 		if len(ctx.Args) > 0 {
 			fmt.Println(ctx.Message.Content)
-			ctx.Message.Reply(ctx.Aurora, ctx.Message.Content)
+			ctx.Message.Reply(ctx.Atlas, ctx.Message.Content)
 		} else {
-			ctx.Message.Reply(ctx.Aurora, "Pong")
+			ctx.Message.Reply(ctx.Atlas, "Pong")
 		}
 	}
 

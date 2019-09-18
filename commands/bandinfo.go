@@ -6,7 +6,7 @@ import (
 	"persephone/lib"
 
 	"github.com/andersfylling/disgord"
-	"github.com/pazuzu156/aurora"
+	"github.com/pazuzu156/atlas"
 	"github.com/pazuzu156/lastfm-go"
 )
 
@@ -25,15 +25,15 @@ func InitBandinfo() Bandinfo {
 }
 
 // Register registers and runs the bandinfo command.
-func (c Bandinfo) Register() *aurora.Command {
-	c.CommandInterface.Run = func(ctx aurora.Context) {
-		// ctx.Message.Reply(ctx.Aurora, "Hello, Bandinfo!")
+func (c Bandinfo) Register() *atlas.Command {
+	c.CommandInterface.Run = func(ctx atlas.Context) {
+		// ctx.Message.Reply(ctx.Atlas, "Hello, Bandinfo!")
 		if len(ctx.Args) > 0 {
 			artistName := lib.JoinString(ctx.Args, " ")
 			artist, err := c.Lastfm.Artist.GetInfo(lastfm.P{"artist": artistName})
 
 			if err != nil {
-				ctx.Message.Reply(ctx.Aurora, "That artist could not be found")
+				ctx.Message.Reply(ctx.Atlas, "That artist could not be found")
 
 				return
 			}
@@ -43,7 +43,7 @@ func (c Bandinfo) Register() *aurora.Command {
 			np, err := fm.GetNowPlayingTrack(ctx.Message.Author, c.Lastfm)
 
 			if err != nil {
-				ctx.Message.Reply(ctx.Aurora, "You're not currently listening to anything")
+				ctx.Message.Reply(ctx.Atlas, "You're not currently listening to anything")
 
 				return
 			}
@@ -56,9 +56,9 @@ func (c Bandinfo) Register() *aurora.Command {
 	return c.CommandInterface
 }
 
-func (c Bandinfo) displayBandInfo(ctx aurora.Context, artist lastfm.ArtistGetInfo) {
+func (c Bandinfo) displayBandInfo(ctx atlas.Context, artist lastfm.ArtistGetInfo) {
 	f, t := c.embedFooter(ctx)
-	ctx.Aurora.CreateMessage(ctx.Message.ChannelID, &disgord.CreateMessageParams{
+	ctx.Atlas.CreateMessage(ctx.Message.ChannelID, &disgord.CreateMessageParams{
 		Embed: &disgord.Embed{
 			Title: artist.Name,
 			URL:   artist.URL,

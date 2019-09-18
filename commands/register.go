@@ -6,7 +6,7 @@ import (
 	"io/ioutil"
 	"net/http"
 
-	"github.com/pazuzu156/aurora"
+	"github.com/pazuzu156/atlas"
 )
 
 // Register command.
@@ -30,13 +30,13 @@ type RegisterResponse struct {
 }
 
 // Register registers and runs the login command.
-func (c Register) Register() *aurora.Command {
-	c.CommandInterface.Run = func(ctx aurora.Context) {
+func (c Register) Register() *atlas.Command {
+	c.CommandInterface.Run = func(ctx atlas.Context) {
 
 		res, err := http.Get(fmt.Sprintf("%s/login/request_token/%s", config.Website.APIURL, ctx.Message.Author.ID.String()))
 
 		if err != nil {
-			ctx.Message.Reply(ctx.Aurora, "An error occurred when attempting to communitate with the authentication server. Please try again later")
+			ctx.Message.Reply(ctx.Atlas, "An error occurred when attempting to communitate with the authentication server. Please try again later")
 
 			return
 		}
@@ -48,15 +48,15 @@ func (c Register) Register() *aurora.Command {
 		json.Unmarshal(body, &lr)
 
 		if lr.Error == true {
-			ctx.Message.Reply(ctx.Aurora, lr.ErrorMessage)
+			ctx.Message.Reply(ctx.Atlas, lr.ErrorMessage)
 
 			return
 		}
 
 		url := fmt.Sprintf("%s/auth/authenticate/%s/%s", config.Website.AppURL, ctx.Message.Author.ID.String(), lr.Token)
 
-		ctx.Message.Reply(ctx.Aurora, fmt.Sprintf("Your login request was received. Use this link to begin the login process: %s", url))
-		ctx.Message.Reply(ctx.Aurora, fmt.Sprintf("This link %s", lr.ExpiresString))
+		ctx.Message.Reply(ctx.Atlas, fmt.Sprintf("Your login request was received. Use this link to begin the login process: %s", url))
+		ctx.Message.Reply(ctx.Atlas, fmt.Sprintf("This link %s", lr.ExpiresString))
 	}
 
 	return c.CommandInterface

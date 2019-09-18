@@ -14,7 +14,7 @@ package commands
 // 	"github.com/cavaliercoder/grab"
 // 	"github.com/fogleman/gg"
 // 	"github.com/nfnt/resize"
-// 	"github.com/pazuzu156/aurora"
+// 	"github.com/pazuzu156/atlas"
 // 	"github.com/pazuzu156/lastfm-go"
 // 	"golang.org/x/text/language"
 // 	"golang.org/x/text/message"
@@ -149,12 +149,12 @@ package commands
 // }
 
 // // Register registers and runs the help command.
-// func (c Band) Register() *aurora.Command {
-// 	c.CommandInterface.Run = func(ctx aurora.Context) {
+// func (c Band) Register() *atlas.Command {
+// 	c.CommandInterface.Run = func(ctx atlas.Context) {
 // 		// this command takes a really long time to complete
 // 		// this message lets the user know that the bot is working
-// 		tempmsg, _ := ctx.Message.Reply(ctx.Aurora, "Please wait while the artist image is generated...")
-// 		defer ctx.Aurora.DeleteMessage(tempmsg.ChannelID, tempmsg.ID) // delete message when command completes
+// 		tempmsg, _ := ctx.Message.Reply(ctx.Atlas, "Please wait while the artist image is generated...")
+// 		defer ctx.Atlas.DeleteMessage(tempmsg.ChannelID, tempmsg.ID) // delete message when command completes
 
 // 		// Want to check if an artist is supplied or not
 // 		if len(ctx.Args) > 0 {
@@ -162,7 +162,7 @@ package commands
 // 			artist, err := c.getArtistInfo(artistName, ctx.Message.Author)
 
 // 			if err != nil {
-// 				ctx.Message.Reply(ctx.Aurora, err.Error())
+// 				ctx.Message.Reply(ctx.Atlas, err.Error())
 
 // 				return
 // 			}
@@ -173,7 +173,7 @@ package commands
 // 			track, err := fm.GetNowPlayingTrack(ctx.Message.Author, c.Lastfm)
 
 // 			if err != nil {
-// 				ctx.Message.Reply(ctx.Aurora, err.Error())
+// 				ctx.Message.Reply(ctx.Atlas, err.Error())
 
 // 				return
 // 			}
@@ -181,7 +181,7 @@ package commands
 // 			artist, err := c.getArtistInfo(track.Artist.Name, ctx.Message.Author) // get full artist info
 
 // 			if err != nil {
-// 				ctx.Message.Reply(ctx.Aurora, "Couldn't find that artist")
+// 				ctx.Message.Reply(ctx.Atlas, "Couldn't find that artist")
 // 			}
 
 // 			c.displayArtistInfo(ctx, artist) // display info with current artist
@@ -191,12 +191,12 @@ package commands
 // 	return c.CommandInterface
 // }
 
-// func (c Band) displayArtistInfo(ctx aurora.Context, artist lastfm.ArtistGetInfo) {
+// func (c Band) displayArtistInfo(ctx atlas.Context, artist lastfm.ArtistGetInfo) {
 // 	albums := c.getAlbumsList(ctx, artist)      // gets users albums from artist
 // 	tracks, err := c.getTracksList(ctx, artist) // gets users tracks from artist
 
 // 	if err != nil {
-// 		ctx.Message.Reply(ctx.Aurora, err.Error())
+// 		ctx.Message.Reply(ctx.Atlas, err.Error())
 
 // 		return
 // 	}
@@ -308,7 +308,7 @@ package commands
 // 	dc.SavePNG(lib.LocGet("temp/" + ctx.Message.Author.ID.String() + "_band.png"))
 // 	r, _ := os.Open(lib.LocGet("temp/" + ctx.Message.Author.ID.String() + "_band.png"))
 
-// 	ctx.Aurora.CreateMessage(ctx.Message.ChannelID, &disgord.CreateMessageParams{
+// 	ctx.Atlas.CreateMessage(ctx.Message.ChannelID, &disgord.CreateMessageParams{
 // 		Files: []disgord.CreateMessageFileParams{
 // 			{
 // 				FileName: r.Name(),
@@ -328,7 +328,7 @@ package commands
 // }
 
 // // getAlbumsList gets albums for a user for a given artist.
-// func (c Band) getAlbumsList(ctx aurora.Context, artist lastfm.ArtistGetInfo) []fm.TopAlbum {
+// func (c Band) getAlbumsList(ctx atlas.Context, artist lastfm.ArtistGetInfo) []fm.TopAlbum {
 // 	user := database.GetUser(ctx.Message.Author)
 // 	// kinda gotta get as many albums as possible. we'll use totalPages to make more queries if need be
 // 	alist, _ := c.Lastfm.User.GetTopAlbums(lastfm.P{"user": user.Lastfm, "limit": "1000"}) // limit max = 1000
@@ -357,7 +357,7 @@ package commands
 // }
 
 // // getTracksList gets the users top tracks for a given artist.
-// func (c Band) getTracksList(ctx aurora.Context, artist lastfm.ArtistGetInfo) ([]fm.TopTrack, error) {
+// func (c Band) getTracksList(ctx atlas.Context, artist lastfm.ArtistGetInfo) ([]fm.TopTrack, error) {
 // 	// this method works like getAlbumsList, won't comment
 // 	user := database.GetUser(ctx.Message.Author)
 // 	tlist, _ := c.Lastfm.User.GetTopTracks(lastfm.P{"user": user.Lastfm, "limit": "1000"})
