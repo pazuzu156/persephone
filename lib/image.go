@@ -51,7 +51,7 @@ func OpenImage(filename string) (image.Image, *os.File) {
 
 // SaveImage saves a generated image.
 func SaveImage(dc *gg.Context, ctx aurora.Context, name string) (*os.File, error) {
-	filename := fmt.Sprintf("temp/%s.png", TagImageName(ctx, name))
+	filename := fmt.Sprintf(LocGet("temp/%s.png"), TagImageName(ctx, name))
 	dc.SavePNG(filename)
 	file, err := os.Open(filename)
 
