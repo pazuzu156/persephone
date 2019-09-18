@@ -91,7 +91,7 @@ func (c Plays) Register() *aurora.Command {
 						break
 					}
 				} else {
-					if strings.ToLower(ctx.Args[0]) == "band" { // show play count for current band
+					if strings.ToLower(ctx.Args[0]) == "artist" { // show play count for current band
 						artist, _ := c.Lastfm.Artist.GetInfo(lastfm.P{"artist": np.Artist.Name, "username": database.GetUser(ctx.Message.Author).Lastfm})
 						plays, _ := strconv.Atoi(artist.Stats.UserPlays)
 
