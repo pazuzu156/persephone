@@ -13,7 +13,7 @@ import (
 	"github.com/cavaliercoder/grab"
 	"github.com/fogleman/gg"
 	"github.com/gocolly/colly"
-	"github.com/pazuzu156/aurora"
+	"github.com/pazuzu156/atlas"
 	"github.com/pazuzu156/lastfm-go"
 )
 
@@ -50,7 +50,7 @@ func OpenImage(filename string) (image.Image, *os.File) {
 }
 
 // SaveImage saves a generated image.
-func SaveImage(dc *gg.Context, ctx aurora.Context, name string) (*os.File, error) {
+func SaveImage(dc *gg.Context, ctx atlas.Context, name string) (*os.File, error) {
 	filename := fmt.Sprintf(LocGet("temp/%s.png"), TagImageName(ctx, name))
 	dc.SavePNG(filename)
 	file, err := os.Open(filename)
@@ -59,7 +59,7 @@ func SaveImage(dc *gg.Context, ctx aurora.Context, name string) (*os.File, error
 }
 
 // TagImageName generates an image filename to uniquely identify it.
-func TagImageName(ctx aurora.Context, name string) string {
+func TagImageName(ctx atlas.Context, name string) string {
 	return fmt.Sprintf("%s_%s", ctx.Message.Author.ID.String(), name)
 }
 

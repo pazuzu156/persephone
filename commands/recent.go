@@ -6,7 +6,7 @@ import (
 	"persephone/lib"
 
 	"github.com/andersfylling/disgord"
-	"github.com/pazuzu156/aurora"
+	"github.com/pazuzu156/atlas"
 )
 
 // Recent command.
@@ -21,8 +21,8 @@ func InitRecent() Recent {
 }
 
 // Register registers and runs the recent command.
-func (c Recent) Register() *aurora.Command {
-	c.CommandInterface.Run = func(ctx aurora.Context) {
+func (c Recent) Register() *atlas.Command {
+	c.CommandInterface.Run = func(ctx atlas.Context) {
 		recent, _ := fm.GetRecentTracks(ctx.Message.Author, c.Lastfm, "4")
 		var tracks []*disgord.EmbedField
 
@@ -45,7 +45,7 @@ func (c Recent) Register() *aurora.Command {
 			})
 
 			footer, time := c.embedFooter(ctx)
-			ctx.Aurora.CreateMessage(ctx.Message.ChannelID, &disgord.CreateMessageParams{
+			ctx.Atlas.CreateMessage(ctx.Message.ChannelID, &disgord.CreateMessageParams{
 				Embed: &disgord.Embed{
 					Title: "Recent Tracks",
 					Thumbnail: &disgord.EmbedThumbnail{

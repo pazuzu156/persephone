@@ -8,7 +8,7 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/pazuzu156/aurora"
+	"github.com/pazuzu156/atlas"
 	"github.com/pazuzu156/lastfm-go"
 )
 
@@ -42,8 +42,8 @@ Passing no value to a parameter will get the plays for said parameter using the 
 }
 
 // Register registers and runs the plays command.
-func (c Plays) Register() *aurora.Command {
-	c.CommandInterface.Run = func(ctx aurora.Context) {
+func (c Plays) Register() *atlas.Command {
+	c.CommandInterface.Run = func(ctx atlas.Context) {
 		np, _ := fm.GetNowPlayingTrack(ctx.Message.Author, c.Lastfm)
 		leave := false
 
@@ -60,15 +60,15 @@ func (c Plays) Register() *aurora.Command {
 						plays, _ := strconv.Atoi(artist.Stats.UserPlays)
 
 						if plays > 0 {
-							ctx.Message.Reply(ctx.Aurora, fmt.Sprintf("**%s** has scrobbled %s **%d** times", ctx.Message.Author.Username, artist.Name, plays))
+							ctx.Message.Reply(ctx.Atlas, fmt.Sprintf("**%s** has scrobbled %s **%d** times", ctx.Message.Author.Username, artist.Name, plays))
 						} else {
-							ctx.Message.Reply(ctx.Aurora, fmt.Sprintf("**%s** has not scrobbled this artist yet", ctx.Message.Author.Username))
+							ctx.Message.Reply(ctx.Atlas, fmt.Sprintf("**%s** has not scrobbled this artist yet", ctx.Message.Author.Username))
 						}
 						leave = true
 						break
 					case "album": // show play count for requested album
 						if len(as) != 3 {
-							ctx.Message.Reply(ctx.Aurora, "You need to provide all values to the album parameter!")
+							ctx.Message.Reply(ctx.Atlas, "You need to provide all values to the album parameter!")
 							leave = true
 						} else {
 							al := as[1]
@@ -77,9 +77,9 @@ func (c Plays) Register() *aurora.Command {
 							plays, _ := strconv.Atoi(album.UserPlayCount)
 
 							if plays > 0 {
-								ctx.Message.Reply(ctx.Aurora, fmt.Sprintf("**%s** has scrobbled %s by %s **%d** times", ctx.Message.Author.Username, album.Name, album.Artist, plays))
+								ctx.Message.Reply(ctx.Atlas, fmt.Sprintf("**%s** has scrobbled %s by %s **%d** times", ctx.Message.Author.Username, album.Name, album.Artist, plays))
 							} else {
-								ctx.Message.Reply(ctx.Aurora, fmt.Sprintf("**%s** has not scrobbled this album yet", ctx.Message.Author.Username))
+								ctx.Message.Reply(ctx.Atlas, fmt.Sprintf("**%s** has not scrobbled this album yet", ctx.Message.Author.Username))
 							}
 						}
 						leave = true
@@ -96,18 +96,18 @@ func (c Plays) Register() *aurora.Command {
 						plays, _ := strconv.Atoi(artist.Stats.UserPlays)
 
 						if plays > 0 {
-							ctx.Message.Reply(ctx.Aurora, fmt.Sprintf("**%s** has scrobbled %s **%d** times", ctx.Message.Author.Username, artist.Name, plays))
+							ctx.Message.Reply(ctx.Atlas, fmt.Sprintf("**%s** has scrobbled %s **%d** times", ctx.Message.Author.Username, artist.Name, plays))
 						} else {
-							ctx.Message.Reply(ctx.Aurora, fmt.Sprintf("**%s** has not scrobbled this artist yet", ctx.Message.Author.Username))
+							ctx.Message.Reply(ctx.Atlas, fmt.Sprintf("**%s** has not scrobbled this artist yet", ctx.Message.Author.Username))
 						}
 					} else if strings.ToLower(ctx.Args[0]) == "album" { // show play count for current album
 						album, _ := c.Lastfm.Album.GetInfo(lastfm.P{"artist": np.Artist.Name, "album": np.Album.Name, "username": database.GetUser(ctx.Message.Author).Lastfm})
 						plays, _ := strconv.Atoi(album.UserPlayCount)
 
 						if plays > 0 {
-							ctx.Message.Reply(ctx.Aurora, fmt.Sprintf("**%s** has scrobbled %s by %s **%d** times", ctx.Message.Author.Username, album.Name, album.Artist, plays))
+							ctx.Message.Reply(ctx.Atlas, fmt.Sprintf("**%s** has scrobbled %s by %s **%d** times", ctx.Message.Author.Username, album.Name, album.Artist, plays))
 						} else {
-							ctx.Message.Reply(ctx.Aurora, fmt.Sprintf("**%s** has not scrobbled this album yet", ctx.Message.Author.Username))
+							ctx.Message.Reply(ctx.Atlas, fmt.Sprintf("**%s** has not scrobbled this album yet", ctx.Message.Author.Username))
 						}
 					}
 				}
@@ -118,9 +118,9 @@ func (c Plays) Register() *aurora.Command {
 			plays, _ := strconv.Atoi(track.UserPlayCount)
 
 			if plays > 0 {
-				ctx.Message.Reply(ctx.Aurora, fmt.Sprintf("**%s** has scrobbled %s by %s **%d** times", ctx.Message.Author.Username, track.Name, track.Artist.Name, plays))
+				ctx.Message.Reply(ctx.Atlas, fmt.Sprintf("**%s** has scrobbled %s by %s **%d** times", ctx.Message.Author.Username, track.Name, track.Artist.Name, plays))
 			} else {
-				ctx.Message.Reply(ctx.Aurora, fmt.Sprintf("**%s** has not scrobbled this track yet", ctx.Message.Author.Username))
+				ctx.Message.Reply(ctx.Atlas, fmt.Sprintf("**%s** has not scrobbled this track yet", ctx.Message.Author.Username))
 			}
 		}
 	}

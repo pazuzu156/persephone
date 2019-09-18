@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"persephone/database"
 
-	"github.com/pazuzu156/aurora"
+	"github.com/pazuzu156/atlas"
 )
 
 // Unregister command.
@@ -19,8 +19,8 @@ func InitUnregister() Unregister {
 }
 
 // Register registers and runs the logout command.
-func (c Unregister) Register() *aurora.Command {
-	c.CommandInterface.Run = func(ctx aurora.Context) {
+func (c Unregister) Register() *atlas.Command {
+	c.CommandInterface.Run = func(ctx atlas.Context) {
 		db, _ := database.OpenDB()
 		defer db.Close()
 
@@ -33,12 +33,12 @@ func (c Unregister) Register() *aurora.Command {
 					db.Delete(&crown)
 				}
 
-				ctx.Message.Reply(ctx.Aurora, fmt.Sprintf("%s You have unregistered successfully", ctx.Message.Author.Mention()))
+				ctx.Message.Reply(ctx.Atlas, fmt.Sprintf("%s You have unregistered successfully", ctx.Message.Author.Mention()))
 			} else {
-				ctx.Message.Reply(ctx.Aurora, "There was an issue unregistering you out. Please try again later")
+				ctx.Message.Reply(ctx.Atlas, "There was an issue unregistering you out. Please try again later")
 			}
 		} else {
-			ctx.Message.Reply(ctx.Aurora, "You are not registered with Last.fm")
+			ctx.Message.Reply(ctx.Atlas, "You are not registered with Last.fm")
 		}
 	}
 

@@ -12,7 +12,7 @@ import (
 
 	"github.com/andersfylling/disgord"
 	"github.com/naoina/genmai"
-	"github.com/pazuzu156/aurora"
+	"github.com/pazuzu156/atlas"
 )
 
 // Crowns command.
@@ -41,8 +41,8 @@ func InitCrowns() Crowns {
 }
 
 // Register registers and runs the crowns command.
-func (c Crowns) Register() *aurora.Command {
-	c.CommandInterface.Run = func(ctx aurora.Context) {
+func (c Crowns) Register() *atlas.Command {
+	c.CommandInterface.Run = func(ctx atlas.Context) {
 		// check for command arguments
 		if len(ctx.Args) > 0 {
 			var (
@@ -54,7 +54,7 @@ func (c Crowns) Register() *aurora.Command {
 			for _, arg := range ctx.Args {
 				if strings.HasPrefix(arg, "<@") {
 					mention, _ := lib.GetDiscordIDFromMention(arg)
-					user, _ = ctx.Aurora.GetUser(mention)
+					user, _ = ctx.Atlas.GetUser(mention)
 				}
 
 				if strings.HasPrefix(arg, "page:") {
@@ -64,7 +64,7 @@ func (c Crowns) Register() *aurora.Command {
 						page, err = strconv.Atoi(a[1])
 
 						if err != nil {
-							ctx.Message.Reply(ctx.Aurora, "Invalid parameter passed to `page`")
+							ctx.Message.Reply(ctx.Atlas, "Invalid parameter passed to `page`")
 
 							return
 						}
@@ -76,7 +76,7 @@ func (c Crowns) Register() *aurora.Command {
 					// dbu := database.GetUserFromString(ctx.Args[0])
 
 					// if dbu.Username != "" {
-					// 	user, _ = ctx.Aurora.GetUser(dbu.GetDiscordID())
+					// 	user, _ = ctx.Atlas.GetUser(dbu.GetDiscordID())
 					// }
 
 					user = ctx.Message.Author
@@ -86,7 +86,7 @@ func (c Crowns) Register() *aurora.Command {
 				// 	dbu := database.GetUserFromString(arg)
 
 				// 	if dbu.Username != "" {
-				// 		user, _ = ctx.Aurora.GetUser(dbu.GetDiscordID())
+				// 		user, _ = ctx.Atlas.GetUser(dbu.GetDiscordID())
 				// 	} else {
 				// 		user = ctx.Message.Author
 				// 	}
@@ -103,9 +103,9 @@ func (c Crowns) Register() *aurora.Command {
 }
 
 // displayCrowns displays all crowns for users logged in with lastfm.
-func (c Crowns) displayCrowns(ctx aurora.Context, user *disgord.User, page int) {
+func (c Crowns) displayCrowns(ctx atlas.Context, user *disgord.User, page int) {
 	if user == nil {
-		ctx.Message.Reply(ctx.Aurora, "That username couldn't be found")
+		ctx.Message.Reply(ctx.Atlas, "That username couldn't be found")
 
 		return
 	}
@@ -142,7 +142,7 @@ func (c Crowns) displayCrowns(ctx aurora.Context, user *disgord.User, page int) 
 				descar = append(descar, fmt.Sprintf("%d. 👑 %s with %d plays", n+1, crown.Artist, crown.PlayCount))
 			}
 
-			ctx.Aurora.CreateMessage(ctx.Message.ChannelID, &disgord.CreateMessageParams{
+			ctx.Atlas.CreateMessage(ctx.Message.ChannelID, &disgord.CreateMessageParams{
 				Embed: &disgord.Embed{
 					Title:       fmt.Sprintf("%d crowns for %s", count, user.Username),
 					Description: lib.JoinString(descar, "\n"),
@@ -164,10 +164,10 @@ func (c Crowns) displayCrowns(ctx aurora.Context, user *disgord.User, page int) 
 			return
 		}
 
-		ctx.Message.Reply(ctx.Aurora, fmt.Sprintf("%s Invalid page count", ctx.Message.Author.Mention()))
+		ctx.Message.Reply(ctx.Atlas, fmt.Sprintf("%s Invalid page count", ctx.Message.Author.Mention()))
 
 		return
 	}
 
-	ctx.Message.Reply(ctx.Aurora, "That user hasn't logged in to the bot yet.")
+	ctx.Message.Reply(ctx.Atlas, "That user hasn't logged in to the bot yet.")
 }

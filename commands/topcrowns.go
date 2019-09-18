@@ -4,7 +4,7 @@ import (
 	"persephone/database"
 	"sort"
 
-	"github.com/pazuzu156/aurora"
+	"github.com/pazuzu156/atlas"
 )
 
 // TopCrowns command.
@@ -19,8 +19,8 @@ func InitTopCrowns() TopCrowns {
 }
 
 // Register registers and runs the topcrowns command.
-func (c TopCrowns) Register() *aurora.Command {
-	c.CommandInterface.Run = func(ctx aurora.Context) {
+func (c TopCrowns) Register() *atlas.Command {
+	c.CommandInterface.Run = func(ctx atlas.Context) {
 		crowns := database.GetCrownsList()
 		sort.SliceStable(crowns, func(i, j int) bool {
 			return crowns[i].PlayCount > crowns[j].PlayCount

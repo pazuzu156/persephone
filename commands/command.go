@@ -5,13 +5,13 @@ import (
 	"strconv"
 
 	"github.com/andersfylling/disgord"
-	"github.com/pazuzu156/aurora"
+	"github.com/pazuzu156/atlas"
 	"github.com/pazuzu156/lastfm-go"
 )
 
 // Command is the base command object for all commands.
 type Command struct {
-	CommandInterface *aurora.Command
+	CommandInterface *atlas.Command
 	Lastfm           *lastfm.API
 }
 
@@ -43,9 +43,9 @@ var (
 	FontBold = lib.LocGet("static/fonts/NotoSans-Bold.ttf")
 )
 
-// Init initializes aurora commands
+// Init initializes atlas commands
 func Init(t *CommandItem) Command {
-	cmd := aurora.NewCommand(t.Name).SetDescription(t.Description)
+	cmd := atlas.NewCommand(t.Name).SetDescription(t.Description)
 
 	if t.Aliases != nil {
 		cmd.SetAliases(t.Aliases...)
@@ -59,22 +59,22 @@ func Init(t *CommandItem) Command {
 }
 
 // embedFooter returns a footer and timestamp for disgord embeds
-func (c Command) embedFooter(ctx aurora.Context) (f *disgord.EmbedFooter, t disgord.Time) {
+func (c Command) embedFooter(ctx atlas.Context) (f *disgord.EmbedFooter, t disgord.Time) {
 	f, t = lib.AddEmbedFooter(ctx.Message)
 
 	return
 }
 
 // getBot returns the bot object.
-func (c Command) getBot(ctx aurora.Context) *disgord.Member {
+func (c Command) getBot(ctx atlas.Context) *disgord.Member {
 	config := lib.Config()
 	id, _ := strconv.Atoi(config.BotID)
-	bot, _ := ctx.Aurora.GetMember(ctx.Message.GuildID, disgord.NewSnowflake(uint64(id)))
+	bot, _ := ctx.Atlas.GetMember(ctx.Message.GuildID, disgord.NewSnowflake(uint64(id)))
 
 	return bot
 }
 
 // getBotUser returns the bot User object.
-func (c Command) getBotUser(ctx aurora.Context) *disgord.User {
+func (c Command) getBotUser(ctx atlas.Context) *disgord.User {
 	return c.getBot(ctx).User
 }

@@ -6,7 +6,7 @@ import (
 	"strconv"
 
 	"github.com/andersfylling/disgord"
-	"github.com/pazuzu156/aurora"
+	"github.com/pazuzu156/atlas"
 )
 
 // About command.
@@ -30,16 +30,16 @@ func InitAbout() About {
 }
 
 // Register registers and runs the about command.
-func (c About) Register() *aurora.Command {
-	c.CommandInterface.Run = func(ctx aurora.Context) {
+func (c About) Register() *atlas.Command {
+	c.CommandInterface.Run = func(ctx atlas.Context) {
 		id, _ := strconv.Atoi(config.BotID)
-		bot, _ := ctx.Aurora.GetMember(ctx.Message.GuildID, disgord.NewSnowflake(uint64(id)))
+		bot, _ := ctx.Atlas.GetMember(ctx.Message.GuildID, disgord.NewSnowflake(uint64(id)))
 
 		// Gets roles the bot has, so they can be displayed in
 		// the embed
 		var roles []string
 		for _, r := range bot.Roles {
-			groles, _ := ctx.Aurora.GetGuildRoles(ctx.Message.GuildID)
+			groles, _ := ctx.Atlas.GetGuildRoles(ctx.Message.GuildID)
 
 			for _, gr := range groles {
 				if gr.ID == r {
@@ -49,7 +49,7 @@ func (c About) Register() *aurora.Command {
 		}
 
 		f, t := c.embedFooter(ctx)
-		ctx.Aurora.CreateMessage(ctx.Message.ChannelID, &disgord.CreateMessageParams{
+		ctx.Atlas.CreateMessage(ctx.Message.ChannelID, &disgord.CreateMessageParams{
 			Embed: &disgord.Embed{
 				Title:       "About Persephone",
 				Description: fmt.Sprintf("Persephone is a bot written in Go. Version v%s", c.Version),

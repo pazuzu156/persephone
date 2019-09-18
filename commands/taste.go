@@ -9,7 +9,7 @@ import (
 	"strings"
 
 	"github.com/andersfylling/disgord"
-	"github.com/pazuzu156/aurora"
+	"github.com/pazuzu156/atlas"
 	"github.com/pazuzu156/lastfm-go"
 )
 
@@ -34,8 +34,8 @@ type MatchData struct {
 }
 
 // Register registers and runs the taste command.
-func (c Taste) Register() *aurora.Command {
-	c.CommandInterface.Run = func(ctx aurora.Context) {
+func (c Taste) Register() *atlas.Command {
+	c.CommandInterface.Run = func(ctx atlas.Context) {
 		if len(ctx.Args) > 0 {
 			var (
 				user       *disgord.User
@@ -46,7 +46,7 @@ func (c Taste) Register() *aurora.Command {
 
 			if strings.HasPrefix(ctx.Args[0], "<@") {
 				mention, _ := lib.GetDiscordIDFromMention(ctx.Args[0])
-				user, _ = ctx.Aurora.GetUser(mention)
+				user, _ = ctx.Atlas.GetUser(mention)
 			}
 
 			if user == nil {
@@ -54,16 +54,16 @@ func (c Taste) Register() *aurora.Command {
 				// dbu := database.GetUserFromString(ctx.Args[0])
 
 				// if dbu.Username != "" {
-				// 	user, _ = ctx.Aurora.GetUser(dbu.GetDiscordID())
+				// 	user, _ = ctx.Atlas.GetUser(dbu.GetDiscordID())
 				// }
 
-				ctx.Message.Reply(ctx.Aurora, "You need to supply a user to taste!")
+				ctx.Message.Reply(ctx.Atlas, "You need to supply a user to taste!")
 
 				return
 			}
 
 			if user.ID == ctx.Message.Author.ID {
-				ctx.Message.Reply(ctx.Aurora, "You cannot taste yourself")
+				ctx.Message.Reply(ctx.Atlas, "You cannot taste yourself")
 
 				return
 			}
@@ -85,7 +85,7 @@ func (c Taste) Register() *aurora.Command {
 			}
 
 			if len(matches) == 0 {
-				ctx.Message.Reply(ctx.Aurora, fmt.Sprintf("You and %s share no common artists", dbu.Username))
+				ctx.Message.Reply(ctx.Atlas, fmt.Sprintf("You and %s share no common artists", dbu.Username))
 
 				return
 			}
@@ -111,7 +111,7 @@ func (c Taste) Register() *aurora.Command {
 
 			f, t := lib.AddEmbedFooter(ctx.Message)
 
-			ctx.Aurora.CreateMessage(ctx.Message.ChannelID, &disgord.CreateMessageParams{
+			ctx.Atlas.CreateMessage(ctx.Message.ChannelID, &disgord.CreateMessageParams{
 				Embed: &disgord.Embed{
 					Title: fmt.Sprintf("%s and %s taste comparison",
 						ctx.Message.Author.Username,
@@ -126,7 +126,7 @@ func (c Taste) Register() *aurora.Command {
 				},
 			})
 		} else {
-			ctx.Message.Reply(ctx.Aurora, "You need to supply a user to taste!")
+			ctx.Message.Reply(ctx.Atlas, "You need to supply a user to taste!")
 		}
 	}
 

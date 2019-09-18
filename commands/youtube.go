@@ -9,7 +9,7 @@ import (
 	"persephone/fm"
 	"persephone/lib"
 
-	"github.com/pazuzu156/aurora"
+	"github.com/pazuzu156/atlas"
 )
 
 // Youtube command.
@@ -42,8 +42,8 @@ func InitYoutube() Youtube {
 }
 
 // Register registers and runs the youtube command.
-func (c Youtube) Register() *aurora.Command {
-	c.CommandInterface.Run = func(ctx aurora.Context) {
+func (c Youtube) Register() *atlas.Command {
+	c.CommandInterface.Run = func(ctx atlas.Context) {
 		ss := map[string]string{"key": c.APIKey, "part": "snippet", "type": "video"}
 
 		if len(ctx.Args) > 0 {
@@ -52,7 +52,7 @@ func (c Youtube) Register() *aurora.Command {
 			track, err := fm.GetNowPlayingTrack(ctx.Message.Author, c.Lastfm)
 
 			if err != nil {
-				ctx.Message.Reply(ctx.Aurora, err.Error())
+				ctx.Message.Reply(ctx.Atlas, err.Error())
 
 				return
 			}
@@ -67,13 +67,13 @@ func (c Youtube) Register() *aurora.Command {
 }
 
 // displayResults displays the results of a youtube search.
-func (c Youtube) displayResults(ctx aurora.Context, ss map[string]string) {
+func (c Youtube) displayResults(ctx atlas.Context, ss map[string]string) {
 	qstring := c.stringify(ss)
 
 	resp, err := http.Get(c.RootURL + qstring)
 
 	if err != nil {
-		ctx.Message.Reply(ctx.Aurora, err.Error())
+		ctx.Message.Reply(ctx.Atlas, err.Error())
 
 		return
 	}
@@ -85,10 +85,10 @@ func (c Youtube) displayResults(ctx aurora.Context, ss map[string]string) {
 	json.Unmarshal(buf, &body)
 
 	if len(body.Items) > 0 {
-		ctx.Message.Reply(ctx.Aurora, fmt.Sprintf("Result for **%s**: https://youtu.be/%s",
+		ctx.Message.Reply(ctx.Atlas, fmt.Sprintf("Result for **%s**: https://youtu.be/%s",
 			ss["q"], body.Items[0].ID.VideoID))
 	} else {
-		ctx.Message.Reply(ctx.Aurora, "No results could be found for what you're listening to")
+		ctx.Message.Reply(ctx.Atlas, "No results could be found for what you're listening to")
 	}
 }
 

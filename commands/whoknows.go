@@ -10,7 +10,7 @@ import (
 	"time"
 
 	"github.com/andersfylling/disgord"
-	"github.com/pazuzu156/aurora"
+	"github.com/pazuzu156/atlas"
 	"github.com/pazuzu156/lastfm-go"
 )
 
@@ -35,8 +35,8 @@ func InitWhoknows() Whoknows {
 }
 
 // Register registers and runs the whoknows command.
-func (c Whoknows) Register() *aurora.Command {
-	c.CommandInterface.Run = func(ctx aurora.Context) {
+func (c Whoknows) Register() *atlas.Command {
+	c.CommandInterface.Run = func(ctx atlas.Context) {
 		// if args > 0, an artist is likely provided
 		// so .wk <artist> runs the command on a requested artist
 		if len(ctx.Args) > 0 {
@@ -44,7 +44,7 @@ func (c Whoknows) Register() *aurora.Command {
 			a, err := c.Lastfm.Artist.GetInfo(lastfm.P{"artist": artist})
 
 			if err != nil {
-				ctx.Message.Reply(ctx.Aurora, "Artist could not be found on Last.fm")
+				ctx.Message.Reply(ctx.Atlas, "Artist could not be found on Last.fm")
 
 				return
 			}
@@ -56,7 +56,7 @@ func (c Whoknows) Register() *aurora.Command {
 				np, err := c.Lastfm.User.GetRecentTracks(lastfm.P{"user": user.Lastfm, "limit": "2"})
 
 				if err != nil {
-					ctx.Message.Reply(ctx.Aurora, "Artist could not be found on Last.fm")
+					ctx.Message.Reply(ctx.Atlas, "Artist could not be found on Last.fm")
 
 					return
 				}
@@ -70,7 +70,7 @@ func (c Whoknows) Register() *aurora.Command {
 					}
 				}
 			} else {
-				ctx.Message.Reply(ctx.Aurora, "You're not currently logged in with Last.fm")
+				ctx.Message.Reply(ctx.Atlas, "You're not currently logged in with Last.fm")
 			}
 		}
 	}
@@ -79,7 +79,7 @@ func (c Whoknows) Register() *aurora.Command {
 }
 
 // displayWhoKnows displays an embed with a list of top users who have scrobbled a given artist.
-func (c Whoknows) displayWhoKnows(ctx aurora.Context, artist lastfm.ArtistGetInfo) {
+func (c Whoknows) displayWhoKnows(ctx atlas.Context, artist lastfm.ArtistGetInfo) {
 	users := database.GetUsers()
 
 	// user representation for the wk slice
@@ -154,7 +154,7 @@ func (c Whoknows) displayWhoKnows(ctx aurora.Context, artist lastfm.ArtistGetInf
 		}
 
 		f, t := c.embedFooter(ctx)
-		ctx.Aurora.CreateMessage(ctx.Message.ChannelID, &disgord.CreateMessageParams{
+		ctx.Atlas.CreateMessage(ctx.Message.ChannelID, &disgord.CreateMessageParams{
 			Embed: &disgord.Embed{
 				Title:       fmt.Sprintf("Who knows %s?", artist.Name),
 				URL:         fmt.Sprintf("https://last.fm/music/%s", strings.Replace(artist.Name, " ", "+", len(artist.Name))),
@@ -164,6 +164,6 @@ func (c Whoknows) displayWhoKnows(ctx aurora.Context, artist lastfm.ArtistGetInf
 			},
 		})
 	} else {
-		ctx.Message.Reply(ctx.Aurora, fmt.Sprintf("No one has scrobbled %s yet", artist.Name))
+		ctx.Message.Reply(ctx.Atlas, fmt.Sprintf("No one has scrobbled %s yet", artist.Name))
 	}
 }
