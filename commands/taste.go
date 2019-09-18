@@ -39,6 +39,7 @@ func (c Taste) Register() *atlas.Command {
 		if len(ctx.Args) > 0 {
 			var (
 				user       *disgord.User
+				callLimit  = "700"
 				matches    []MatchData
 				matchLimit = 10
 				descar     []*disgord.EmbedField
@@ -70,8 +71,8 @@ func (c Taste) Register() *atlas.Command {
 
 			dba := database.GetUser(ctx.Message.Author)
 			dbu := database.GetUser(user)
-			authorData, _ := c.Lastfm.User.GetTopArtists(lastfm.P{"user": dba.Lastfm, "period": "overall", "limit": "150"})
-			userData, _ := c.Lastfm.User.GetTopArtists(lastfm.P{"user": dbu.Lastfm, "period": "overall", "limit": "150"})
+			authorData, _ := c.Lastfm.User.GetTopArtists(lastfm.P{"user": dba.Lastfm, "period": "overall", "limit": callLimit})
+			userData, _ := c.Lastfm.User.GetTopArtists(lastfm.P{"user": dbu.Lastfm, "period": "overall", "limit": callLimit})
 
 			for _, x := range userData.Artists {
 				b, a := c.contains(authorData.Artists, x.Name)
