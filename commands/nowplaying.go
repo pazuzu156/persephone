@@ -89,7 +89,10 @@ func (c Nowplaying) Register() *atlas.Command {
 			dc.SetRGBA(1, 1, 1, 0.2)
 			dc.DrawRectangle(50, 0, 250, 600)
 			dc.Fill()
-			dc.DrawImage(aar, 55, 105)
+
+			if aar != nil {
+				dc.DrawImage(aar, 55, 105)
+			}
 
 			// Draw artist name
 			dc.LoadFontFace(FontBold, 20)
