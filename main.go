@@ -98,5 +98,5 @@ func init() {
 	atlas.Use(commands.InitWhoknows().Register())
 	atlas.Use(commands.InitYoutube().Register())
 
-	// atlas.Use(commands.InitNewtaste().Register())
+	// atlas.Use(commands.InitNewtaste())
 }

@@ -46,8 +46,16 @@ func (c Nowplaying) Register() *atlas.Command {
 			os.Remove(avf.Name())
 
 			// Some resizing for avatar and album art
-			aar := resize.Resize(240, 240, aa, resize.Bicubic)
-			var avr image.Image
+			// aar := resize.Resize(240, 240, aa, resize.Bicubic)
+
+			var (
+				aar image.Image
+				avr image.Image
+			)
+
+			if aa != nil {
+				avr = resize.Resize(240, 240, aa, resize.Bicubic)
+			}
 
 			if av != nil {
 				avr = resize.Resize(72, 72, av, resize.Bicubic)
