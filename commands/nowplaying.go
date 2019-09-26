@@ -46,8 +46,16 @@ func (c Nowplaying) Register() *atlas.Command {
 			os.Remove(avf.Name())
 
 			// Some resizing for avatar and album art
-			aar := resize.Resize(240, 240, aa, resize.Bicubic)
-			var avr image.Image
+			// aar := resize.Resize(240, 240, aa, resize.Bicubic)
+
+			var (
+				aar image.Image
+				avr image.Image
+			)
+
+			if aa != nil {
+				avr = resize.Resize(240, 240, aa, resize.Bicubic)
+			}
 
 			if av != nil {
 				avr = resize.Resize(72, 72, av, resize.Bicubic)
@@ -81,7 +89,10 @@ func (c Nowplaying) Register() *atlas.Command {
 			dc.SetRGBA(1, 1, 1, 0.2)
 			dc.DrawRectangle(50, 0, 250, 600)
 			dc.Fill()
-			dc.DrawImage(aar, 55, 105)
+
+			if aar != nil {
+				dc.DrawImage(aar, 55, 105)
+			}
 
 			// Draw artist name
 			dc.LoadFontFace(FontBold, 20)
