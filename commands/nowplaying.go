@@ -54,7 +54,7 @@ func (c Nowplaying) Register() *atlas.Command {
 			)
 
 			if aa != nil {
-				avr = resize.Resize(240, 240, aa, resize.Bicubic)
+				aar = resize.Resize(240, 240, aa, resize.Bicubic)
 			}
 
 			if av != nil {
