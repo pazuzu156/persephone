@@ -2,7 +2,6 @@ package commands
 
 import (
 	"fmt"
-	"image"
 	"os"
 	"persephone/database"
 	"persephone/fm"
@@ -46,20 +45,8 @@ func (c Nowplaying) Register() *atlas.Command {
 			os.Remove(avf.Name())
 
 			// Some resizing for avatar and album art
-			// aar := resize.Resize(240, 240, aa, resize.Bicubic)
-
-			var (
-				aar image.Image
-				avr image.Image
-			)
-
-			if aa != nil {
-				aar = resize.Resize(240, 240, aa, resize.Bicubic)
-			}
-
-			if av != nil {
-				avr = resize.Resize(72, 72, av, resize.Bicubic)
-			}
+			aar := resize.Resize(240, 240, aa, resize.Bicubic)
+			avr := resize.Resize(72, 72, av, resize.Bicubic)
 
 			// New image context, and add background image
 			dc := gg.NewContext(1000, 600)
@@ -71,12 +58,7 @@ func (c Nowplaying) Register() *atlas.Command {
 			dc.Fill()
 
 			// Draw avatar and add username + scrobble count
-			// dc.DrawImage(avr, 315, 100)
-
-			if avr != nil {
-				dc.DrawImage(avr, 315, 100)
-			}
-
+			dc.DrawImage(avr, 315, 100)
 			dc.LoadFontFace(FontBold, 26)
 			dc.SetRGB(0.9, 0.9, 0.9)
 			dc.DrawString(ctx.Message.Author.Username+" ("+lfmuser.Name+")", 390, 130)
@@ -89,10 +71,7 @@ func (c Nowplaying) Register() *atlas.Command {
 			dc.SetRGBA(1, 1, 1, 0.2)
 			dc.DrawRectangle(50, 0, 250, 600)
 			dc.Fill()
-
-			if aar != nil {
-				dc.DrawImage(aar, 55, 105)
-			}
+			dc.DrawImage(aar, 55, 105)
 
 			// Draw artist name
 			dc.LoadFontFace(FontBold, 20)

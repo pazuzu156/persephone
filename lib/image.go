@@ -30,8 +30,14 @@ func GetExt(filename string) string {
 
 // OpenImage returns an image.Image instance of a given file
 func OpenImage(filename string) (image.Image, *os.File) {
-	in, _ := os.Open(filename)
+	in, err := os.Open(filename)
 	defer in.Close()
+
+	// This is for images that can't be loaded, we'll just load a stock image
+	if err != nil {
+		return OpenImage(LocGet("static/images/bm.png"))
+	}
+
 	var img image.Image
 
 	switch GetExt(filename) {
@@ -111,6 +117,7 @@ func GetArtistImage(artist lastfm.ArtistGetInfo) image.Image {
 
 		return img
 	}
+
 	aimg, _ := OpenImage(LocGet("static/images/bm.png"))
 
 	return aimg
