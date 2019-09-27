@@ -7,6 +7,7 @@ import (
 	"image/png"
 	"net/url"
 	"os"
+	"path"
 	"strings"
 
 	"github.com/andersfylling/disgord"
@@ -20,6 +21,7 @@ import (
 // NoArtistURL is the URL to a blank image for no artist images found
 // on metal archives.
 const NoArtistURL = "https://cdn.persephonebot.net/images/bm.png"
+const LfmStarImage = "2a96cbd8b46e442fc41c2b86b821562f.png"
 
 // GetExt returns the extension of a given file name
 func GetExt(filename string) string {
@@ -28,10 +30,35 @@ func GetExt(filename string) string {
 	return s[len(s)-1]
 }
 
+// CheckStar checks if a URL (for last.fm) is their stock star image.
+func CheckStar(sURL string) bool {
+	url, _ := url.Parse(sURL)
+	path := path.Base(url.Path)
+
+	return path == LfmStarImage
+}
+
+// Grab overrides grab.Get to implement CheckStar.
+func Grab(sURL string) (res *grab.Response, err error) {
+	if CheckStar(sURL) {
+		res, err = grab.Get(LocGet("temp/"), NoArtistURL)
+	} else {
+		res, err = grab.Get(LocGet("temp/"), sURL)
+	}
+
+	return
+}
+
 // OpenImage returns an image.Image instance of a given file
 func OpenImage(filename string) (image.Image, *os.File) {
-	in, _ := os.Open(filename)
+	in, err := os.Open(filename)
 	defer in.Close()
+
+	// This is for images that can't be loaded, we'll just load a stock image
+	if err != nil {
+		return OpenImage(LocGet("static/images/bm.png"))
+	}
+
 	var img image.Image
 
 	switch GetExt(filename) {
@@ -111,6 +138,7 @@ func GetArtistImage(artist lastfm.ArtistGetInfo) image.Image {
 
 		return img
 	}
+
 	aimg, _ := OpenImage(LocGet("static/images/bm.png"))
 
 	return aimg
