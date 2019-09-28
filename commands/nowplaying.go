@@ -8,7 +8,6 @@ import (
 	"persephone/lib"
 
 	"github.com/andersfylling/disgord"
-	"github.com/cavaliercoder/grab"
 	"github.com/fogleman/gg"
 	"github.com/nfnt/resize"
 	"github.com/pazuzu156/atlas"
@@ -33,7 +32,7 @@ func (c Nowplaying) Register() *atlas.Command {
 		lfmuser, _ := database.GetLastfmUserInfo(ctx.Message.Author, c.Lastfm)
 
 		if err == nil {
-			res, _ := grab.Get(lib.LocGet("temp/"), track.Images[3].URL)
+			res, _ := lib.Grab(track.Images[3].URL)
 
 			// Open base images
 			bg, _ := lib.OpenImage(lib.LocGet("static/images/background.png"))
@@ -102,7 +101,7 @@ func (c Nowplaying) Register() *atlas.Command {
 
 					dc.DrawRoundedRectangle(340, 400, 160, 160, 80)
 					dc.Clip()
-					i, _ := grab.Get(lib.LocGet("temp/"), img)
+					i, _ := lib.Grab(img)
 					ii, _ := lib.OpenImage(i.Filename)
 					iir := resize.Resize(160, 160, ii, resize.Bicubic)
 					dc.DrawImage(iir, 340, 400)
@@ -125,7 +124,7 @@ func (c Nowplaying) Register() *atlas.Command {
 
 					dc.DrawRoundedRectangle(340, 310, 160, 160, 80)
 					dc.Clip()
-					i, _ := grab.Get(lib.LocGet("temp/"), img)
+					i, _ := lib.Grab(img)
 					ii, _ := lib.OpenImage(i.Filename)
 					iir := resize.Resize(160, 160, ii, resize.Bicubic)
 					dc.DrawImage(iir, 340, 310)
@@ -148,7 +147,7 @@ func (c Nowplaying) Register() *atlas.Command {
 
 					dc.DrawRoundedRectangle(340, 220, 160, 160, 80)
 					dc.Clip()
-					i, _ := grab.Get(lib.LocGet("temp/"), img)
+					i, _ := lib.Grab(img)
 					ii, _ := lib.OpenImage(i.Filename)
 					iir := resize.Resize(160, 160, ii, resize.Bicubic)
 					dc.DrawImage(iir, 340, 220)

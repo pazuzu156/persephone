@@ -7,6 +7,7 @@ import (
 	"image/png"
 	"net/url"
 	"os"
+	"path"
 	"strings"
 
 	"github.com/andersfylling/disgord"
@@ -20,12 +21,32 @@ import (
 // NoArtistURL is the URL to a blank image for no artist images found
 // on metal archives.
 const NoArtistURL = "https://cdn.persephonebot.net/images/bm.png"
+const LfmStarImage = "2a96cbd8b46e442fc41c2b86b821562f.png"
 
 // GetExt returns the extension of a given file name
 func GetExt(filename string) string {
 	s := strings.Split(filename, ".")
 
 	return s[len(s)-1]
+}
+
+// CheckStar checks if a URL (for last.fm) is their stock star image.
+func CheckStar(sURL string) bool {
+	url, _ := url.Parse(sURL)
+	path := path.Base(url.Path)
+
+	return path == LfmStarImage
+}
+
+// Grab overrides grab.Get to implement CheckStar.
+func Grab(sURL string) (res *grab.Response, err error) {
+	if CheckStar(sURL) {
+		res, err = grab.Get(LocGet("temp/"), NoArtistURL)
+	} else {
+		res, err = grab.Get(LocGet("temp/"), sURL)
+	}
+
+	return
 }
 
 // OpenImage returns an image.Image instance of a given file
