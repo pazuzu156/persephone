@@ -18,10 +18,14 @@ import (
 	"github.com/pazuzu156/lastfm-go"
 )
 
-// NoArtistURL is the URL to a blank image for no artist images found
-// on metal archives.
-const NoArtistURL = "https://cdn.persephonebot.net/images/bm.png"
-const LfmStarImage = "2a96cbd8b46e442fc41c2b86b821562f.png"
+const (
+	// NoArtistURL is the URL to a blank image for no artist images found
+	// on metal archives.
+	NoArtistURL = "https://cdn.persephonebot.net/images/bm.png"
+
+	// LfmStarImage is the image name for the default Last.fm star pic.
+	LfmStarImage = "2a96cbd8b46e442fc41c2b86b821562f.png"
+)
 
 // GetExt returns the extension of a given file name
 func GetExt(filename string) string {
