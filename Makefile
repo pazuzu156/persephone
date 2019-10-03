@@ -15,6 +15,7 @@ install:
 	install -D -m644 static/fonts/NotoSans-Bold.ttf ${INSHOME}/static/fonts/NotoSans-Bold.ttf
 	install -D -m644 static/fonts/NotoSans-Regular.ttf ${INSHOME}/static/fonts/NotoSans-Regular.ttf
 	install -D -m644 static/images/background.png ${INSHOME}/static/images/background.png
+	install -D -m644 static/images/bm.png ${INSHOME}/static/images/bm.png
 	install -D -m644 artists.json ${INSHOME}/artists.json
 
 uninstall:
