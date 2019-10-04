@@ -13,7 +13,7 @@ read COMMAND_DESCRIPTION
 cat > commands/${COMMAND_NAME,,}.go <<- EOC
 package commands
 
-import "github.com/pazuzu156/aurora"
+import "github.com/pazuzu156/atlas"
 
 // ${COMMAND_NAME^} command.
 type ${COMMAND_NAME^} struct{ Command }
@@ -30,13 +30,13 @@ func Init${COMMAND_NAME^}() ${COMMAND_NAME^} {
 }
 
 // Register registers and runs the ${COMMAND_NAME,,} command.
-func (c ${COMMAND_NAME^}) Register() *aurora.Command {
-    c.CommandInterface.Run = func(ctx aurora.Context) {
-        ctx.Message.Reply(ctx.Aurora, "Hello, ${COMMAND_NAME^}!")
+func (c ${COMMAND_NAME^}) Register() *atlas.Command {
+    c.CommandInterface.Run = func(ctx atlas.Context) {
+        ctx.Message.Reply(ctx.Atlas, "Hello, ${COMMAND_NAME^}!")
     }
 
     return c.CommandInterface
 }
 EOC
 
-echo "Be sure to add \"aurora.Use(commands.Init${COMMAND_NAME^}().Register())\" to main.go"
+echo "Be sure to add \"atlas.Use(commands.Init${COMMAND_NAME^}().Register())\" to main.go"

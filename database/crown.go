@@ -29,8 +29,13 @@ func GetCrownsList() (crowns []Crowns) {
 
 // User is a relational method to retrieve the user from a given crown.
 func (c Crowns) User() (user Users) {
-	err := db.Select(&user, db.From(Users{}), db.Where("discord_id", "=", c.DiscordID))
+	var users []Users
+	err := db.Select(&users, db.From(Users{}), db.Where("discord_id", "=", c.DiscordID))
 	lib.Check(err)
+
+	if len(users) == 1 {
+		user = users[0]
+	}
 
 	return
 }

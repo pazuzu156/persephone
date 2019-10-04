@@ -84,7 +84,8 @@ func main() {
 func init() {
 	atlas.Use(commands.InitAbout().Register())
 	atlas.Use(commands.InitBandinfo().Register())
-	// atlas.Use(commands.InitBand().Register())
+	// atlas.Use(commands.InitBand().Register()
+	atlas.Use(commands.InitCrownBoard().Register())
 	atlas.Use(commands.InitCrowns().Register())
 	atlas.Use(commands.InitHelp().Register())
 	atlas.Use(commands.InitUnregister().Register())
