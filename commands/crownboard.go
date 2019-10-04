@@ -18,9 +18,7 @@ func InitCrownBoard() CrownBoard {
 	return CrownBoard{Init(&CommandItem{
 		Name:        "crownboard",
 		Description: "Crowns leaderboard",
-		Aliases:     []string{"cb"},
-		Usage:       "crownboard ...",
-		Parameters:  []Parameter{},
+		Aliases:     []string{"cb", "leaders"},
 	})}
 }
 
