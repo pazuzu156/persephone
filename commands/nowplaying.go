@@ -75,12 +75,12 @@ func (c Nowplaying) Register() *atlas.Command {
 			// Draw artist name
 			dc.LoadFontFace(FontBold, 20)
 			dc.SetRGB(0.9, 0.9, 0.9)
-			dc.DrawStringWrapped(track.Artist.Name, 70, 370, 0, 0, 200, 1.5, gg.AlignLeft)
+			dc.DrawStringWrapped(lib.ShortStr(track.Name, 33), 70, 370, 0, 0, 200, 1.5, gg.AlignLeft)
 
 			// Draw album + track name
 			dc.LoadFontFace(FontRegular, 20)
 			dc.SetRGB(0.9, 0.9, 0.9)
-			dc.DrawStringWrapped(track.Album.Name+" - "+track.Name, 70, 420, 0, 0, 200, 1.5, gg.AlignLeft)
+			dc.DrawStringWrapped(track.Artist.Name+" - "+track.Album.Name, 70, 440, 0, 0, 200, 1.5, gg.AlignLeft)
 
 			// This gets the last 3 listened tracks and draws
 			// images + text for each
@@ -110,10 +110,10 @@ func (c Nowplaying) Register() *atlas.Command {
 
 					dc.SetRGB(0.9, 0.9, 0.9)
 					dc.LoadFontFace(FontBold, 25)
-					dc.DrawString(t3.Artist.Name, 510, 480)
+					dc.DrawString(lib.ShortStr(t3.Name, 33), 510, 480)
 
 					dc.LoadFontFace(FontRegular, 25)
-					dc.DrawString(lib.ShortStr(t3.Name, 33), 510, 520)
+					dc.DrawString(t3.Artist.Name, 510, 520)
 				}
 
 				// Track 2
@@ -133,10 +133,10 @@ func (c Nowplaying) Register() *atlas.Command {
 
 					dc.SetRGB(0.9, 0.9, 0.9)
 					dc.LoadFontFace(FontBold, 25)
-					dc.DrawString(t2.Artist.Name, 510, 380)
+					dc.DrawString(lib.ShortStr(t2.Name, 33), 510, 380)
 
 					dc.LoadFontFace(FontRegular, 25)
-					dc.DrawString(lib.ShortStr(t2.Name, 33), 510, 420)
+					dc.DrawString(t2.Artist.Name, 510, 420)
 				}
 
 				// First most recent track
@@ -156,10 +156,10 @@ func (c Nowplaying) Register() *atlas.Command {
 
 					dc.SetRGB(0.9, 0.9, 0.9)
 					dc.LoadFontFace(FontBold, 25)
-					dc.DrawString(t1.Artist.Name, 510, 280)
+					dc.DrawString(lib.ShortStr(t1.Name, 33), 510, 280)
 
 					dc.LoadFontFace(FontRegular, 25)
-					dc.DrawString(lib.ShortStr(t1.Name, 33), 510, 320)
+					dc.DrawString(t1.Artist.Name, 510, 320)
 				}
 			}
 
