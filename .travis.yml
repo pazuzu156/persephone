@@ -1,13 +1,9 @@
-language: go
-install: true
-
-go:
-    - 1.12.x
-
-install:
-    - env GO111MODULE=on go get -u
-    - env GO111MODULE=on go vet
-
-script:
-    - env GO111MODULE=on go build
-    - env GO111MODULE=on go install
+- language: go
+    if: branch = master
+    install:
+        - export GO111MODULE=on
+        - go mod vendor
+        - go vet
+    script:
+        - go build
+        - go install
