@@ -4,3 +4,4 @@ temp/*
 !temp/.gitkeep
 persephone
 *.tar.gz
+vendor/*
