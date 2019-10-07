@@ -12,6 +12,7 @@ import (
 
 	"github.com/andersfylling/disgord"
 	"github.com/cavaliercoder/grab"
+	"github.com/chai2010/webp"
 	"github.com/fogleman/gg"
 	"github.com/gocolly/colly"
 	"github.com/pazuzu156/atlas"
@@ -74,6 +75,9 @@ func OpenImage(filename string) (image.Image, *os.File) {
 		break
 	case "jpg":
 		img, _ = jpeg.Decode(in)
+		break
+	case "webp":
+		img, _ = webp.Decode(in)
 		break
 	}
 

@@ -33,13 +33,24 @@ func JoinString(strs []string, char string) string {
 	return strings.TrimRight(strings.Join(strs, char), char)
 }
 
+// JoinStringMap joins a string map with a char, and removes the end char.
+func JoinStringMap(strs map[int]string, char string) string {
+	vals := make([]string, 0, len(strs))
+
+	for _, v := range strs {
+		vals = append(vals, v)
+	}
+
+	return JoinString(vals, char)
+}
+
 // GenAvatarURL generates a URL used to get a user avatar.
 func GenAvatarURL(user *disgord.User) string {
 	if user.Avatar == nil {
 		return NoArtistURL
 	}
 
-	return fmt.Sprintf("https://cdn.discordapp.com/avatars/%s/%s.png", user.ID.String(), *user.Avatar)
+	return fmt.Sprintf("https://cdn.discordapp.com/avatars/%s/%s.webp", user.ID.String(), *user.Avatar)
 }
 
 // Ucwords capitalizes the first letter in each word. (Mirror's PHP's ucwords function)
@@ -67,13 +78,19 @@ func GenerateMessageURL(guildID disgord.Snowflake, msg *disgord.Message) string 
 // GetDiscordIDFromMention gets the snowflake id from a mention.
 func GetDiscordIDFromMention(mention string) (ID disgord.Snowflake, err error) {
 	if IsMention(mention) {
-		did, _ := strconv.Atoi(strings.TrimLeft(strings.TrimLeft(strings.TrimRight(mention, ">"), "<@"), "!"))
-		ID = disgord.NewSnowflake(uint64(did))
+		ID = StrToSnowflake(strings.TrimLeft(strings.TrimLeft(strings.TrimRight(mention, ">"), "<@"), "!"))
 	} else {
 		err = errors.New("given string is not a Discord mention")
 	}
 
 	return
+}
+
+// StrToSnowflake returns a Snowflake from a string.
+func StrToSnowflake(str string) disgord.Snowflake {
+	did, _ := strconv.Atoi(str)
+
+	return disgord.NewSnowflake(uint64(did))
 }
 
 // IsMention checks if a string is a discord mention.

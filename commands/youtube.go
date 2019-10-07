@@ -47,7 +47,7 @@ func (c Youtube) Register() *atlas.Command {
 		ss := map[string]string{"key": c.APIKey, "part": "snippet", "type": "video"}
 
 		if len(ctx.Args) > 0 {
-			ss["q"] = lib.JoinString(ctx.Args, " ")
+			ss["q"] = lib.JoinStringMap(ctx.Args, " ")
 		} else {
 			track, err := fm.GetNowPlayingTrack(ctx.Message.Author, c.Lastfm)
 

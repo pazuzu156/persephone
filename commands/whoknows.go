@@ -40,7 +40,8 @@ func (c Whoknows) Register() *atlas.Command {
 		// if args > 0, an artist is likely provided
 		// so .wk <artist> runs the command on a requested artist
 		if len(ctx.Args) > 0 {
-			artist := strings.TrimRight(strings.Join(ctx.Args, " "), " ")
+			// artist := strings.TrimRight(strings.Join(ctx.Args, " "), " ")
+			artist := lib.JoinStringMap(ctx.Args, " ")
 			a, err := c.Lastfm.Artist.GetInfo(lastfm.P{"artist": artist})
 
 			if err != nil {

@@ -11,6 +11,7 @@ type Configuration struct {
 	Token    string `json:"token"`
 	BotOwner string `json:"bot_owner"`
 	BotID    string `json:"bot_id"`
+	GuildID  string `json:"guild_id"`
 	Prefix   string `json:"prefix"`
 	// Starboard string `json:"starboard"`
 	Starboard struct {

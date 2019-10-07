@@ -66,6 +66,7 @@ type TopTrack struct {
 	} `xml:"image"`
 }
 
+// Artist holds simple artist info.
 type Artist struct {
 	Rank       string `xml:"rank,attr"`
 	Name       string `xml:"name"`
@@ -79,6 +80,7 @@ type Artist struct {
 	} `xml:"image"`
 }
 
+// Artists holds simple artist info in slice format.
 type Artists []struct {
 	Rank       string `xml:"rank,attr"`
 	Name       string `xml:"name"`
