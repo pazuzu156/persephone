@@ -68,7 +68,7 @@ func RegisterEvents(client *atlas.Atlas) {
 
 func updatePresence() {
 	for true {
-		status := &disgord.UpdateStatusCommand{
+		status := &disgord.UpdateStatusPayload{
 			Game: &disgord.Activity{
 				Name: "Metal",
 				Type: 2,

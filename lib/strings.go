@@ -45,12 +45,14 @@ func JoinStringMap(strs map[int]string, char string) string {
 }
 
 // GenAvatarURL generates a URL used to get a user avatar.
+//
+// Deprecated: Use AvatarURL method from Disgord instead
 func GenAvatarURL(user *disgord.User) string {
-	if user.Avatar == nil {
+	if &user.Avatar == nil {
 		return NoArtistURL
 	}
 
-	return fmt.Sprintf("https://cdn.discordapp.com/avatars/%s/%s.webp", user.ID.String(), *user.Avatar)
+	return fmt.Sprintf("https://cdn.discordapp.com/avatars/%s/%s.webp", user.ID.String(), user.Avatar)
 }
 
 // Ucwords capitalizes the first letter in each word. (Mirror's PHP's ucwords function)
