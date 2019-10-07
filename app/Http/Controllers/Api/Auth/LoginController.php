@@ -26,7 +26,7 @@ class LoginController extends Controller
             }
         }
 
-        $token = str_random(16); // 16 character token
+        $token = \Str::random(16); // 16 character token
         $exists = Login::where('discord_id', '=', $discordId);
 
         if ($exists->count()) {
