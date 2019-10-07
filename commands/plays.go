@@ -23,7 +23,7 @@ func InitPlays() Plays {
 Giving no parameters will get the play count for the current playing track.
 Passing no value to a parameter will get the plays for said parameter using the current playing track`,
 		Aliases: []string{"p"},
-		Usage:   "plays artist:Grabak",
+		Usage:   "plays --artist Grabak",
 		Parameters: []Parameter{
 			{
 				Name:        "artist",
@@ -45,63 +45,34 @@ Passing no value to a parameter will get the plays for said parameter using the 
 func (c Plays) Register() *atlas.Command {
 	c.CommandInterface.Run = func(ctx atlas.Context) {
 		np, _ := fm.GetNowPlayingTrack(ctx.Message.Author, c.Lastfm)
-		leave := false
 
 		if len(ctx.Args) > 0 {
-			for _, arg := range ctx.Args {
-				if strings.Contains(arg, ":") {
-					arg = lib.JoinString(ctx.Args, " ")
-					as := strings.Split(arg, ":")
+			for n, arg := range ctx.Args {
+				if strings.HasPrefix(arg, "--") {
+					arg = strings.TrimLeft(arg, "--")
+					argv, isset := ctx.Args[n+1]
 
-					switch strings.ToLower(as[0]) {
-					case "artist": // show play count for requested artist
-						a := as[1]
-						artist, _ := c.Lastfm.Artist.GetInfo(lastfm.P{"artist": a, "username": database.GetUser(ctx.Message.Author).Lastfm})
-						plays, _ := strconv.Atoi(artist.Stats.UserPlays)
+					switch strings.ToLower(arg) {
+					case "album": // album
+						var album lastfm.AlbumGetInfo
 
-						if plays > 0 {
-							ctx.Message.Reply(ctx.Atlas, fmt.Sprintf("**%s** has scrobbled %s **%d** times", ctx.Message.Author.Username, artist.Name, plays))
-						} else {
-							ctx.Message.Reply(ctx.Atlas, fmt.Sprintf("**%s** has not scrobbled this artist yet", ctx.Message.Author.Username))
-						}
-						leave = true
-						break
-					case "album": // show play count for requested album
-						if len(as) != 3 {
-							ctx.Message.Reply(ctx.Atlas, "You need to provide all values to the album parameter!")
-							leave = true
-						} else {
-							al := as[1]
-							ar := as[2]
-							album, _ := c.Lastfm.Album.GetInfo(lastfm.P{"artist": ar, "album": al, "username": database.GetUser(ctx.Message.Author).Lastfm})
-							plays, _ := strconv.Atoi(album.UserPlayCount)
+						if isset {
+							delete(ctx.Args, 0)
+							argvs := strings.Split(lib.JoinStringMap(ctx.Args, " "), ":")
 
-							if plays > 0 {
-								ctx.Message.Reply(ctx.Atlas, fmt.Sprintf("**%s** has scrobbled %s by %s **%d** times", ctx.Message.Author.Username, album.Name, album.Artist, plays))
+							if len(argvs) > 1 {
+								al := argvs[0]
+								ar := argvs[1]
+								album, _ = c.Lastfm.Album.GetInfo(lastfm.P{"artist": ar, "album": al, "username": c.getLastfmUser(ctx.Message.Author)})
 							} else {
-								ctx.Message.Reply(ctx.Atlas, fmt.Sprintf("**%s** has not scrobbled this album yet", ctx.Message.Author.Username))
+								ctx.Message.Reply(ctx.Atlas, "Invalid argument syntax. The argument value should look like: album:artist")
+
+								break
 							}
-						}
-						leave = true
-						break
-					}
-
-					// break from loop if we don't need to be here anymore
-					if leave {
-						break
-					}
-				} else {
-					if strings.ToLower(ctx.Args[0]) == "artist" { // show play count for current band
-						artist, _ := c.Lastfm.Artist.GetInfo(lastfm.P{"artist": np.Artist.Name, "username": database.GetUser(ctx.Message.Author).Lastfm})
-						plays, _ := strconv.Atoi(artist.Stats.UserPlays)
-
-						if plays > 0 {
-							ctx.Message.Reply(ctx.Atlas, fmt.Sprintf("**%s** has scrobbled %s **%d** times", ctx.Message.Author.Username, artist.Name, plays))
 						} else {
-							ctx.Message.Reply(ctx.Atlas, fmt.Sprintf("**%s** has not scrobbled this artist yet", ctx.Message.Author.Username))
+							album, _ = c.Lastfm.Album.GetInfo(lastfm.P{"artist": np.Artist.Name, "album": np.Album.Name, "username": c.getLastfmUser(ctx.Message.Author)})
 						}
-					} else if strings.ToLower(ctx.Args[0]) == "album" { // show play count for current album
-						album, _ := c.Lastfm.Album.GetInfo(lastfm.P{"artist": np.Artist.Name, "album": np.Album.Name, "username": database.GetUser(ctx.Message.Author).Lastfm})
+
 						plays, _ := strconv.Atoi(album.UserPlayCount)
 
 						if plays > 0 {
@@ -109,6 +80,24 @@ func (c Plays) Register() *atlas.Command {
 						} else {
 							ctx.Message.Reply(ctx.Atlas, fmt.Sprintf("**%s** has not scrobbled this album yet", ctx.Message.Author.Username))
 						}
+						break
+					case "artist": // artist
+						var artist lastfm.ArtistGetInfo
+
+						if isset {
+							artist, _ = c.Lastfm.Artist.GetInfo(lastfm.P{"artist": argv, "username": c.getLastfmUser(ctx.Message.Author)})
+						} else {
+							artist, _ = c.Lastfm.Artist.GetInfo(lastfm.P{"artist": np.Artist.Name, "username": c.getLastfmUser(ctx.Message.Author)})
+						}
+
+						plays, _ := strconv.Atoi(artist.Stats.UserPlays)
+
+						if plays > 0 {
+							ctx.Message.Reply(ctx.Atlas, fmt.Sprintf("**%s** has scrobbled %s **%d** times", ctx.Message.Author.Username, artist.Name, plays))
+						} else {
+							ctx.Message.Reply(ctx.Atlas, fmt.Sprintf("**%s** has not scrobbled this artist yet", ctx.Message.Author.Username))
+						}
+						break
 					}
 				}
 			}
