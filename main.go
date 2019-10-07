@@ -22,7 +22,7 @@ func main() {
 		client := atlas.New(&atlas.Options{
 			DisgordOptions: &disgord.Config{
 				BotToken: config.Token,
-				Logger:   disgord.DefaultLogger(true), // uncomment for disgord logging
+				// Logger:   disgord.DefaultLogger(true), // uncomment for disgord logging
 			},
 			OwnerID: config.BotOwner,
 		})
