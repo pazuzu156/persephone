@@ -36,11 +36,15 @@ func (c Nowplaying) Register() *atlas.Command {
 
 			// Open base images
 			bg, _ := lib.OpenImage(lib.LocGet("static/images/background.png"))
-			aa, _ := lib.OpenImage(res.Filename)
-			av, avf := lib.GetAvatarImage(ctx.Message.Author)
+			aa, aaf := lib.OpenImage(res.Filename)
+			// av, avf := lib.GetAvatarImage(ctx.Message.Author)
+
+			avURL, _ := ctx.Message.Author.AvatarURL(256, false)
+			res, _ = lib.Grab(avURL)
+			av, avf := lib.OpenImage(res.Filename)
 
 			// delete downloaded images (they're already loaded into memory)
-			os.Remove(res.Filename)
+			os.Remove(aaf.Name())
 			os.Remove(avf.Name())
 
 			// Some resizing for avatar and album art
