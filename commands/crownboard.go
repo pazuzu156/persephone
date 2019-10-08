@@ -26,6 +26,7 @@ func InitCrownBoard() CrownBoard {
 func (c CrownBoard) Register() *atlas.Command {
 	c.CommandInterface.Run = func(ctx atlas.Context) {
 		users := database.GetUsers()
+		crownsCount := len(database.GetCrownsList())
 
 		sort.SliceStable(users, func(i, j int) bool {
 			return len(users[i].Crowns()) > len(users[j].Crowns())
@@ -48,7 +49,8 @@ func (c CrownBoard) Register() *atlas.Command {
 
 		ctx.Atlas.CreateMessage(ctx.Message.ChannelID, &disgord.CreateMessageParams{
 			Embed: &disgord.Embed{
-				Title:       "Crown Leaderboards",
+				// Title:       "Crown Leaderboards",
+				Title:       fmt.Sprintf("Crowns Leaderboards • %s total crowns", lib.HumanNumber(crownsCount)),
 				Description: lib.JoinString(descar, "\n"),
 				Color:       lib.RandomColor(),
 				Footer:      f, Timestamp: t,
