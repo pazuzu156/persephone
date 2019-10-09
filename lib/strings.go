@@ -4,6 +4,7 @@ import (
 	"errors"
 	"fmt"
 	"reflect"
+	"sort"
 	"strconv"
 	"strings"
 
@@ -35,10 +36,20 @@ func JoinString(strs []string, char string) string {
 
 // JoinStringMap joins a string map with a char, and removes the end char.
 func JoinStringMap(strs map[int]string, char string) string {
-	vals := make([]string, 0, len(strs))
+	// make sure map is sorted in order cause Go likes random orders
+	// for some stupid fucking reason
+	var keys []int
 
-	for _, v := range strs {
-		vals = append(vals, v)
+	for k := range strs {
+		keys = append(keys, k)
+	}
+
+	sort.Ints(keys)
+
+	var vals []string
+
+	for _, k := range keys {
+		vals = append(vals, strs[k])
 	}
 
 	return JoinString(vals, char)

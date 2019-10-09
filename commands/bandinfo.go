@@ -29,7 +29,11 @@ func (c Bandinfo) Register() *atlas.Command {
 	c.CommandInterface.Run = func(ctx atlas.Context) {
 		// ctx.Message.Reply(ctx.Atlas, "Hello, Bandinfo!")
 		if len(ctx.Args) > 0 {
-			artistName := lib.JoinStringMap(ctx.Args, " ")
+			args := ctx.Args
+			artistName := lib.JoinStringMap(args, " ")
+
+			fmt.Println(artistName)
+
 			artist, err := c.Lastfm.Artist.GetInfo(lastfm.P{"artist": artistName})
 
 			if err != nil {
