@@ -107,8 +107,12 @@ func (c Nowplaying) Register() *atlas.Command {
 					dc.Clip()
 					i, _ := lib.Grab(img)
 					ii, _ := lib.OpenImage(i.Filename)
-					iir := resize.Resize(160, 160, ii, resize.Bicubic)
-					dc.DrawImage(iir, 340, 400)
+
+					if ii != nil {
+						iir := resize.Resize(160, 160, ii, resize.Bicubic)
+						dc.DrawImage(iir, 340, 400)
+					}
+
 					dc.ResetClip()
 					os.Remove(i.Filename)
 
@@ -130,8 +134,12 @@ func (c Nowplaying) Register() *atlas.Command {
 					dc.Clip()
 					i, _ := lib.Grab(img)
 					ii, _ := lib.OpenImage(i.Filename)
-					iir := resize.Resize(160, 160, ii, resize.Bicubic)
-					dc.DrawImage(iir, 340, 310)
+
+					if ii != nil {
+						iir := resize.Resize(160, 160, ii, resize.Bicubic)
+						dc.DrawImage(iir, 340, 310)
+					}
+
 					dc.ResetClip()
 					os.Remove(i.Filename)
 
@@ -153,8 +161,12 @@ func (c Nowplaying) Register() *atlas.Command {
 					dc.Clip()
 					i, _ := lib.Grab(img)
 					ii, _ := lib.OpenImage(i.Filename)
-					iir := resize.Resize(160, 160, ii, resize.Bicubic)
-					dc.DrawImage(iir, 340, 220)
+
+					if ii != nil {
+						iir := resize.Resize(160, 160, ii, resize.Bicubic)
+						dc.DrawImage(iir, 340, 220)
+					}
+
 					dc.ResetClip()
 					os.Remove(i.Filename)
 
