@@ -58,4 +58,7 @@ func init() {
 	atlas.Use(commands.InitYoutube().Register())
 
 	// atlas.Use(commands.InitNewtaste())
+
+	// Bot Owner commands.
+	atlas.Use(commands.InitDeleteUser().Register())
 }
