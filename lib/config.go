@@ -8,11 +8,12 @@ import (
 
 // Configuration is the base json object.
 type Configuration struct {
-	Token    string `json:"token"`
-	BotOwner string `json:"bot_owner"`
-	BotID    string `json:"bot_id"`
-	GuildID  string `json:"guild_id"`
-	Prefix   string `json:"prefix"`
+	Token        string `json:"token"`
+	BotOwner     string `json:"bot_owner"`
+	BotID        string `json:"bot_id"`
+	GuildID      string `json:"guild_id"`
+	ElevatedRole string `json:"elevated_role"`
+	Prefix       string `json:"prefix"`
 	// Starboard string `json:"starboard"`
 	Starboard struct {
 		Channel         string `json:"channel"`

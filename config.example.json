@@ -2,6 +2,8 @@
     "token": "",
     "bot_owner": "",
     "bot_id": "",
+    "guild_id": "",
+    "elevated_role": "",
     "prefix": "-",
     "starboard": {
         "channel": "starboard",

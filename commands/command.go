@@ -23,6 +23,7 @@ type CommandItem struct {
 	Aliases     []string
 	Usage       string
 	Parameters  []Parameter
+	Admin       bool
 }
 
 // Parameter is the base parameter object for the help command.

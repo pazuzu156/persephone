@@ -58,6 +58,15 @@ func (c Help) Register() *atlas.Command {
 
 			for _, command := range commands {
 				descslc := strings.Split(command.Description, "\n") // don't want all lines of a command description, just the first
+
+				// Don't wanna render this in the main help
+				// if a user cannot execute it
+				if command.Admin {
+					if !lib.CanRun(ctx) {
+						continue
+					}
+				}
+
 				cmdstrslc = append(cmdstrslc, fmt.Sprintf("`%s%s` - %s", config.Prefix, command.Name, descslc[0]))
 			}
 
@@ -86,6 +95,12 @@ func (c Help) Register() *atlas.Command {
 
 // processHelp processes help info defined in each command for command specific help pages
 func (c Help) processHelp(ctx atlas.Context, command CommandItem) {
+	if command.Admin {
+		if !lib.CanRun(ctx) {
+			return
+		}
+	}
+
 	embedFields := []*disgord.EmbedField{
 		{
 			Name:  fmt.Sprintf("%s Help", lib.Ucwords(command.Name)),
