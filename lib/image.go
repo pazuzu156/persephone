@@ -103,7 +103,7 @@ func BrandImage(dc *gg.Context) {
 	dc.LoadFontFace(LocGet("static/fonts/NotoSans-Regular.ttf"), 14)
 	dc.SetRGB(0.9, 0.9, 0.9)
 	dc.DrawStringAnchored(
-		"Persephone: discord.gg/e3wEh3Y",
+		"Persephone: discord.gg/pvxYdcb",
 		float64(dc.Width()), float64(dc.Height()),
 		1.04, -1.2,
 	)
