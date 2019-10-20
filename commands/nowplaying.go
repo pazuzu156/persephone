@@ -8,6 +8,7 @@ import (
 	"persephone/lib"
 
 	"github.com/andersfylling/disgord"
+	"github.com/disintegration/imaging"
 	"github.com/fogleman/gg"
 	"github.com/nfnt/resize"
 	"github.com/pazuzu156/atlas"
@@ -35,7 +36,7 @@ func (c Nowplaying) Register() *atlas.Command {
 			res, _ := lib.Grab(track.Images[3].URL)
 
 			// Open base images
-			bg, _ := lib.OpenImage(lib.LocGet("static/images/background.png"))
+			// bg, _ := lib.OpenImage(lib.LocGet("static/images/background.png"))
 			aa, aaf := lib.OpenImage(res.Filename)
 			// av, avf := lib.GetAvatarImage(ctx.Message.Author)
 
@@ -50,10 +51,14 @@ func (c Nowplaying) Register() *atlas.Command {
 			// Some resizing for avatar and album art
 			aar := resize.Resize(240, 240, aa, resize.Bicubic)
 			avr := resize.Resize(72, 72, av, resize.Bicubic)
+			aabg := resize.Resize(1000, 600, aa, resize.Bicubic)
 
 			// New image context, and add background image
 			dc := gg.NewContext(1000, 600)
-			dc.DrawImage(bg, 0, 0)
+			baabg := imaging.Blur(aabg, 60)
+			// baabg = imaging.AdjustBrightness(baabg, -10)
+			baabg = imaging.AdjustSaturation(baabg, -20)
+			dc.DrawImage(baabg, 0, 0)
 
 			// Draw avatar (also add the white bar that goes behind the avatar image)
 			dc.SetRGBA(1, 1, 1, 0.2)
