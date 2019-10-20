@@ -101,6 +101,12 @@ func TagImageName(ctx atlas.Context, name string) string {
 // BrandImage tags an image with a discord link and bot's name
 func BrandImage(dc *gg.Context) {
 	dc.LoadFontFace(LocGet("static/fonts/NotoSans-Regular.ttf"), 14)
+	dc.SetRGB(0.2, 0.2, 0.2)
+	dc.DrawStringAnchored(
+		"Persephone: discord.gg/pvxYdcb",
+		float64(dc.Width())+1, float64(dc.Height())+1,
+		1.04, -1.2,
+	)
 	dc.SetRGB(0.9, 0.9, 0.9)
 	dc.DrawStringAnchored(
 		"Persephone: discord.gg/pvxYdcb",
