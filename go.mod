@@ -11,6 +11,7 @@ require (
 	github.com/antchfx/xpath v1.0.0 // indirect
 	github.com/cavaliercoder/grab v2.0.0+incompatible
 	github.com/chai2010/webp v1.1.0
+	github.com/disintegration/imaging v1.6.1
 	github.com/ethereum/go-ethereum v1.9.6
 	github.com/fogleman/gg v1.3.0
 	github.com/go-sql-driver/mysql v1.4.1
@@ -27,7 +28,7 @@ require (
 	github.com/pazuzu156/lastfm-go v0.0.2
 	github.com/saintfish/chardet v0.0.0-20120816061221-3af4cd4741ca // indirect
 	github.com/temoto/robotstxt v1.1.1 // indirect
-	golang.org/x/image v0.0.0-20190910094157-69e4b8554b2a // indirect
+	golang.org/x/image v0.0.0-20191009234506-e7c1f5e7dbb8 // indirect
 	golang.org/x/text v0.3.2
 	google.golang.org/appengine v1.6.4 // indirect
 )
