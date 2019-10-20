@@ -2,7 +2,6 @@ package commands
 
 import (
 	"fmt"
-	"persephone/database"
 	"persephone/lib"
 	"sort"
 
@@ -25,8 +24,8 @@ func InitCrownBoard() CrownBoard {
 // Register registers and runs the crownboard command.
 func (c CrownBoard) Register() *atlas.Command {
 	c.CommandInterface.Run = func(ctx atlas.Context) {
-		users := database.GetUsers()
-		crownsCount := len(database.GetCrownsList())
+		users := lib.GetUsers()
+		crownsCount := len(lib.GetCrownsList())
 
 		sort.SliceStable(users, func(i, j int) bool {
 			return len(users[i].Crowns()) > len(users[j].Crowns())

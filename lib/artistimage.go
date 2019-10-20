@@ -1,6 +1,4 @@
-package database
-
-import "persephone/lib"
+package lib
 
 // ArtistImages object.
 type ArtistImages struct {
@@ -13,5 +11,5 @@ type ArtistImages struct {
 func init() {
 	var err error
 	db, err = OpenDB()
-	lib.Check(err)
+	Check(err)
 }

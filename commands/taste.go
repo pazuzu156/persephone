@@ -2,7 +2,6 @@ package commands
 
 import (
 	"fmt"
-	"persephone/database"
 	"persephone/fm"
 	"persephone/lib"
 	"sort"
@@ -52,7 +51,7 @@ func (c Taste) Register() *atlas.Command {
 
 			if user == nil {
 				// TODO: bug with string usernames....
-				// dbu := database.GetUserFromString(ctx.Args[0])
+				// dbu := lib.GetUserFromString(ctx.Args[0])
 
 				// if dbu.Username != "" {
 				// 	user, _ = ctx.Atlas.GetUser(dbu.GetDiscordID())
@@ -69,8 +68,8 @@ func (c Taste) Register() *atlas.Command {
 				return
 			}
 
-			dba := database.GetUser(ctx.Message.Author)
-			dbu := database.GetUser(user)
+			dba := lib.GetUser(ctx.Message.Author)
+			dbu := lib.GetUser(user)
 			authorData, _ := c.Lastfm.User.GetTopArtists(lastfm.P{"user": dba.Lastfm, "period": "overall", "limit": callLimit})
 			userData, _ := c.Lastfm.User.GetTopArtists(lastfm.P{"user": dbu.Lastfm, "period": "overall", "limit": callLimit})
 

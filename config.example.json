@@ -3,6 +3,7 @@
     "bot_owner": "",
     "bot_id": "",
     "guild_id": "",
+    "log_channel_id": "",
     "elevated_role": "",
     "prefix": "-",
     "starboard": {

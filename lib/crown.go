@@ -1,8 +1,4 @@
-package database
-
-import (
-	"persephone/lib"
-)
+package lib
 
 // Crowns object.
 type Crowns struct {
@@ -16,13 +12,13 @@ type Crowns struct {
 func init() {
 	var err error
 	db, err = OpenDB()
-	lib.Check(err)
+	Check(err)
 }
 
 // GetCrownsList returns a list of all crowns in database
 func GetCrownsList() (crowns []Crowns) {
 	err := db.Select(&crowns, db.From(Crowns{}))
-	lib.Check(err)
+	Check(err)
 
 	return
 }
@@ -31,7 +27,7 @@ func GetCrownsList() (crowns []Crowns) {
 func (c Crowns) User() (user Users) {
 	var users []Users
 	err := db.Select(&users, db.From(Users{}), db.Where("discord_id", "=", c.DiscordID))
-	lib.Check(err)
+	Check(err)
 
 	if len(users) == 1 {
 		user = users[0]

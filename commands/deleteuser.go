@@ -2,7 +2,6 @@ package commands
 
 import (
 	"fmt"
-	"persephone/database"
 	"persephone/lib"
 	"strconv"
 
@@ -18,9 +17,15 @@ func InitDeleteUser() DeleteUser {
 		Name:        "deleteuser",
 		Description: "Deletes a user and all related data",
 		Aliases:     []string{"du", "removeuser", "ru"},
-		Usage:       "deleteuser ...",
-		Parameters:  []Parameter{},
-		Admin:       true,
+		Usage:       "deleteuser <discord_id>",
+		Parameters: []Parameter{
+			{
+				Name:        "discord_id",
+				Description: "The Discord ID of the user to remove",
+				Required:    true,
+			},
+		},
+		Admin: true,
 	})}
 }
 
@@ -36,33 +41,19 @@ func (c DeleteUser) Register() *atlas.Command {
 				return
 			}
 
-			db, _ := database.OpenDB()
-			var users []database.Users
-			db.Select(&users, db.Where("discord_id", "=", u64), db.From(database.Users{}))
+			db, _ := lib.OpenDB()
+			var users []lib.Users
+			db.Select(&users, db.Where("discord_id", "=", u64), db.From(lib.Users{}))
 
 			if len(users) > 0 {
-				var (
-					crownsRemoved = false
-					userRemoved   = false
-				)
 				user := users[0]
-				del, _ := db.Delete(user.Crowns())
+				ur, cr := user.Delete()
 
-				if del > 0 {
-					crownsRemoved = true
-				}
-
-				del, _ = db.Delete(&user)
-
-				if del > 0 {
-					userRemoved = true
-				}
-
-				if crownsRemoved && userRemoved {
+				if cr && ur {
 					ctx.Message.Reply(ctx.Atlas, fmt.Sprintf("User with ID %d and their crowns have been removed", u64))
-				} else if crownsRemoved && !userRemoved {
+				} else if cr && !ur {
 					ctx.Message.Reply(ctx.Atlas, fmt.Sprintf("User with ID %d was not removed, but their crowns were. You might need to run this again", u64))
-				} else if !crownsRemoved && userRemoved {
+				} else if !cr && ur {
 					ctx.Message.Reply(ctx.Atlas, fmt.Sprintf("User with ID %d was removed, but their crowns were not You might need to run this again", u64))
 				} else {
 					ctx.Message.Reply(ctx.Atlas, fmt.Sprintf("User with ID %d was not removed, and neither were their crowns. Please try again later", u64))

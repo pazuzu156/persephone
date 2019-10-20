@@ -1,7 +1,6 @@
 package commands
 
 import (
-	"persephone/database"
 	"persephone/lib"
 	"strconv"
 
@@ -83,5 +82,5 @@ func (c Command) getBotUser(ctx atlas.Context) *disgord.User {
 
 // getLastfmUser returns a Last.FM username from the database from a given discord user.
 func (c Command) getLastfmUser(user *disgord.User) string {
-	return database.GetUser(user).Lastfm
+	return lib.GetUser(user).Lastfm
 }

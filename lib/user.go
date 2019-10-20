@@ -1,7 +1,6 @@
-package database
+package lib
 
 import (
-	"persephone/lib"
 	"strconv"
 
 	"github.com/andersfylling/disgord"
@@ -25,7 +24,7 @@ type Users struct {
 func init() {
 	var err error
 	db, err = OpenDB()
-	lib.Check(err)
+	Check(err)
 }
 
 // GetUser gets the database user via a Discord user.
@@ -107,4 +106,24 @@ func (c Users) Crowns() (crowns []Crowns) {
 
 func (c Users) GetDiscordID() disgord.Snowflake {
 	return disgord.NewSnowflake(c.DiscordID)
+}
+
+func (c Users) Delete() (bool, bool) {
+	var (
+		removedUser   = false
+		removedCrowns = false
+	)
+	del, _ := db.Delete(c.Crowns())
+
+	if del > 0 {
+		removedCrowns = true
+	}
+
+	del, _ = db.Delete(&c)
+
+	if del > 0 {
+		removedUser = true
+	}
+
+	return removedUser, removedCrowns
 }
