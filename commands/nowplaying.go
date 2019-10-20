@@ -8,7 +8,6 @@ import (
 	"persephone/lib"
 
 	"github.com/andersfylling/disgord"
-	"github.com/disintegration/imaging"
 	"github.com/fogleman/gg"
 	"github.com/nfnt/resize"
 	"github.com/pazuzu156/atlas"
@@ -36,9 +35,8 @@ func (c Nowplaying) Register() *atlas.Command {
 			res, _ := lib.Grab(track.Images[3].URL)
 
 			// Open base images
-			// bg, _ := lib.OpenImage(lib.LocGet("static/images/background.png"))
+			bg, _ := lib.OpenImage(lib.LocGet("static/images/background.png"))
 			aa, aaf := lib.OpenImage(res.Filename)
-			// av, avf := lib.GetAvatarImage(ctx.Message.Author)
 
 			avURL, _ := ctx.Message.Author.AvatarURL(256, false)
 			res, _ = lib.Grab(avURL)
@@ -51,14 +49,10 @@ func (c Nowplaying) Register() *atlas.Command {
 			// Some resizing for avatar and album art
 			aar := resize.Resize(240, 240, aa, resize.Bicubic)
 			avr := resize.Resize(72, 72, av, resize.Bicubic)
-			aabg := resize.Resize(1000, 600, aa, resize.Bicubic)
 
 			// New image context, and add background image
 			dc := gg.NewContext(1000, 600)
-			baabg := imaging.Blur(aabg, 60)
-			// baabg = imaging.AdjustBrightness(baabg, -10)
-			baabg = imaging.AdjustSaturation(baabg, -20)
-			dc.DrawImage(baabg, 0, 0)
+			dc.DrawImage(bg, 0, 0)
 
 			// Draw avatar (also add the white bar that goes behind the avatar image)
 			dc.SetRGBA(1, 1, 1, 0.2)
@@ -68,10 +62,14 @@ func (c Nowplaying) Register() *atlas.Command {
 			// Draw avatar and add username + scrobble count
 			dc.DrawImage(avr, 315, 100)
 			dc.LoadFontFace(FontBold, 26)
+			dc.SetRGB(0.2, 0.2, 0.2)
+			dc.DrawString(ctx.Message.Author.Username+" ("+lfmuser.Name+")", 391, 131)
 			dc.SetRGB(0.9, 0.9, 0.9)
 			dc.DrawString(ctx.Message.Author.Username+" ("+lfmuser.Name+")", 390, 130)
 			// scrobble count
 			dc.LoadFontFace(FontRegular, 20)
+			dc.SetRGB(0.2, 0.2, 0.2)
+			dc.DrawString(fmt.Sprintf("%s scrobbles", lib.HumanNumber(lfmuser.PlayCount)), 391, 161)
 			dc.SetRGB(0.9, 0.9, 0.9)
 			dc.DrawString(fmt.Sprintf("%s scrobbles", lib.HumanNumber(lfmuser.PlayCount)), 390, 160)
 
@@ -83,11 +81,15 @@ func (c Nowplaying) Register() *atlas.Command {
 
 			// Draw artist name
 			dc.LoadFontFace(FontBold, 20)
+			dc.SetRGB(0.2, 0.2, 0.2)
+			dc.DrawStringWrapped(lib.ShortStr(track.Name, 33), 71, 371, 0, 0, 200, 1.5, gg.AlignLeft)
 			dc.SetRGB(0.9, 0.9, 0.9)
 			dc.DrawStringWrapped(lib.ShortStr(track.Name, 33), 70, 370, 0, 0, 200, 1.5, gg.AlignLeft)
 
 			// Draw album + track name
 			dc.LoadFontFace(FontRegular, 20)
+			dc.SetRGB(0.2, 0.2, 0.2)
+			dc.DrawStringWrapped(track.Artist.Name+" - "+track.Album.Name, 71, 441, 0, 0, 200, 1.5, gg.AlignLeft)
 			dc.SetRGB(0.9, 0.9, 0.9)
 			dc.DrawStringWrapped(track.Artist.Name+" - "+track.Album.Name, 70, 440, 0, 0, 200, 1.5, gg.AlignLeft)
 
@@ -121,11 +123,16 @@ func (c Nowplaying) Register() *atlas.Command {
 					dc.ResetClip()
 					os.Remove(i.Filename)
 
-					dc.SetRGB(0.9, 0.9, 0.9)
 					dc.LoadFontFace(FontBold, 25)
+					dc.SetRGB(0.2, 0.2, 0.2)
+					dc.DrawString(lib.ShortStr(t3.Name, 33), 511, 481)
+					dc.SetRGB(0.9, 0.9, 0.9)
 					dc.DrawString(lib.ShortStr(t3.Name, 33), 510, 480)
 
 					dc.LoadFontFace(FontRegular, 25)
+					dc.SetRGB(0.2, 0.2, 0.2)
+					dc.DrawString(t3.Artist.Name, 511, 521)
+					dc.SetRGB(0.9, 0.9, 0.9)
 					dc.DrawString(t3.Artist.Name, 510, 520)
 				}
 
@@ -148,11 +155,16 @@ func (c Nowplaying) Register() *atlas.Command {
 					dc.ResetClip()
 					os.Remove(i.Filename)
 
-					dc.SetRGB(0.9, 0.9, 0.9)
 					dc.LoadFontFace(FontBold, 25)
+					dc.SetRGB(0.2, 0.2, 0.2)
+					dc.DrawString(lib.ShortStr(t2.Name, 33), 511, 381)
+					dc.SetRGB(0.9, 0.9, 0.9)
 					dc.DrawString(lib.ShortStr(t2.Name, 33), 510, 380)
 
 					dc.LoadFontFace(FontRegular, 25)
+					dc.SetRGB(0.2, 0.2, 0.2)
+					dc.DrawString(t2.Artist.Name, 511, 421)
+					dc.SetRGB(0.9, 0.9, 0.9)
 					dc.DrawString(t2.Artist.Name, 510, 420)
 				}
 
@@ -175,11 +187,16 @@ func (c Nowplaying) Register() *atlas.Command {
 					dc.ResetClip()
 					os.Remove(i.Filename)
 
-					dc.SetRGB(0.9, 0.9, 0.9)
 					dc.LoadFontFace(FontBold, 25)
+					dc.SetRGB(0.2, 0.2, 0.2)
+					dc.DrawString(lib.ShortStr(t1.Name, 33), 511, 281)
+					dc.SetRGB(0.9, 0.9, 0.9)
 					dc.DrawString(lib.ShortStr(t1.Name, 33), 510, 280)
 
 					dc.LoadFontFace(FontRegular, 25)
+					dc.SetRGB(0.2, 0.2, 0.2)
+					dc.DrawString(t1.Artist.Name, 511, 321)
+					dc.SetRGB(0.9, 0.9, 0.9)
 					dc.DrawString(t1.Artist.Name, 510, 320)
 				}
 			}
