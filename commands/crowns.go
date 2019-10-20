@@ -3,7 +3,6 @@ package commands
 import (
 	"fmt"
 	"math"
-	"persephone/database"
 	"persephone/lib"
 	"sort"
 	"strconv"
@@ -73,7 +72,7 @@ func (c Crowns) Register() *atlas.Command {
 
 				if user == nil {
 					// TODO: bug with string usernames....
-					// dbu := database.GetUserFromString(ctx.Args[0])
+					// dbu := lib.GetUserFromString(ctx.Args[0])
 
 					// if dbu.Username != "" {
 					// 	user, _ = ctx.Atlas.GetUser(dbu.GetDiscordID())
@@ -83,7 +82,7 @@ func (c Crowns) Register() *atlas.Command {
 				}
 
 				// if user == nil {
-				// 	dbu := database.GetUserFromString(arg)
+				// 	dbu := lib.GetUserFromString(arg)
 
 				// 	if dbu.Username != "" {
 				// 		user, _ = ctx.Atlas.GetUser(dbu.GetDiscordID())
@@ -110,7 +109,7 @@ func (c Crowns) displayCrowns(ctx atlas.Context, user *disgord.User, page int) {
 		return
 	}
 
-	crowns := database.GetUser(user).Crowns() // get crowns
+	crowns := lib.GetUser(user).Crowns() // get crowns
 
 	if len(crowns) > 0 {
 		var (
@@ -127,8 +126,8 @@ func (c Crowns) displayCrowns(ctx atlas.Context, user *disgord.User, page int) {
 			}
 
 			// query database with limit/offset for each page
-			db, _ := database.OpenDB()
-			db.Select(&crowns, db.Where("discord_id", "=", database.GetUInt64ID(user)).OrderBy("play_count", genmai.DESC), db.From(database.Crowns{}), db.Limit(maxPerPage).Offset(offset))
+			db, _ := lib.OpenDB()
+			db.Select(&crowns, db.Where("discord_id", "=", lib.GetUInt64ID(user)).OrderBy("play_count", genmai.DESC), db.From(lib.Crowns{}), db.Limit(maxPerPage).Offset(offset))
 
 			// Sorts the slice in descending order by number of plays
 			sort.SliceStable(crowns, func(i, j int) bool {
@@ -169,5 +168,9 @@ func (c Crowns) displayCrowns(ctx atlas.Context, user *disgord.User, page int) {
 		return
 	}
 
-	ctx.Message.Reply(ctx.Atlas, "That user hasn't logged in to the bot yet.")
+	if lib.GetUser(user).DiscordID == 0 {
+		ctx.Message.Reply(ctx.Atlas, "That user hasn't logged in to the bot yet.")
+	} else {
+		ctx.Message.Reply(ctx.Atlas, "That user doesn't have any crowns yet")
+	}
 }

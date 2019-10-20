@@ -1,8 +1,7 @@
-package database
+package lib
 
 import (
 	"fmt"
-	"persephone/lib"
 	"time"
 
 	_ "github.com/go-sql-driver/mysql" // required for mysql driver
@@ -17,7 +16,7 @@ type Time struct {
 
 var (
 	db     *genmai.DB
-	config = lib.Config()
+	config = Config()
 )
 
 // Migrate migrates database tables (only run on database creation)

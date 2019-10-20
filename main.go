@@ -2,7 +2,6 @@ package main
 
 import (
 	"persephone/commands"
-	"persephone/database"
 	"persephone/lib"
 
 	"github.com/andersfylling/disgord"
@@ -17,7 +16,7 @@ var (
 // main entry point
 func main() {
 	if migrate {
-		database.Migrate()
+		lib.Migrate()
 	} else {
 		client := atlas.New(&atlas.Options{
 			DisgordOptions: &disgord.Config{

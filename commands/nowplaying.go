@@ -3,7 +3,6 @@ package commands
 import (
 	"fmt"
 	"os"
-	"persephone/database"
 	"persephone/fm"
 	"persephone/lib"
 
@@ -29,7 +28,7 @@ func InitNowPlaying() Nowplaying {
 func (c Nowplaying) Register() *atlas.Command {
 	c.CommandInterface.Run = func(ctx atlas.Context) {
 		track, err := fm.GetNowPlayingTrack(ctx.Message.Author, c.Lastfm)
-		lfmuser, _ := database.GetLastfmUserInfo(ctx.Message.Author, c.Lastfm)
+		lfmuser, _ := lib.GetLastfmUserInfo(ctx.Message.Author, c.Lastfm)
 
 		if err == nil {
 			res, _ := lib.Grab(track.Images[3].URL)

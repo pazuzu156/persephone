@@ -2,7 +2,6 @@ package commands
 
 import (
 	"fmt"
-	"persephone/database"
 	"persephone/fm"
 	"persephone/lib"
 	"strconv"
@@ -103,7 +102,7 @@ func (c Plays) Register() *atlas.Command {
 			}
 		} else {
 			// show play count for current playing track
-			track, _ := c.Lastfm.Track.GetInfo(lastfm.P{"track": np.Name, "artist": np.Artist.Name, "username": database.GetUser(ctx.Message.Author).Lastfm})
+			track, _ := c.Lastfm.Track.GetInfo(lastfm.P{"track": np.Name, "artist": np.Artist.Name, "username": lib.GetUser(ctx.Message.Author).Lastfm})
 			plays, _ := strconv.Atoi(track.UserPlayCount)
 
 			if plays > 0 {

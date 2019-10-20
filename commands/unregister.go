@@ -2,7 +2,7 @@ package commands
 
 import (
 	"fmt"
-	"persephone/database"
+    "persephone/lib"
 
 	"github.com/pazuzu156/atlas"
 )
@@ -21,10 +21,10 @@ func InitUnregister() Unregister {
 // Register registers and runs the logout command.
 func (c Unregister) Register() *atlas.Command {
 	c.CommandInterface.Run = func(ctx atlas.Context) {
-		db, _ := database.OpenDB()
+		db, _ := lib.OpenDB()
 		defer db.Close()
 
-		if user := database.GetUser(ctx.Message.Author); user.Username != "" {
+		if user := lib.GetUser(ctx.Message.Author); user.Username != "" {
 			crowns := user.Crowns()
 			n, _ := db.Delete(&user)
 

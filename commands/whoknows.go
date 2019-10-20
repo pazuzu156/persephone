@@ -2,7 +2,6 @@ package commands
 
 import (
 	"fmt"
-	"persephone/database"
 	"persephone/lib"
 	"sort"
 	"strconv"
@@ -53,7 +52,7 @@ func (c Whoknows) Register() *atlas.Command {
 			go c.displayWhoKnows(ctx, a) // runs the whoknows logic and displays the embed
 		} else {
 			// get the user from the sender
-			if user := database.GetUser(ctx.Message.Author); user.Username != "" {
+			if user := lib.GetUser(ctx.Message.Author); user.Username != "" {
 				np, err := c.Lastfm.User.GetRecentTracks(lastfm.P{"user": user.Lastfm, "limit": "2"})
 
 				if err != nil {
@@ -81,7 +80,7 @@ func (c Whoknows) Register() *atlas.Command {
 
 // displayWhoKnows displays an embed with a list of top users who have scrobbled a given artist.
 func (c Whoknows) displayWhoKnows(ctx atlas.Context, artist lastfm.ArtistGetInfo) {
-	users := database.GetUsers()
+	users := lib.GetUsers()
 
 	// user representation for the wk slice
 	type U struct {
@@ -116,9 +115,9 @@ func (c Whoknows) displayWhoKnows(ctx atlas.Context, artist lastfm.ArtistGetInfo
 			if i < max {
 				user := wk[i]
 				if i == 0 {
-					db, _ := database.OpenDB()
+					db, _ := lib.OpenDB()
 					defer db.Close()
-					crowns := database.GetCrownsList()
+					crowns := lib.GetCrownsList()
 					now := time.Now()
 
 					updated := false
@@ -133,12 +132,12 @@ func (c Whoknows) displayWhoKnows(ctx atlas.Context, artist lastfm.ArtistGetInfo
 					}
 
 					if !updated {
-						crown := []database.Crowns{
+						crown := []lib.Crowns{
 							{
 								DiscordID: user.DiscordID,
 								Artist:    artist.Name,
 								PlayCount: user.Plays,
-								Time: database.Time{
+								Time: lib.Time{
 									CreatedAt: &now,
 									UpdatedAt: &now,
 								},

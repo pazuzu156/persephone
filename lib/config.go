@@ -12,6 +12,7 @@ type Configuration struct {
 	BotOwner     string `json:"bot_owner"`
 	BotID        string `json:"bot_id"`
 	GuildID      string `json:"guild_id"`
+	LogChannelID string `json:"log_channel_id"`
 	ElevatedRole string `json:"elevated_role"`
 	Prefix       string `json:"prefix"`
 	// Starboard string `json:"starboard"`

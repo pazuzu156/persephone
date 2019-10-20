@@ -10,12 +10,34 @@ import (
 
 var (
 	_client *atlas.Atlas
-	config  = Config()
 )
 
 // RegisterEvents registers any client events.
 func RegisterEvents(client *atlas.Atlas) {
 	_client = client
+
+	client.On(disgord.EvtGuildMemberRemove, func(s disgord.Session, evt *disgord.GuildMemberRemove) {
+		user := GetUser(evt.User)
+		ur, cr := user.Delete()
+
+		if cr && ur {
+			s.CreateMessage(StrToSnowflake(config.LogChannelID), &disgord.CreateMessageParams{
+				Content: fmt.Sprintf("User %s and there crowns were removed", user.Username),
+			})
+		} else if cr && !ur {
+			s.CreateMessage(StrToSnowflake(config.LogChannelID), &disgord.CreateMessageParams{
+				Content: fmt.Sprintf("User %s was not removed, but their crowns were", user.Username),
+			})
+		} else if !cr && ur {
+			s.CreateMessage(StrToSnowflake(config.LogChannelID), &disgord.CreateMessageParams{
+				Content: fmt.Sprintf("User %s was removed, but their crowns were not", user.Username),
+			})
+		} else {
+			s.CreateMessage(StrToSnowflake(config.LogChannelID), &disgord.CreateMessageParams{
+				Content: fmt.Sprintf("User %s and crowns were not removed", user.Username),
+			})
+		}
+	})
 
 	client.On(disgord.EvtReady, func(s disgord.Session, evt *disgord.Ready) {
 		for _, i := range []string{
