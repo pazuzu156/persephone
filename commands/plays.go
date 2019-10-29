@@ -49,7 +49,7 @@ func (c Plays) Register() *atlas.Command {
 			for n, arg := range ctx.Args {
 				if strings.HasPrefix(arg, "--") {
 					arg = strings.TrimLeft(arg, "--")
-					argv, isset := ctx.Args[n+1]
+					_, isset := ctx.Args[n+1]
 
 					switch strings.ToLower(arg) {
 					case "album": // album
@@ -84,7 +84,9 @@ func (c Plays) Register() *atlas.Command {
 						var artist lastfm.ArtistGetInfo
 
 						if isset {
-							artist, _ = c.Lastfm.Artist.GetInfo(lastfm.P{"artist": argv, "username": c.getLastfmUser(ctx.Message.Author)})
+							delete(ctx.Args, 0)
+							argvs := lib.JoinStringMap(ctx.Args, " ")
+							artist, _ = c.Lastfm.Artist.GetInfo(lastfm.P{"artist": argvs, "username": c.getLastfmUser(ctx.Message.Author)})
 						} else {
 							artist, _ = c.Lastfm.Artist.GetInfo(lastfm.P{"artist": np.Artist.Name, "username": c.getLastfmUser(ctx.Message.Author)})
 						}
