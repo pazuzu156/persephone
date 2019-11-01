@@ -68,7 +68,7 @@ class LoginController extends Controller
             ]);
 
             foreach ($discord->user->getCurrentUserGuilds() as $guild) {
-                if ($guild->id == (int)env('DISCORD_GUILD_ID')) {
+                // if ($guild->id == (int)env('DISCORD_GUILD_ID')) {
                     $user = User::where('discord_id', '=', $r->id);
 
                     if ($user->count()) {
@@ -88,10 +88,10 @@ class LoginController extends Controller
                     }
 
                     return view('auth.error')->with('reason', 'There was an issue saving your Discord user data. Please try again later.');
-                }
+                // }
             }
 
-            return view('auth.error')->with('reason', 'You are not a part of the Untrodden Corridors of Hades Discord server');
+            // return view('auth.error')->with('reason', 'You are not a part of the Untrodden Corridors of Hades Discord server');
         }
 
         return view('auth.error')->with('reason', 'Unable to retrieve a Discord authentication token');
