@@ -19,7 +19,7 @@ func main() {
 		lib.Migrate()
 	} else {
 		client := atlas.New(&atlas.Options{
-			DisgordOptions: &disgord.Config{
+			DisgordOptions: disgord.Config{
 				BotToken: config.Token,
 				// Logger:   disgord.DefaultLogger(true), // uncomment for disgord logging
 			},
