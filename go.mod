@@ -5,6 +5,7 @@ go 1.12
 require (
 	github.com/PuerkitoBio/goquery v1.5.0 // indirect
 	github.com/andersfylling/disgord v0.12.0-rc6
+	github.com/andersfylling/snowflake/v3 v3.0.2
 	github.com/andybalholm/cascadia v1.1.0 // indirect
 	github.com/antchfx/htmlquery v1.1.0 // indirect
 	github.com/antchfx/xmlquery v1.1.0 // indirect

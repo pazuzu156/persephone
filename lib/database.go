@@ -26,6 +26,7 @@ func Migrate() {
 	db.CreateTableIfNotExists(&Crowns{})
 	db.CreateTableIfNotExists(&Users{})
 	db.CreateTableIfNotExists(&ArtistImages{})
+	db.CreateTableIfNotExists(&Servers{})
 	db.Close()
 }
 

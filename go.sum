@@ -4,6 +4,9 @@ github.com/agnivade/wasmbrowsertest v0.3.0/go.mod h1:zQt6ZTdl338xxRaMW395qccVE2e
 github.com/agnivade/wasmbrowsertest v0.3.1/go.mod h1:zQt6ZTdl338xxRaMW395qccVE2eQm0SjC/SDz0mPWQI=
 github.com/andersfylling/disgord v0.12.0-rc6 h1:J2rBDSQ0tt1NstX5uL4YkoNaTosf3lHZNlNwdzIn8t8=
 github.com/andersfylling/disgord v0.12.0-rc6/go.mod h1:39TYQbNLG2VVyfuDhR7AEdi1uiaqjYz6XjCupzneOcg=
+github.com/andersfylling/snowflake v1.3.0 h1:dobYwnkDhe3EzvX3FMZlrRygQ1CVj1W+s3wlJuiuqwQ=
+github.com/andersfylling/snowflake/v3 v3.0.2 h1:4G4da8UizMuqH0bGr5kEv+6CFFANldUi8GBdpw0PvLg=
+github.com/andersfylling/snowflake/v3 v3.0.2/go.mod h1:wppPwIA+SDLR5F21VoW2ir06w8GtB2ZAOCuq7xjGOF0=
 github.com/andersfylling/snowflake/v4 v4.0.1 h1:zBUa0CBSrYBy0QV9WM0LyPKvO4sQ9K50j+q+eVCB9pM=
 github.com/andersfylling/snowflake/v4 v4.0.1/go.mod h1:m/0yauv7FVegGSd+TJ2fNnLG243FQVPqLwyQo0CwFP8=
 github.com/andybalholm/cascadia v1.0.0/go.mod h1:GsXiBklL0woXo1j/WYWtSYYC4ouU9PqHO0sqidkEA4Y=
