@@ -15,10 +15,11 @@ func CanRun(ctx atlas.Context) bool {
 
 	for _, r := range member.Roles {
 		groles, _ := ctx.Atlas.GetGuildRoles(ctx.Message.GuildID)
+		guild := GetServer(ctx.Message.GuildID)
 
 		for _, gr := range groles {
 			if gr.ID == r {
-				if r.String() == config.ElevatedRole {
+				if SnowflakeToUInt64(r) == guild.ElevatedRole {
 					return true
 				}
 			}

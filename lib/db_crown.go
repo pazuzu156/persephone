@@ -15,7 +15,7 @@ func init() {
 	Check(err)
 }
 
-// GetCrownsList returns a list of all crowns in database
+// GetCrownsList returns a list of all crowns in database.
 func GetCrownsList() (crowns []Crowns) {
 	err := db.Select(&crowns, db.From(Crowns{}))
 	Check(err)
