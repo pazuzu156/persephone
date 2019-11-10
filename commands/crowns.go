@@ -50,25 +50,41 @@ func (c Crowns) Register() *atlas.Command {
 				err  error
 			)
 
-			for _, arg := range ctx.Args {
+			for n, arg := range ctx.Args {
 				if strings.HasPrefix(arg, "<@") {
 					mention, _ := lib.GetDiscordIDFromMention(arg)
 					user, _ = ctx.Atlas.GetUser(mention)
 				}
 
-				if strings.HasPrefix(arg, "page:") {
-					a := strings.Split(arg, ":")
+				if strings.HasPrefix(arg, "--") {
+					arg = strings.TrimPrefix(arg, "--")
+					pageNumber, _ := ctx.Args[n+1]
 
-					if a[1] != "" {
-						page, err = strconv.Atoi(a[1])
+					switch strings.ToLower(arg) {
+					case "page":
+						page, err = strconv.Atoi(pageNumber)
 
 						if err != nil {
-							ctx.Message.Reply(ctx.Atlas, "Invalid parameter passed to `page`")
+							ctx.Message.Reply(ctx.Atlas, "")
 
 							return
 						}
 					}
 				}
+
+				// if strings.HasPrefix(arg, "page:") {
+				// 	a := strings.Split(arg, ":")
+
+				// 	if a[1] != "" {
+				// 		page, err = strconv.Atoi(a[1])
+
+				// 		if err != nil {
+				// 			ctx.Message.Reply(ctx.Atlas, "Invalid parameter passed to `page`")
+
+				// 			return
+				// 		}
+				// 	}
+				// }
 
 				if user == nil {
 					// TODO: bug with string usernames....
