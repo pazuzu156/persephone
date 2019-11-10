@@ -143,7 +143,7 @@ func (c Crowns) displayCrowns(ctx atlas.Context, user *disgord.User, page int) {
 
 			// add each crown to string slice for embed
 			for n, crown := range crowns {
-				descar = append(descar, fmt.Sprintf("%d. 👑 %s with %d plays", n+1, crown.Artist, crown.PlayCount))
+				descar = append(descar, fmt.Sprintf("%d. 👑 %s with %d plays", (n+1)+offset, crown.Artist, crown.PlayCount))
 			}
 
 			ctx.Atlas.CreateMessage(ctx.Message.ChannelID, &disgord.CreateMessageParams{
