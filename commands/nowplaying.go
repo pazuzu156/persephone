@@ -37,6 +37,10 @@ func (c Nowplaying) Register() *atlas.Command {
 			bg, _ := lib.OpenImage(lib.LocGet("static/images/background.png"))
 			aa, aaf := lib.OpenImage(res.Filename)
 
+			if aa == nil {
+				aa, aaf = lib.OpenImage(lib.LocGet("static/images/bm.png"))
+			}
+
 			avURL, _ := ctx.Message.Author.AvatarURL(256, false)
 			res, _ = lib.Grab(avURL)
 			av, avf := lib.OpenImage(res.Filename)
