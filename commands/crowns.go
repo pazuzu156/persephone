@@ -69,22 +69,9 @@ func (c Crowns) Register() *atlas.Command {
 
 							return
 						}
+						break
 					}
 				}
-
-				// if strings.HasPrefix(arg, "page:") {
-				// 	a := strings.Split(arg, ":")
-
-				// 	if a[1] != "" {
-				// 		page, err = strconv.Atoi(a[1])
-
-				// 		if err != nil {
-				// 			ctx.Message.Reply(ctx.Atlas, "Invalid parameter passed to `page`")
-
-				// 			return
-				// 		}
-				// 	}
-				// }
 
 				if user == nil {
 					// TODO: bug with string usernames....
@@ -107,6 +94,7 @@ func (c Crowns) Register() *atlas.Command {
 				// 	}
 				// }
 				c.displayCrowns(ctx, user, page)
+				break
 			}
 		} else {
 			c.displayCrowns(ctx, ctx.Message.Author, 1)
@@ -138,12 +126,13 @@ func (c Crowns) displayCrowns(ctx atlas.Context, user *disgord.User, page int) {
 		// page sanity check
 		if page <= pages {
 			if page > 1 {
-				offset = (page-1)*maxPerPage + 1 // fucking pagination
+				offset = (page - 1) * maxPerPage // fucking pagination
 			}
 
 			// query database with limit/offset for each page
 			db, _ := lib.OpenDB()
-			db.Select(&crowns, db.Where("discord_id", "=", lib.GetUInt64ID(user)).OrderBy("play_count", genmai.DESC), db.From(lib.Crowns{}), db.Limit(maxPerPage).Offset(offset))
+			db.Select(&crowns, db.Where("discord_id", "=", lib.GetUInt64ID(user)).OrderBy("play_count", genmai.DESC),
+				db.From(lib.Crowns{}), db.Limit(maxPerPage).Offset(offset))
 
 			// Sorts the slice in descending order by number of plays
 			sort.SliceStable(crowns, func(i, j int) bool {
