@@ -6,8 +6,12 @@ persephone: clean
 	NOTAR=true ./build
 
 install:
-	sudo install -D -m644 persephone /usr/bin/persephone
-	sudo chmod +x /usr/bin/persephone
+	if [ ${GOPATH+x} ] then
+		go install
+	else
+		sudo install -D -m644 persephone /usr/bin/persephone
+		sudo chmod +x /usr/bin/persephone
+	fi
 	mkdir -pv ${INSHOME}/temp
 	mkdir -pv ${INSHOME}/static/fonts
 	mkdir -pv ${INSHOME}/static/images
