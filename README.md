@@ -33,6 +33,15 @@ On Linux, to build for distribution (or to install on your system) use the provi
 
 Do not run `make install` with sudo, it will run sudo when needed. Make sure you update your configuration in `~/persephone/config.json` so the bot will run
 
+By default, the makefile will attempt to install the binary in `GOPATH` if that's set, or in `/usr/bin`. To change this, either have `GOPATH` set, or set `PREFIX`
+
+If `GOPATH` is set, but you want to set a custom `PREFIX`, empty `GOPATH`:
+
+    $ GOPATH= PREFIX=/usr/local/bin make install
+    ...
+
+Otherwise, just `PREFIX` is fine
+
 ## Contributing
 
 Please refer to [CONTRIBUTING.md](CONTRIBUTING.md) for more info

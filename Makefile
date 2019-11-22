@@ -1,17 +1,22 @@
 INSHOME=${HOME}/.config/persephone
 
+ifndef PREFIX
+PREFIX=/usr/bin
+endif
+
 all: persephone
 
 persephone: clean
 	NOTAR=true ./build
 
 install:
-	if [ ${GOPATH+x} ] then
-		go install
-	else
-		sudo install -D -m644 persephone /usr/bin/persephone
-		sudo chmod +x /usr/bin/persephone
-	fi
+ifdef GOPATH
+	go install
+else
+	sudo install -D -m644 persephone $(PREFIX)/persephone
+	sudo chmod +x $(PREFIX)/persephone
+endif
+
 	mkdir -pv ${INSHOME}/temp
 	mkdir -pv ${INSHOME}/static/fonts
 	mkdir -pv ${INSHOME}/static/images
@@ -23,7 +28,12 @@ install:
 	install -D -m644 artists.json ${INSHOME}/artists.json
 
 uninstall:
-	sudo rm -rf /usr/bin/persephone
+ifdef GOPATH
+	rm -rf $(GOPATH)/bin/persephone
+else
+	sudo rm -rf $(PREFIX)/persephone
+endif
+
 	rm -rf ${INSHOME}/temp
 	rm -rf ${INSHOME}/static
 
