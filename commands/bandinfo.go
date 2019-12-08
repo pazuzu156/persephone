@@ -67,7 +67,7 @@ func (c Bandinfo) displayBandInfo(ctx atlas.Context, artist lastfm.ArtistGetInfo
 			URL:   artist.URL,
 			Color: lib.RandomColor(),
 			Thumbnail: &disgord.EmbedThumbnail{
-				URL: lib.GetArtistImageURL(artist),
+				URL: lib.GetArtistImageURLFromFmArtist(artist),
 			},
 			Fields: []*disgord.EmbedField{
 				{

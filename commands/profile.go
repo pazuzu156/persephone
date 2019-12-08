@@ -2,11 +2,14 @@ package commands
 
 import (
 	"fmt"
+	"os"
 	"persephone/lib"
 
 	"github.com/andersfylling/disgord"
 	"github.com/fogleman/gg"
+	"github.com/nfnt/resize"
 	"github.com/pazuzu156/atlas"
+	"github.com/pazuzu156/lastfm-go"
 )
 
 // Profile command.
@@ -32,11 +35,58 @@ func InitProfile() Profile {
 func (c Profile) Register() *atlas.Command {
 	c.CommandInterface.Run = func(ctx atlas.Context) {
 		lfmuser, _ := lib.GetLastfmUserInfo(ctx.Message.Author, c.Lastfm)
+		// np, _ := fm.GetNowPlayingTrack(ctx.Message.Author, c.Lastfm)
+
+		avURL, _ := ctx.Message.Author.AvatarURL(256, false)
+		res, _ := lib.Grab(avURL)
+		av, avf := lib.OpenImage(res.Filename)
+
+		os.Remove(avf.Name())
+
+		avr := resize.Resize(72, 72, av, resize.Bicubic)
+
+		// TODO: Get Top Artists
+		artists, _ := c.Lastfm.User.GetTopArtists(lastfm.P{"user": lfmuser.Name, "period": "overall", "limit": "5"})
+
+		for _, artist := range artists.Artists {
+			fmt.Printf("%s: %s plays\n", artist.Name, artist.PlayCount)
+		}
+
+		// TODO: Get Top Albums
+
+		// TODO: Get Top Tags
 
 		bg, _ := lib.OpenImage(lib.LocGet("static/images/background.png"))
 
 		dc := gg.NewContext(1000, 600)
 		dc.DrawImage(bg, 0, 0)
+
+		dc.SetRGBA(1, 1, 1, 0.2)
+		dc.DrawRectangle(0, 100, 1000, 72)
+		dc.Fill()
+
+		// Draw avatar and add username + scrobble count
+		dc.DrawImage(avr, 315, 100)
+		dc.LoadFontFace(FontBold, 26)
+		dc.SetRGB(0.2, 0.2, 0.2)
+		dc.DrawString(ctx.Message.Author.Username+" ("+lfmuser.Name+")", 391, 131)
+		dc.SetRGB(0.9, 0.9, 0.9)
+		dc.DrawString(ctx.Message.Author.Username+" ("+lfmuser.Name+")", 390, 130)
+		// scrobble count
+		dc.LoadFontFace(FontRegular, 20)
+		dc.SetRGB(0.2, 0.2, 0.2)
+		dc.DrawString(fmt.Sprintf("%s scrobbles", lib.HumanNumber(lfmuser.PlayCount)), 391, 161)
+		dc.SetRGB(0.9, 0.9, 0.9)
+		dc.DrawString(fmt.Sprintf("%s scrobbles", lib.HumanNumber(lfmuser.PlayCount)), 390, 160)
+
+		// Draw white box that goes behind album art + draw album art
+		dc.SetRGBA(1, 1, 1, 0.2)
+		dc.DrawRectangle(50, 0, 250, 600)
+		dc.Fill()
+
+		// ai := lib.GetArtistImage(artists.Artists[0])
+
+		// dc.DrawImage(aar, 55, 105)
 
 		lib.BrandImage(dc)
 

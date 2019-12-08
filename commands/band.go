@@ -176,7 +176,7 @@ func (c Band) displayArtistInfo(ctx atlas.Context, artist lastfm.ArtistGetInfo) 
 
 	lfmuser, _ := lib.GetLastfmUserInfo(ctx.Message.Author, c.Lastfm)
 
-	aimg := lib.GetArtistImage(artist) // artist image is scraped from metal-archives
+	aimg := lib.GetArtistImageFromFmArtist(artist) // artist image is scraped from metal-archives
 	avres, _ := grab.Get(lib.LocGet("temp/"), lib.GenAvatarURL(ctx.Message.Author))
 	bg, _ := lib.OpenImage(lib.LocGet("static/images/background.png"))
 	av, _ := lib.OpenImage(avres.Filename)
