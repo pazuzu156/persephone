@@ -30,7 +30,7 @@ func InitCrowns() Crowns {
 				Required:    false,
 			},
 			{
-				Name:        "page",
+				Name:        "--page",
 				Value:       "#",
 				Description: "Shows the requested page of results",
 				Required:    false,
