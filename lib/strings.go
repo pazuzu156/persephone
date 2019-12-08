@@ -83,6 +83,13 @@ func HumanNumber(i interface{}) string {
 	return printer.Sprintf("%d", i)
 }
 
+// ToInt converts a string to and integer.
+func ToInt(s string) int {
+	i, _ := strconv.Atoi(s)
+
+	return i
+}
+
 // GenerateMessageURL returns the URL for a specific Discord message.
 func GenerateMessageURL(guildID disgord.Snowflake, msg *disgord.Message) string {
 	return fmt.Sprintf("https://discordapp.com/channels/%s/%s/%s", guildID, msg.ChannelID, msg.ID)
