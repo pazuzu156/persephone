@@ -18,6 +18,7 @@ package lib
 // 	} `xml:"image"`
 // }
 
+// TopAlbum holds top album info.
 type TopAlbum struct {
 	Rank   string `xml:"rank,attr"`
 	Name   string `xml:"name"`
