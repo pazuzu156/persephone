@@ -19,6 +19,11 @@ if test -z `which go`; then
 	exit 1
 fi
 
+if test -z `go vet`; then
+    echo "Failed to vet your Go code. Please make the above corrections and try again"
+    exit 1
+fi
+
 go build -o $EXE_NAME -i -v
 
 mv temp/.gitkeep gkt
