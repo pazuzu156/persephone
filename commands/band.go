@@ -18,114 +18,6 @@ import (
 	"golang.org/x/text/message"
 )
 
-// album and track positions for grids
-var (
-	albumPositions = []lib.AlbumPosition{
-		{
-			X: 355,
-			Y: 170,
-			Shadow: lib.Shadow{
-				X: 350,
-				Y: 165,
-				R: 10,
-			},
-			Info: lib.InfoText{
-				X: 350,
-				Y: 340,
-				Plays: lib.PlaysText{
-					X: 350,
-					Y: 360,
-				},
-			},
-		},
-		{
-			X: 555,
-			Y: 170,
-			Shadow: lib.Shadow{
-				X: 550,
-				Y: 165,
-				R: 10,
-			},
-			Info: lib.InfoText{
-				X: 550,
-				Y: 340,
-				Plays: lib.PlaysText{
-					X: 550,
-					Y: 360,
-				},
-			},
-		},
-		{
-			X: 355,
-			Y: 390,
-			Shadow: lib.Shadow{
-				X: 350,
-				Y: 385,
-				R: 10,
-			},
-			Info: lib.InfoText{
-				X: 350,
-				Y: 560,
-				Plays: lib.PlaysText{
-					X: 350,
-					Y: 580,
-				},
-			},
-		},
-		{
-			X: 555,
-			Y: 390,
-			Shadow: lib.Shadow{
-				X: 550,
-				Y: 385,
-				R: 10,
-			},
-			Info: lib.InfoText{
-				X: 550,
-				Y: 560,
-				Plays: lib.PlaysText{
-					X: 550,
-					Y: 580,
-				},
-			},
-		},
-	}
-	trackPositions = []lib.TrackPosition{
-		{
-			X: 720,
-			Y: 180,
-			Plays: lib.PlaysText{
-				X: 870,
-				Y: 180,
-			},
-		},
-		{
-			X: 720,
-			Y: 210,
-			Plays: lib.PlaysText{
-				X: 870,
-				Y: 210,
-			},
-		},
-		{
-			X: 720,
-			Y: 240,
-			Plays: lib.PlaysText{
-				X: 870,
-				Y: 240,
-			},
-		},
-		{
-			X: 720,
-			Y: 270,
-			Plays: lib.PlaysText{
-				X: 870,
-				Y: 270,
-			},
-		},
-	}
-)
-
 // Band command.
 type Band struct{ Command }
 
@@ -242,7 +134,7 @@ func (c Band) displayArtistInfo(ctx atlas.Context, artist lastfm.ArtistGetInfo) 
 			ai, _ := lib.OpenImage(ares.Filename)
 			os.Remove(ares.Filename)
 			ar := resize.Resize(145, 145, ai, resize.Bicubic)
-			pos := albumPositions[i]
+			pos := AlbumPositions[i]
 
 			// shadow
 			dc.SetRGBA(0, 0, 0, 0.3)
@@ -267,7 +159,7 @@ func (c Band) displayArtistInfo(ctx atlas.Context, artist lastfm.ArtistGetInfo) 
 	// takes top tracks and lists the top 4
 	for i, track := range tracks {
 		if i < len(tracks) && i < 4 {
-			pos := trackPositions[i]
+			pos := TrackPositions[i]
 			dc.SetRGB(0.9, 0.9, 0.9)
 			dc.LoadFontFace(FontRegular, 16)
 			dc.DrawString(lib.ShortStr(track.Name, 15), pos.X, pos.Y)
