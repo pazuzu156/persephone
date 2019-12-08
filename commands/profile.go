@@ -35,7 +35,6 @@ func InitProfile() Profile {
 func (c Profile) Register() *atlas.Command {
 	c.CommandInterface.Run = func(ctx atlas.Context) {
 		lfmuser, _ := lib.GetLastfmUserInfo(ctx.Message.Author, c.Lastfm)
-		// np, _ := fm.GetNowPlayingTrack(ctx.Message.Author, c.Lastfm)
 
 		avURL, _ := ctx.Message.Author.AvatarURL(256, false)
 		res, _ := lib.Grab(avURL)
@@ -47,10 +46,6 @@ func (c Profile) Register() *atlas.Command {
 
 		// TODO: Get Top Artists
 		artists, _ := c.Lastfm.User.GetTopArtists(lastfm.P{"user": lfmuser.Name, "period": "overall", "limit": "5"})
-
-		for _, artist := range artists.Artists {
-			fmt.Printf("%s: %s plays\n", artist.Name, artist.PlayCount)
-		}
 
 		// TODO: Get Top Albums
 
@@ -84,9 +79,54 @@ func (c Profile) Register() *atlas.Command {
 		dc.DrawRectangle(50, 0, 250, 600)
 		dc.Fill()
 
-		// ai := lib.GetArtistImage(artists.Artists[0])
+		dc.SetRGB(0.2, 0.2, 0.2)
+		dc.LoadFontFace(FontBold, 40)
+		dc.DrawString("Top Artists", 66, 96)
+		dc.SetRGB(0.8, 0.8, 0.8)
+		dc.DrawString("Top Artists", 65, 95)
 
-		// dc.DrawImage(aar, 55, 105)
+		aa := lib.GetArtistImage(artists.Artists[0])
+
+		if aa == nil {
+			aa, _ = lib.OpenImage(lib.LocGet("static/images/bm.png"))
+		}
+
+		aar := resize.Resize(240, 240, aa, resize.Bicubic)
+		dc.DrawImage(aar, 55, 105)
+
+		dc.LoadFontFace(FontRegular, 25)
+		dc.SetRGB(0.2, 0.2, 0.2)
+		dc.DrawString(lib.ShortStr(artists.Artists[0].Name, 33), 61, 371)
+		dc.DrawString(fmt.Sprintf("%s plays", artists.Artists[0].PlayCount), 61, 401)
+
+		dc.SetRGB(0.9, 0.9, 0.9)
+		dc.DrawString(lib.ShortStr(artists.Artists[0].Name, 33), 60, 370)
+		dc.DrawString(fmt.Sprintf("%s plays", artists.Artists[0].PlayCount), 60, 400)
+
+		x := float64(61)
+		y := float64(445)
+
+		for n, artist := range artists.Artists {
+			if n > 0 {
+				dc.LoadFontFace(FontRegular, 20)
+
+				dc.SetRGB(0.2, 0.2, 0.2)
+				dc.DrawString(lib.ShortStr(artist.Name, 25), x, y)
+				dc.DrawStringWrapped(artist.PlayCount, 50, y, 0, 1, 240, 0, gg.AlignRight)
+				dc.SetLineWidth(0.5)
+				dc.DrawLine(x, y+5, x+230, y+5)
+				dc.Stroke()
+
+				dc.SetRGB(0.9, 0.9, 0.9)
+				dc.DrawString(lib.ShortStr(artist.Name, 25), x-1, y-1)
+				dc.DrawStringWrapped(artist.PlayCount, 49, y-1, 0, 1, 240, 0, gg.AlignRight)
+				dc.SetLineWidth(0.5)
+				dc.DrawLine(x-1, y+4, x+229, y+4)
+				dc.Stroke()
+
+				y = y + 40
+			}
+		}
 
 		lib.BrandImage(dc)
 
