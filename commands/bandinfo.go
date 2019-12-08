@@ -2,7 +2,6 @@ package commands
 
 import (
 	"fmt"
-	"persephone/fm"
 	"persephone/lib"
 
 	"github.com/andersfylling/disgord"
@@ -44,7 +43,7 @@ func (c Bandinfo) Register() *atlas.Command {
 
 			c.displayBandInfo(ctx, artist)
 		} else {
-			np, err := fm.GetNowPlayingTrack(ctx.Message.Author, c.Lastfm)
+			np, err := lib.GetNowPlayingTrack(ctx.Message.Author, c.Lastfm)
 
 			if err != nil {
 				ctx.Message.Reply(ctx.Atlas, "You're not currently listening to anything")

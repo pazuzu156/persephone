@@ -1,4 +1,4 @@
-package fm
+package lib
 
 // TopAlbum holds top album info.
 // type TopAlbum struct {

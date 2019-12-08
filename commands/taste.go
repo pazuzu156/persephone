@@ -2,7 +2,6 @@ package commands
 
 import (
 	"fmt"
-	"persephone/fm"
 	"persephone/lib"
 	"sort"
 	"strings"
@@ -28,8 +27,8 @@ func InitTaste() Taste {
 
 // MatchData holds data of matched artists for caller and recipient.
 type MatchData struct {
-	UserArtistData   fm.Artist
-	AuthorArtistData fm.Artist
+	UserArtistData   lib.Artist
+	AuthorArtistData lib.Artist
 }
 
 // Register registers and runs the taste command.
@@ -133,12 +132,12 @@ func (c Taste) Register() *atlas.Command {
 	return c.CommandInterface
 }
 
-func (c Taste) contains(a fm.Artists, x string) (bool, fm.Artist) {
+func (c Taste) contains(a lib.Artists, x string) (bool, lib.Artist) {
 	for _, n := range a {
 		if x == n.Name {
 			return true, n
 		}
 	}
 
-	return false, fm.Artist{}
+	return false, lib.Artist{}
 }

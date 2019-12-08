@@ -1,8 +1,7 @@
-package fm
+package lib
 
 import (
     "errors"
-    "persephone/lib"
 
 	"github.com/andersfylling/disgord"
 	"github.com/pazuzu156/lastfm-go"
@@ -29,7 +28,7 @@ func GetNowPlayingTrack(author *disgord.User, lfm *lastfm.API) (Track, error) {
 
 // GetRecentTracks retrieves a users recently scrobbled tracks.
 func GetRecentTracks(author *disgord.User, lfm *lastfm.API, limit string) ([]Track, error) {
-	if user := lib.GetUser(author); user.Username != "" {
+	if user := GetUser(author); user.Username != "" {
 		np, _ := lfm.User.GetRecentTracks(lastfm.P{
 			"user":  user.Lastfm,
 			"limit": limit,

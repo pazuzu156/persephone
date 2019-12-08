@@ -6,7 +6,6 @@ import (
 	"io/ioutil"
 	"net/http"
 	"net/url"
-	"persephone/fm"
 	"persephone/lib"
 
 	"github.com/pazuzu156/atlas"
@@ -49,7 +48,7 @@ func (c Youtube) Register() *atlas.Command {
 		if len(ctx.Args) > 0 {
 			ss["q"] = lib.JoinStringMap(ctx.Args, " ")
 		} else {
-			track, err := fm.GetNowPlayingTrack(ctx.Message.Author, c.Lastfm)
+			track, err := lib.GetNowPlayingTrack(ctx.Message.Author, c.Lastfm)
 
 			if err != nil {
 				ctx.Message.Reply(ctx.Atlas, err.Error())
@@ -81,7 +80,7 @@ func (c Youtube) displayResults(ctx atlas.Context, ss map[string]string) {
 	defer resp.Body.Close()
 
 	buf, _ := ioutil.ReadAll(resp.Body)
-	var body fm.YouTubeResponse
+	var body lib.YouTubeResponse
 	json.Unmarshal(buf, &body)
 
 	if len(body.Items) > 0 {

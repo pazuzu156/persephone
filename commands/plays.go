@@ -2,7 +2,6 @@ package commands
 
 import (
 	"fmt"
-	"persephone/fm"
 	"persephone/lib"
 	"strconv"
 	"strings"
@@ -43,7 +42,7 @@ Passing no value to a parameter will get the plays for said parameter using the 
 // Register registers and runs the plays command.
 func (c Plays) Register() *atlas.Command {
 	c.CommandInterface.Run = func(ctx atlas.Context) {
-		np, _ := fm.GetNowPlayingTrack(ctx.Message.Author, c.Lastfm)
+		np, _ := lib.GetNowPlayingTrack(ctx.Message.Author, c.Lastfm)
 
 		if len(ctx.Args) > 0 {
 			for n, arg := range ctx.Args {

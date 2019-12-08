@@ -5,7 +5,6 @@ import (
 	"os"
 	"sort"
 
-	"persephone/fm"
 	"persephone/lib"
 	"strconv"
 
@@ -21,19 +20,19 @@ import (
 
 // album and track positions for grids
 var (
-	albumPositions = []fm.AlbumPosition{
+	albumPositions = []lib.AlbumPosition{
 		{
 			X: 355,
 			Y: 170,
-			Shadow: fm.Shadow{
+			Shadow: lib.Shadow{
 				X: 350,
 				Y: 165,
 				R: 10,
 			},
-			Info: fm.InfoText{
+			Info: lib.InfoText{
 				X: 350,
 				Y: 340,
-				Plays: fm.PlaysText{
+				Plays: lib.PlaysText{
 					X: 350,
 					Y: 360,
 				},
@@ -42,15 +41,15 @@ var (
 		{
 			X: 555,
 			Y: 170,
-			Shadow: fm.Shadow{
+			Shadow: lib.Shadow{
 				X: 550,
 				Y: 165,
 				R: 10,
 			},
-			Info: fm.InfoText{
+			Info: lib.InfoText{
 				X: 550,
 				Y: 340,
-				Plays: fm.PlaysText{
+				Plays: lib.PlaysText{
 					X: 550,
 					Y: 360,
 				},
@@ -59,15 +58,15 @@ var (
 		{
 			X: 355,
 			Y: 390,
-			Shadow: fm.Shadow{
+			Shadow: lib.Shadow{
 				X: 350,
 				Y: 385,
 				R: 10,
 			},
-			Info: fm.InfoText{
+			Info: lib.InfoText{
 				X: 350,
 				Y: 560,
-				Plays: fm.PlaysText{
+				Plays: lib.PlaysText{
 					X: 350,
 					Y: 580,
 				},
@@ -76,26 +75,26 @@ var (
 		{
 			X: 555,
 			Y: 390,
-			Shadow: fm.Shadow{
+			Shadow: lib.Shadow{
 				X: 550,
 				Y: 385,
 				R: 10,
 			},
-			Info: fm.InfoText{
+			Info: lib.InfoText{
 				X: 550,
 				Y: 560,
-				Plays: fm.PlaysText{
+				Plays: lib.PlaysText{
 					X: 550,
 					Y: 580,
 				},
 			},
 		},
 	}
-	trackPositions = []fm.TrackPosition{
+	trackPositions = []lib.TrackPosition{
 		{
 			X: 720,
 			Y: 180,
-			Plays: fm.PlaysText{
+			Plays: lib.PlaysText{
 				X: 870,
 				Y: 180,
 			},
@@ -103,7 +102,7 @@ var (
 		{
 			X: 720,
 			Y: 210,
-			Plays: fm.PlaysText{
+			Plays: lib.PlaysText{
 				X: 870,
 				Y: 210,
 			},
@@ -111,7 +110,7 @@ var (
 		{
 			X: 720,
 			Y: 240,
-			Plays: fm.PlaysText{
+			Plays: lib.PlaysText{
 				X: 870,
 				Y: 240,
 			},
@@ -119,7 +118,7 @@ var (
 		{
 			X: 720,
 			Y: 270,
-			Plays: fm.PlaysText{
+			Plays: lib.PlaysText{
 				X: 870,
 				Y: 270,
 			},
@@ -144,7 +143,7 @@ func InitBand() Band {
 // Register registers and runs the help command.
 func (c Band) Register() *atlas.Command {
 	c.CommandInterface.Run = func(ctx atlas.Context) {
-		track, err := fm.GetNowPlayingTrack(ctx.Message.Author, c.Lastfm)
+		track, err := lib.GetNowPlayingTrack(ctx.Message.Author, c.Lastfm)
 
 		if err != nil {
 			ctx.Message.Reply(ctx.Atlas, err.Error())

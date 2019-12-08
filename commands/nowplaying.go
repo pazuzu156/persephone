@@ -3,7 +3,6 @@ package commands
 import (
 	"fmt"
 	"os"
-	"persephone/fm"
 	"persephone/lib"
 
 	"github.com/andersfylling/disgord"
@@ -27,7 +26,7 @@ func InitNowPlaying() Nowplaying {
 // Register registers and runs the nowplaying command.
 func (c Nowplaying) Register() *atlas.Command {
 	c.CommandInterface.Run = func(ctx atlas.Context) {
-		track, err := fm.GetNowPlayingTrack(ctx.Message.Author, c.Lastfm)
+		track, err := lib.GetNowPlayingTrack(ctx.Message.Author, c.Lastfm)
 		lfmuser, _ := lib.GetLastfmUserInfo(ctx.Message.Author, c.Lastfm)
 
 		if err == nil {
@@ -100,7 +99,7 @@ func (c Nowplaying) Register() *atlas.Command {
 			// images + text for each
 			// tracks are layered in reverse order 3 -> 2 -> 1 displayed
 			// in ascending order
-			tracks, _ := fm.GetRecentTracks(ctx.Message.Author, c.Lastfm, "3")
+			tracks, _ := lib.GetRecentTracks(ctx.Message.Author, c.Lastfm, "3")
 			if len(tracks) > 3 {
 				t1 := tracks[1] // most recent track
 				t2 := tracks[2] // second most recent track

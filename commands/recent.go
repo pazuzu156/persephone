@@ -2,7 +2,6 @@ package commands
 
 import (
 	"fmt"
-	"persephone/fm"
 	"persephone/lib"
 
 	"github.com/andersfylling/disgord"
@@ -23,7 +22,7 @@ func InitRecent() Recent {
 // Register registers and runs the recent command.
 func (c Recent) Register() *atlas.Command {
 	c.CommandInterface.Run = func(ctx atlas.Context) {
-		recent, _ := fm.GetRecentTracks(ctx.Message.Author, c.Lastfm, "4")
+		recent, _ := lib.GetRecentTracks(ctx.Message.Author, c.Lastfm, "4")
 		var tracks []*disgord.EmbedField
 
 		if len(recent) > 0 {
