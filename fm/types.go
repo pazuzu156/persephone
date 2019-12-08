@@ -1,18 +1,35 @@
 package fm
 
 // TopAlbum holds top album info.
+// type TopAlbum struct {
+// 	Rank      string `xml:"rank,attr"`
+// 	Name      string `xml:"name"`
+// 	PlayCount string `xml:"playcount"`
+// 	Mbid      string `xml:"mbid"`
+// 	URL       string `xml:"url"`
+// 	Artist    struct {
+// 		Name string `xml:"name"`
+// 		Mbid string `xml:"mbid"`
+// 		URL  string `xml:"url"`
+// 	} `xml:"artist"`
+// 	Images []struct {
+// 		Size string `xml:"size,attr"`
+// 		URL  string `xml:",chardata"`
+// 	} `xml:"image"`
+// }
+
 type TopAlbum struct {
-	Rank      string `xml:"rank,attr"`
-	Name      string `xml:"name"`
-	PlayCount string `xml:"playcount"`
-	Mbid      string `xml:"mbid"`
-	URL       string `xml:"url"`
-	Artist    struct {
+	Rank   string `xml:"rank,attr"`
+	Name   string `xml:"name"`
+	Mbid   string `xml:"mbid"`
+	Artist struct {
 		Name string `xml:"name"`
 		Mbid string `xml:"mbid"`
 		URL  string `xml:"url"`
 	} `xml:"artist"`
-	Images []struct {
+	PlayCount string `xml:"playcount"`
+	URL       string `xml:"url"`
+	Images    []struct {
 		Size string `xml:"size,attr"`
 		URL  string `xml:",chardata"`
 	} `xml:"image"`

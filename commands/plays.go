@@ -25,13 +25,13 @@ Passing no value to a parameter will get the plays for said parameter using the 
 		Usage:   "plays --artist Grabak",
 		Parameters: []Parameter{
 			{
-				Name:        "artist",
+				Name:        "--artist",
 				Value:       "name",
 				Description: "Gets play count for a given artist",
 				Required:    false,
 			},
 			{
-				Name:        "album",
+				Name:        "--album",
 				Value:       "name:artist",
 				Description: "Gets play count for a given album",
 				Required:    false,

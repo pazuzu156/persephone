@@ -127,7 +127,7 @@ func (c Help) processHelp(ctx atlas.Context, command CommandItem) {
 			)
 
 			if param.Value != "" {
-				paramName = fmt.Sprintf("--%s %s", param.Name, param.Value)
+				paramName = fmt.Sprintf("%s %s", param.Name, param.Value)
 			} else {
 				paramName = param.Name
 			}
