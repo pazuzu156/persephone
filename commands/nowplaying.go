@@ -64,16 +64,10 @@ func (c Nowplaying) Register() *atlas.Command {
 			// Draw avatar and add username + scrobble count
 			dc.DrawImage(avr, 315, 100)
 			dc.LoadFontFace(FontBold, 26)
-			dc.SetRGB(0.2, 0.2, 0.2)
-			dc.DrawString(ctx.Message.Author.Username+" ("+lfmuser.Name+")", 391, 131)
-			dc.SetRGB(0.9, 0.9, 0.9)
-			dc.DrawString(ctx.Message.Author.Username+" ("+lfmuser.Name+")", 390, 130)
+			lib.DrawStringWithShadow(ctx.Message.Author.Username+" ("+lfmuser.Name+")", 390, 130, dc)
 			// scrobble count
 			dc.LoadFontFace(FontRegular, 20)
-			dc.SetRGB(0.2, 0.2, 0.2)
-			dc.DrawString(fmt.Sprintf("%s scrobbles", lib.HumanNumber(lfmuser.PlayCount)), 391, 161)
-			dc.SetRGB(0.9, 0.9, 0.9)
-			dc.DrawString(fmt.Sprintf("%s scrobbles", lib.HumanNumber(lfmuser.PlayCount)), 390, 160)
+			lib.DrawStringWithShadow(fmt.Sprintf("%s scrobbles", lib.HumanNumber(lfmuser.PlayCount)), 390, 160, dc)
 
 			// Draw white box that goes behind album art + draw album art
 			dc.SetRGBA(1, 1, 1, 0.2)
@@ -83,17 +77,11 @@ func (c Nowplaying) Register() *atlas.Command {
 
 			// Draw artist name
 			dc.LoadFontFace(FontBold, 20)
-			dc.SetRGB(0.2, 0.2, 0.2)
-			dc.DrawStringWrapped(lib.ShortStr(track.Name, 33), 71, 371, 0, 0, 200, 1.5, gg.AlignLeft)
-			dc.SetRGB(0.9, 0.9, 0.9)
-			dc.DrawStringWrapped(lib.ShortStr(track.Name, 33), 70, 370, 0, 0, 200, 1.5, gg.AlignLeft)
+			lib.DrawWrappedStringWithShadow(lib.ShortStr(track.Name, 33), 70, 370, 0, 0, 200, 1.5, gg.AlignLeft, dc)
 
 			// Draw album + track name
 			dc.LoadFontFace(FontRegular, 20)
-			dc.SetRGB(0.2, 0.2, 0.2)
-			dc.DrawStringWrapped(track.Artist.Name+" - "+track.Album.Name, 71, 441, 0, 0, 200, 1.5, gg.AlignLeft)
-			dc.SetRGB(0.9, 0.9, 0.9)
-			dc.DrawStringWrapped(track.Artist.Name+" - "+track.Album.Name, 70, 440, 0, 0, 200, 1.5, gg.AlignLeft)
+			lib.DrawWrappedStringWithShadow(track.Artist.Name+" - "+track.Album.Name, 70, 440, 0, 0, 200, 1.5, gg.AlignLeft, dc)
 
 			// This gets the last 3 listened tracks and draws
 			// images + text for each
@@ -126,16 +114,10 @@ func (c Nowplaying) Register() *atlas.Command {
 					os.Remove(i.Filename)
 
 					dc.LoadFontFace(FontBold, 25)
-					dc.SetRGB(0.2, 0.2, 0.2)
-					dc.DrawString(lib.ShortStr(t3.Name, 33), 511, 481)
-					dc.SetRGB(0.9, 0.9, 0.9)
-					dc.DrawString(lib.ShortStr(t3.Name, 33), 510, 480)
+					lib.DrawStringWithShadow(lib.ShortStr(t3.Name, 33), 510, 480, dc)
 
 					dc.LoadFontFace(FontRegular, 25)
-					dc.SetRGB(0.2, 0.2, 0.2)
-					dc.DrawString(t3.Artist.Name, 511, 521)
-					dc.SetRGB(0.9, 0.9, 0.9)
-					dc.DrawString(t3.Artist.Name, 510, 520)
+					lib.DrawStringWithShadow(t3.Artist.Name, 510, 520, dc)
 				}
 
 				// Track 2
@@ -158,16 +140,10 @@ func (c Nowplaying) Register() *atlas.Command {
 					os.Remove(i.Filename)
 
 					dc.LoadFontFace(FontBold, 25)
-					dc.SetRGB(0.2, 0.2, 0.2)
-					dc.DrawString(lib.ShortStr(t2.Name, 33), 511, 381)
-					dc.SetRGB(0.9, 0.9, 0.9)
-					dc.DrawString(lib.ShortStr(t2.Name, 33), 510, 380)
+					lib.DrawStringWithShadow(lib.ShortStr(t2.Name, 33), 510, 380, dc)
 
 					dc.LoadFontFace(FontRegular, 25)
-					dc.SetRGB(0.2, 0.2, 0.2)
-					dc.DrawString(t2.Artist.Name, 511, 421)
-					dc.SetRGB(0.9, 0.9, 0.9)
-					dc.DrawString(t2.Artist.Name, 510, 420)
+					lib.DrawStringWithShadow(t2.Artist.Name, 510, 420, dc)
 				}
 
 				// First most recent track
@@ -190,16 +166,10 @@ func (c Nowplaying) Register() *atlas.Command {
 					os.Remove(i.Filename)
 
 					dc.LoadFontFace(FontBold, 25)
-					dc.SetRGB(0.2, 0.2, 0.2)
-					dc.DrawString(lib.ShortStr(t1.Name, 33), 511, 281)
-					dc.SetRGB(0.9, 0.9, 0.9)
-					dc.DrawString(lib.ShortStr(t1.Name, 33), 510, 280)
+					lib.DrawStringWithShadow(lib.ShortStr(t1.Name, 33), 510, 280, dc)
 
 					dc.LoadFontFace(FontRegular, 25)
-					dc.SetRGB(0.2, 0.2, 0.2)
-					dc.DrawString(t1.Artist.Name, 511, 321)
-					dc.SetRGB(0.9, 0.9, 0.9)
-					dc.DrawString(t1.Artist.Name, 510, 320)
+					lib.DrawStringWithShadow(t1.Artist.Name, 510, 320, dc)
 				}
 			}
 

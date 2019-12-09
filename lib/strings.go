@@ -9,6 +9,7 @@ import (
 	"strings"
 
 	"github.com/andersfylling/disgord"
+	"github.com/fogleman/gg"
 	"golang.org/x/text/language"
 	"golang.org/x/text/message"
 )
@@ -128,4 +129,21 @@ func UInt64ToSnowflake(i uint64) disgord.Snowflake {
 // IsMention checks if a string is a discord mention.
 func IsMention(mention string) bool {
 	return strings.HasPrefix(mention, "<@")
+}
+
+// DrawStringWithShadow draws a string with text shadow.
+func DrawStringWithShadow(s string, x float64, y float64, dc *gg.Context) {
+	dc.SetRGB(0.2, 0.2, 0.2)
+	dc.DrawString(s, x+1, y+1)
+	dc.SetRGB(0.9, 0.9, 0.9)
+	dc.DrawString(s, x, y)
+}
+
+// DrawWrappedStringWithShadow draws a wrapped string with text shadow.
+func DrawWrappedStringWithShadow(s string, x float64, y float64, ax float64,
+	ay float64, width float64, lineSpacing float64, align gg.Align, dc *gg.Context) {
+	dc.SetRGB(0.2, 0.2, 0.2)
+	dc.DrawStringWrapped(s, x+1, y+1, ax, ay, width, lineSpacing, align)
+	dc.SetRGB(0.9, 0.9, 0.9)
+	dc.DrawStringWrapped(s, x, y, ax, ay, width, lineSpacing, align)
 }
