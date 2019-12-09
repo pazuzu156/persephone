@@ -45,13 +45,11 @@ func (c Profile) Register() *atlas.Command {
 
 		avr := resize.Resize(72, 72, av, resize.Bicubic)
 
-		// TODO: Get Top Artists
 		artists, _ := c.Lastfm.User.GetTopArtists(lastfm.P{"user": lfmuser.Name, "period": "overall", "limit": "5"})
-
-		// TODO: Get Top Albums
 		albums, _ := c.Lastfm.User.GetTopAlbums(lastfm.P{"user": lfmuser.Name, "limit": "4", "period": "overall"})
 
-		// TODO: Get Top Tags
+		// top tags api end-point is currently broken. will return later.
+		// tags, _ := c.Lastfm.User.GetTopTags(lastfm.P{"user": lfmuser.Name})
 
 		bg, _ := lib.OpenImage(lib.LocGet("static/images/background.png"))
 

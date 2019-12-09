@@ -18,6 +18,8 @@ import (
 	"golang.org/x/text/message"
 )
 
+// This command is EXTREMELY slow and EXTREMELY API heavy. Disabled...
+
 // Band command.
 type Band struct{ Command }
 
