@@ -51,6 +51,7 @@ func init() {
 	atlas.Use(commands.InitRecent().Register())
 	// atlas.Use(commands.InitPing().Register())
 	atlas.Use(commands.InitPlays().Register())
+	atlas.Use(commands.InitProfile().Register())
 	atlas.Use(commands.InitRegister().Register())
 	atlas.Use(commands.InitTaste().Register())
 	atlas.Use(commands.InitWhoknows().Register())

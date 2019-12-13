@@ -116,7 +116,7 @@ func BrandImage(dc *gg.Context) {
 }
 
 // GetArtistImageURL returns the URL for an artist scraped from metal-archives.
-func GetArtistImageURL(artist lastfm.ArtistGetInfo) string {
+func GetArtistImageURL(artist Artist) string {
 	// what shall we scrape for?
 	col := colly.NewCollector()
 	var imgsrc string
@@ -141,7 +141,7 @@ func GetArtistImageURL(artist lastfm.ArtistGetInfo) string {
 }
 
 // GetArtistImage scrapes metal-archives for an artist image.
-func GetArtistImage(artist lastfm.ArtistGetInfo) image.Image {
+func GetArtistImage(artist Artist) image.Image {
 	imgsrc := GetArtistImageURL(artist)
 
 	if imgsrc != NoArtistURL {
@@ -156,6 +156,26 @@ func GetArtistImage(artist lastfm.ArtistGetInfo) image.Image {
 	aimg, _ := OpenImage(LocGet("static/images/bm.png"))
 
 	return aimg
+}
+
+// GetArtistImageURLFromFmArtist returns the URL for an artist scraped from metal-archives.
+func GetArtistImageURLFromFmArtist(artist lastfm.ArtistGetInfo) string {
+	a := Artist{
+		Name:   artist.Name,
+		Images: artist.Images,
+	}
+
+	return GetArtistImageURL(a)
+}
+
+// GetArtistImageFromFmArtist scrapes metal-archives for an artist image.
+func GetArtistImageFromFmArtist(artist lastfm.ArtistGetInfo) image.Image {
+	a := Artist{
+		Name:   artist.Name,
+		Images: artist.Images,
+	}
+
+	return GetArtistImage(a)
 }
 
 // GetAvatarImage returns an image.Image of a user's avatar.

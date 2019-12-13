@@ -33,17 +33,6 @@ type Parameter struct {
 	Required    bool   // is parameter required?
 }
 
-var (
-	commands = []CommandItem{}
-	config   = lib.Config()
-
-	// FontRegular is the name for the regular typed font.
-	FontRegular = lib.LocGet("static/fonts/NotoSans-Regular.ttf")
-
-	// FontBold is the name for the bold typed font.
-	FontBold = lib.LocGet("static/fonts/NotoSans-Bold.ttf")
-)
-
 // Init initializes atlas commands
 func Init(t *CommandItem) Command {
 	cmd := atlas.NewCommand(t.Name).SetDescription(t.Description)
