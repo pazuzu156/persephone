@@ -34,4 +34,8 @@ if ! [ ${NOTAR+x} ]; then
     tar $TAR_FLAGS persephone.tar.gz $EXE_NAME temp/ static/ config.json artists.json
 fi
 
+if ! [ ${NOZIP+x} ]; then
+	zip persephone-windows.zip $EXE_NAME temp/ static/ config.json artists.json
+fi
+
 mv gkt temp/.gitkeep
