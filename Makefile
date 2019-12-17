@@ -3,7 +3,7 @@ INSHOME=${HOME}/.config/persephone
 all: persephone
 
 persephone: clean
-	NOTAR=true ./build
+	NOTAR=true NOZIP=true ./build
 
 install:
 	sudo install -D -m644 persephone /usr/bin/persephone
