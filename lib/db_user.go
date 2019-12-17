@@ -61,6 +61,7 @@ func GetUInt64ID(user *disgord.User) uint64 {
 	return uint64(did)
 }
 
+// GetUserFromString returns a user from a string username.
 func GetUserFromString(username string) Users {
 	var dbu []Users
 	db.Select(&dbu, db.Where("username", "=", username))
@@ -104,10 +105,12 @@ func (c Users) Crowns() (crowns []Crowns) {
 	return
 }
 
+// GetDiscordID returns a discord ID snowflake.
 func (c Users) GetDiscordID() disgord.Snowflake {
 	return disgord.NewSnowflake(c.DiscordID)
 }
 
+// Delete deletes a user.
 func (c Users) Delete() (bool, bool) {
 	var (
 		removedUser   = false
