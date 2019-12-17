@@ -8,8 +8,10 @@ import (
 	"strconv"
 	"strings"
 
+	"github.com/PuerkitoBio/goquery"
 	"github.com/andersfylling/disgord"
 	"github.com/fogleman/gg"
+	"github.com/microcosm-cc/bluemonday"
 	"golang.org/x/text/language"
 	"golang.org/x/text/message"
 )
@@ -139,4 +141,31 @@ func DrawWrappedStringWithShadow(s string, x float64, y float64, ax float64,
 	dc.DrawStringWrapped(s, x+1, y+1, ax, ay, width, lineSpacing, align)
 	dc.SetRGB(0.9, 0.9, 0.9)
 	dc.DrawStringWrapped(s, x, y, ax, ay, width, lineSpacing, align)
+}
+
+// HTMLParse parses an html string, and replaces anchor tags with bbcode links.
+func HTMLParse(s string) string {
+	// Strip tags that are not anchor tags
+	p := bluemonday.NewPolicy()
+	p.AllowStandardURLs()
+	p.AllowAttrs("href").OnElements("a")
+	s = p.Sanitize(s)
+
+	// Search through text, get anchor tags, and
+	// replace them with bbcode links instead
+	sr := strings.NewReader(s)
+	doc, _ := goquery.NewDocumentFromReader(sr)
+	sel := doc.Find("a")
+
+	for i := range sel.Nodes {
+		single := sel.Eq(i)
+		href, ok := single.Attr("href")
+
+		if ok {
+			text := single.Text()
+			single.ReplaceWithHtml(fmt.Sprintf("[%s](%s)", text, href))
+		}
+	}
+
+	return doc.Contents().Text()
 }

@@ -27,14 +27,15 @@ func InitBandinfo() Bandinfo {
 // Register registers and runs the bandinfo command.
 func (c Bandinfo) Register() *atlas.Command {
 	c.CommandInterface.Run = func(ctx atlas.Context) {
-		// ctx.Message.Reply(ctx.Atlas, "Hello, Bandinfo!")
+		user := lib.GetUser(ctx.Message.Author)
+
 		if len(ctx.Args) > 0 {
 			args := ctx.Args
 			artistName := lib.JoinStringMap(args, " ")
 
 			fmt.Println(artistName)
 
-			artist, err := c.Lastfm.Artist.GetInfo(lastfm.P{"artist": artistName})
+			artist, err := c.Lastfm.Artist.GetInfo(lastfm.P{"artist": artistName, "username": user.Lastfm})
 
 			if err != nil {
 				ctx.Message.Reply(ctx.Atlas, "That artist could not be found")
@@ -52,7 +53,14 @@ func (c Bandinfo) Register() *atlas.Command {
 				return
 			}
 
-			artist, _ := c.Lastfm.Artist.GetInfo(lastfm.P{"artist": np.Artist.Name})
+			artist, err := c.Lastfm.Artist.GetInfo(lastfm.P{"artist": np.Artist.Name, "username": user.Lastfm})
+
+			if err != nil {
+				ctx.Message.Reply(ctx.Atlas, "That artist could not be found")
+
+				return
+			}
+
 			c.displayBandInfo(ctx, artist)
 		}
 	}
@@ -60,8 +68,41 @@ func (c Bandinfo) Register() *atlas.Command {
 	return c.CommandInterface
 }
 
+func (c Bandinfo) appendToFields(fields []*disgord.EmbedField, name string, item string, inline bool) []*disgord.EmbedField {
+	if "" != item {
+		field := &disgord.EmbedField{
+			Name:   name,
+			Value:  item,
+			Inline: inline,
+		}
+
+		fields = append(fields, field)
+	}
+
+	return fields
+}
+
 func (c Bandinfo) displayBandInfo(ctx atlas.Context, artist lastfm.ArtistGetInfo) {
 	f, t := c.embedFooter(ctx)
+	bio := lib.ShortStr(lib.HTMLParse(artist.Bio.Content), 850, fmt.Sprintf(" [Read More...](%s)", artist.Bio.Links[0].URL))
+
+	if "" == bio {
+		bio = "No bio found"
+	}
+
+	fields := []*disgord.EmbedField{
+		{
+			Name:  "Summary",
+			Value: bio,
+		},
+	}
+
+	fields = c.appendToFields(fields, "Tags", lib.JoinString(c.tags(artist), ", "), false)
+	fields = c.appendToFields(fields, "Similar Artists", lib.JoinString(c.similar(artist), ", "), false)
+	fields = c.appendToFields(fields, "Total Listeners", lib.HumanNumber(artist.Stats.Listeners), true)
+	fields = c.appendToFields(fields, "Total Play Count", lib.HumanNumber(artist.Stats.Plays), true)
+	fields = c.appendToFields(fields, "Your Play Count", lib.HumanNumber(artist.Stats.UserPlays), true)
+
 	ctx.Atlas.CreateMessage(ctx.Message.ChannelID, &disgord.CreateMessageParams{
 		Embed: &disgord.Embed{
 			Title: artist.Name,
@@ -70,30 +111,7 @@ func (c Bandinfo) displayBandInfo(ctx atlas.Context, artist lastfm.ArtistGetInfo
 			Thumbnail: &disgord.EmbedThumbnail{
 				URL: lib.GetArtistImageURLFromFmArtist(artist),
 			},
-			Fields: []*disgord.EmbedField{
-				{
-					Name:  "Summary",
-					Value: lib.ShortStr(artist.Bio.Content, 850, fmt.Sprintf(" [Read More...](%s)", artist.Bio.Links[0].URL)),
-				},
-				{
-					Name:  "Tags",
-					Value: lib.JoinString(c.tags(artist), ", "),
-				},
-				{
-					Name:  "Similar Artists",
-					Value: lib.JoinString(c.similar(artist), ", "),
-				},
-				{
-					Name:   "Total Listeners",
-					Value:  lib.HumanNumber(artist.Stats.Listeners),
-					Inline: true,
-				},
-				{
-					Name:   "Total Play Count",
-					Value:  lib.HumanNumber(artist.Stats.Plays),
-					Inline: true,
-				},
-			},
+			Fields: fields,
 			Footer: f, Timestamp: t,
 		},
 	})
