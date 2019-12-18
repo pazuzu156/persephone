@@ -2,6 +2,7 @@ package commands
 
 import (
 	"fmt"
+	"image"
 	"os"
 	"persephone/lib"
 
@@ -76,8 +77,11 @@ func (c Profile) Register() *atlas.Command {
 		dc.LoadFontFace(FontBold, 40)
 		lib.DrawStringWithShadow("Top Artists", 65, 90, dc)
 
-		// display top artist and the other top 4
-		aa := lib.GetArtistImage(artists.Artists[0])
+		var aa image.Image = nil
+
+		if len(artists.Artists) > 0 {
+			aa = lib.GetArtistImage(artists.Artists[0])
+		}
 
 		if aa == nil {
 			aa, _ = lib.OpenImage(lib.LocGet("static/images/bm.png"))
