@@ -6,10 +6,16 @@ import (
 	"runtime"
 )
 
+// os.Getenv seems to continue giving me goroutine issues
+// hard setting HOME path. Please set your path accordingly
+var homepath string = "/home/kaleb"
+
 // Storage returns storage locations for configuration and static folders
 func Storage() string {
 	if runtime.GOOS == "linux" {
-		return fmt.Sprintf("%s/.config/persephone", os.Getenv("HOME"))
+		// return fmt.Sprintf("%s/.config/persephone", os.Getenv("HOME"))
+
+		return fmt.Sprintf("%s/.config/persephone", homepath)
 	}
 
 	return ""
