@@ -119,12 +119,19 @@ func (c Help) processHelp(ctx atlas.Context, command CommandItem) {
 	// Parameters
 	if len(command.Parameters) > 0 {
 		var params []string
+		fmt.Println(params)
 
 		for _, param := range command.Parameters {
 			var (
 				paramStr  string
 				paramName string
 			)
+
+			slParamName := strings.Split(param.Name, ",")
+
+			if len(slParamName) > 1 {
+				param.Name = fmt.Sprintf("%s, -%s", slParamName[0], slParamName[1])
+			}
 
 			if param.Value != "" {
 				paramName = fmt.Sprintf("--%s %s", param.Name, param.Value)
