@@ -22,7 +22,6 @@ func InitProfile() Profile {
 	return Profile{Init(&CommandItem{
 		Name:        "profile",
 		Description: "Shows your top everything",
-		Aliases:     []string{"p"},
 		Usage:       "profile [member]",
 		Parameters: []Parameter{
 			{
