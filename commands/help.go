@@ -119,7 +119,6 @@ func (c Help) processHelp(ctx atlas.Context, command CommandItem) {
 	// Parameters
 	if len(command.Parameters) > 0 {
 		var params []string
-		fmt.Println(params)
 
 		for _, param := range command.Parameters {
 			var (
