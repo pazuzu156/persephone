@@ -59,7 +59,7 @@ func (c Command) embedFooter(ctx atlas.Context) (f *disgord.EmbedFooter, t disgo
 func (c Command) getBot(ctx atlas.Context) *disgord.Member {
 	config := lib.Config()
 	id, _ := strconv.Atoi(config.BotID)
-	bot, _ := ctx.Atlas.GetMember(ctx.Message.GuildID, disgord.NewSnowflake(uint64(id)))
+	bot, _ := ctx.Atlas.GetMember(ctx.Context, ctx.Message.GuildID, disgord.NewSnowflake(uint64(id)))
 
 	return bot
 }

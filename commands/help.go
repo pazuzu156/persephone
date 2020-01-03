@@ -71,7 +71,7 @@ func (c Help) Register() *atlas.Command {
 			}
 
 			f, t := c.embedFooter(ctx)
-			ctx.Atlas.CreateMessage(ctx.Message.ChannelID, &disgord.CreateMessageParams{
+			ctx.Atlas.CreateMessage(ctx.Context, ctx.Message.ChannelID, &disgord.CreateMessageParams{
 				Embed: &disgord.Embed{
 					Fields: []*disgord.EmbedField{
 						{
@@ -171,7 +171,7 @@ func (c Help) processHelp(ctx atlas.Context, command CommandItem) {
 	}
 
 	f, t := c.embedFooter(ctx)
-	ctx.Atlas.CreateMessage(ctx.Message.ChannelID, &disgord.CreateMessageParams{
+	ctx.Atlas.CreateMessage(ctx.Context, ctx.Message.ChannelID, &disgord.CreateMessageParams{
 		Embed: &disgord.Embed{
 			Fields: embedFields,
 			Color:  0x007FFF,

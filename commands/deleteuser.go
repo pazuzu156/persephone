@@ -36,7 +36,7 @@ func (c DeleteUser) Register() *atlas.Command {
 			u64, err := strconv.ParseUint(lib.JoinStringMap(ctx.Args, " "), 10, 64)
 
 			if err != nil {
-				ctx.Message.Reply(ctx.Atlas, "You didn't pass in a valid Discord User ID")
+				ctx.Message.Reply(ctx.Context, ctx.Atlas, "You didn't pass in a valid Discord User ID")
 
 				return
 			}
@@ -50,13 +50,13 @@ func (c DeleteUser) Register() *atlas.Command {
 				ur, cr := user.Delete()
 
 				if cr && ur {
-					ctx.Message.Reply(ctx.Atlas, fmt.Sprintf("User with ID %d and their crowns have been removed", u64))
+					ctx.Message.Reply(ctx.Context, ctx.Atlas, fmt.Sprintf("User with ID %d and their crowns have been removed", u64))
 				} else if cr && !ur {
-					ctx.Message.Reply(ctx.Atlas, fmt.Sprintf("User with ID %d was not removed, but their crowns were. You might need to run this again", u64))
+					ctx.Message.Reply(ctx.Context, ctx.Atlas, fmt.Sprintf("User with ID %d was not removed, but their crowns were. You might need to run this again", u64))
 				} else if !cr && ur {
-					ctx.Message.Reply(ctx.Atlas, fmt.Sprintf("User with ID %d was removed, but their crowns were not You might need to run this again", u64))
+					ctx.Message.Reply(ctx.Context, ctx.Atlas, fmt.Sprintf("User with ID %d was removed, but their crowns were not You might need to run this again", u64))
 				} else {
-					ctx.Message.Reply(ctx.Atlas, fmt.Sprintf("User with ID %d was not removed, and neither were their crowns. Please try again later", u64))
+					ctx.Message.Reply(ctx.Context, ctx.Atlas, fmt.Sprintf("User with ID %d was not removed, and neither were their crowns. Please try again later", u64))
 				}
 			}
 		}

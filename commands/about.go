@@ -16,7 +16,7 @@ type About struct {
 }
 
 // Version holds the bot's version number
-const Version string = "1.3.2"
+const Version string = "1.4"
 
 // InitAbout initialized the about command.
 func InitAbout() About {
@@ -33,13 +33,13 @@ func InitAbout() About {
 func (c About) Register() *atlas.Command {
 	c.CommandInterface.Run = func(ctx atlas.Context) {
 		id, _ := strconv.Atoi(config.BotID)
-		bot, _ := ctx.Atlas.GetMember(ctx.Message.GuildID, disgord.NewSnowflake(uint64(id)))
+		bot, _ := ctx.Atlas.GetMember(ctx.Context, ctx.Message.GuildID, disgord.NewSnowflake(uint64(id)))
 
 		// Gets roles the bot has, so they can be displayed in
 		// the embed
 		var roles []string
 		for _, r := range bot.Roles {
-			groles, _ := ctx.Atlas.GetGuildRoles(ctx.Message.GuildID)
+			groles, _ := ctx.Atlas.GetGuildRoles(ctx.Context, ctx.Message.GuildID)
 
 			for _, gr := range groles {
 				if gr.ID == r {
@@ -49,7 +49,7 @@ func (c About) Register() *atlas.Command {
 		}
 
 		f, t := c.embedFooter(ctx)
-		ctx.Atlas.CreateMessage(ctx.Message.ChannelID, &disgord.CreateMessageParams{
+		ctx.Atlas.CreateMessage(ctx.Context, ctx.Message.ChannelID, &disgord.CreateMessageParams{
 			Embed: &disgord.Embed{
 				Title:       "About Persephone",
 				Description: fmt.Sprintf("Persephone is a bot written in Go. Version v%s", c.Version),

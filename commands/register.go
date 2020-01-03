@@ -36,7 +36,7 @@ func (c Register) Register() *atlas.Command {
 		res, err := http.Get(fmt.Sprintf("%s/login/request_token/%s", config.Website.APIURL, ctx.Message.Author.ID.String()))
 
 		if err != nil {
-			ctx.Message.Reply(ctx.Atlas, "An error occurred when attempting to communitate with the authentication server. Please try again later")
+			ctx.Message.Reply(ctx.Context, ctx.Atlas, "An error occurred when attempting to communitate with the authentication server. Please try again later")
 
 			return
 		}
@@ -48,15 +48,15 @@ func (c Register) Register() *atlas.Command {
 		json.Unmarshal(body, &lr)
 
 		if lr.Error == true {
-			ctx.Message.Reply(ctx.Atlas, lr.ErrorMessage)
+			ctx.Message.Reply(ctx.Context, ctx.Atlas, lr.ErrorMessage)
 
 			return
 		}
 
 		url := fmt.Sprintf("%s/auth/authenticate/%s/%s", config.Website.AppURL, ctx.Message.Author.ID.String(), lr.Token)
 
-		ctx.Message.Reply(ctx.Atlas, fmt.Sprintf("Your login request was received. Use this link to begin the login process: %s", url))
-		ctx.Message.Reply(ctx.Atlas, fmt.Sprintf("This link %s", lr.ExpiresString))
+		ctx.Message.Reply(ctx.Context, ctx.Atlas, fmt.Sprintf("Your login request was received. Use this link to begin the login process: %s", url))
+		ctx.Message.Reply(ctx.Context, ctx.Atlas, fmt.Sprintf("This link %s", lr.ExpiresString))
 	}
 
 	return c.CommandInterface

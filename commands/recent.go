@@ -45,7 +45,7 @@ func (c Recent) Register() *atlas.Command {
 			})
 
 			footer, time := c.embedFooter(ctx)
-			ctx.Atlas.CreateMessage(ctx.Message.ChannelID, &disgord.CreateMessageParams{
+			ctx.Atlas.CreateMessage(ctx.Context, ctx.Message.ChannelID, &disgord.CreateMessageParams{
 				Embed: &disgord.Embed{
 					Title: "Recent Tracks",
 					Thumbnail: &disgord.EmbedThumbnail{

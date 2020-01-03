@@ -208,7 +208,7 @@ func (c Nowplaying) Register() *atlas.Command {
 			r, _ := lib.SaveImage(dc, ctx, "np")
 
 			// create new message with the image + embed with a link to the user's Last.fm profile page
-			ctx.Atlas.CreateMessage(ctx.Message.ChannelID, &disgord.CreateMessageParams{
+			ctx.Atlas.CreateMessage(ctx.Context, ctx.Message.ChannelID, &disgord.CreateMessageParams{
 				Files: []disgord.CreateMessageFileParams{
 					{FileName: lib.TagImageName(ctx, "np") + ".png", Reader: r},
 				},
@@ -223,7 +223,7 @@ func (c Nowplaying) Register() *atlas.Command {
 			r.Close()
 			os.Remove(r.Name())
 		} else {
-			ctx.Message.Reply(ctx.Atlas, err.Error())
+			ctx.Message.Reply(ctx.Context, ctx.Atlas, err.Error())
 		}
 	}
 

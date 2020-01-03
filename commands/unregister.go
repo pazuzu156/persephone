@@ -2,7 +2,7 @@ package commands
 
 import (
 	"fmt"
-    "persephone/lib"
+	"persephone/lib"
 
 	"github.com/pazuzu156/atlas"
 )
@@ -33,12 +33,12 @@ func (c Unregister) Register() *atlas.Command {
 					db.Delete(&crown)
 				}
 
-				ctx.Message.Reply(ctx.Atlas, fmt.Sprintf("%s You have unregistered successfully", ctx.Message.Author.Mention()))
+				ctx.Message.Reply(ctx.Context, ctx.Atlas, fmt.Sprintf("%s You have unregistered successfully", ctx.Message.Author.Mention()))
 			} else {
-				ctx.Message.Reply(ctx.Atlas, "There was an issue unregistering you out. Please try again later")
+				ctx.Message.Reply(ctx.Context, ctx.Atlas, "There was an issue unregistering you out. Please try again later")
 			}
 		} else {
-			ctx.Message.Reply(ctx.Atlas, "You are not registered with Last.fm")
+			ctx.Message.Reply(ctx.Context, ctx.Atlas, "You are not registered with Last.fm")
 		}
 	}
 

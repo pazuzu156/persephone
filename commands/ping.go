@@ -30,9 +30,9 @@ func (c Ping) Register() *atlas.Command {
 	c.CommandInterface.Run = func(ctx atlas.Context) {
 		if len(ctx.Args) > 0 {
 			fmt.Println(ctx.Message.Content)
-			ctx.Message.Reply(ctx.Atlas, ctx.Message.Content)
+			ctx.Message.Reply(ctx.Context, ctx.Atlas, ctx.Message.Content)
 		} else {
-			ctx.Message.Reply(ctx.Atlas, "Pong")
+			ctx.Message.Reply(ctx.Context, ctx.Atlas, "Pong")
 		}
 	}
 

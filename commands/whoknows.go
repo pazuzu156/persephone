@@ -44,7 +44,7 @@ func (c Whoknows) Register() *atlas.Command {
 			a, err := c.Lastfm.Artist.GetInfo(lastfm.P{"artist": artist})
 
 			if err != nil {
-				ctx.Message.Reply(ctx.Atlas, "Artist could not be found on Last.fm")
+				ctx.Message.Reply(ctx.Context, ctx.Atlas, "Artist could not be found on Last.fm")
 
 				return
 			}
@@ -56,7 +56,7 @@ func (c Whoknows) Register() *atlas.Command {
 				np, err := c.Lastfm.User.GetRecentTracks(lastfm.P{"user": user.Lastfm, "limit": "2"})
 
 				if err != nil {
-					ctx.Message.Reply(ctx.Atlas, "Artist could not be found on Last.fm")
+					ctx.Message.Reply(ctx.Context, ctx.Atlas, "Artist could not be found on Last.fm")
 
 					return
 				}
@@ -70,7 +70,7 @@ func (c Whoknows) Register() *atlas.Command {
 					}
 				}
 			} else {
-				ctx.Message.Reply(ctx.Atlas, "You're not currently logged in with Last.fm")
+				ctx.Message.Reply(ctx.Context, ctx.Atlas, "You're not currently logged in with Last.fm")
 			}
 		}
 	}
@@ -154,7 +154,7 @@ func (c Whoknows) displayWhoKnows(ctx atlas.Context, artist lastfm.ArtistGetInfo
 		}
 
 		f, t := c.embedFooter(ctx)
-		ctx.Atlas.CreateMessage(ctx.Message.ChannelID, &disgord.CreateMessageParams{
+		ctx.Atlas.CreateMessage(ctx.Context, ctx.Message.ChannelID, &disgord.CreateMessageParams{
 			Embed: &disgord.Embed{
 				Title:       fmt.Sprintf("Who knows %s?", artist.Name),
 				URL:         fmt.Sprintf("https://last.fm/music/%s", strings.Replace(artist.Name, " ", "+", len(artist.Name))),
@@ -164,6 +164,6 @@ func (c Whoknows) displayWhoKnows(ctx atlas.Context, artist lastfm.ArtistGetInfo
 			},
 		})
 	} else {
-		ctx.Message.Reply(ctx.Atlas, fmt.Sprintf("No one has scrobbled %s yet", artist.Name))
+		ctx.Message.Reply(ctx.Context, ctx.Atlas, fmt.Sprintf("No one has scrobbled %s yet", artist.Name))
 	}
 }

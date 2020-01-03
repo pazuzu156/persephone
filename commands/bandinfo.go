@@ -38,7 +38,7 @@ func (c Bandinfo) Register() *atlas.Command {
 			artist, err := c.Lastfm.Artist.GetInfo(lastfm.P{"artist": artistName, "username": user.Lastfm})
 
 			if err != nil {
-				ctx.Message.Reply(ctx.Atlas, "That artist could not be found")
+				ctx.Message.Reply(ctx.Context, ctx.Atlas, "That artist could not be found")
 
 				return
 			}
@@ -48,7 +48,7 @@ func (c Bandinfo) Register() *atlas.Command {
 			np, err := fm.GetNowPlayingTrack(ctx.Message.Author, c.Lastfm)
 
 			if err != nil {
-				ctx.Message.Reply(ctx.Atlas, "You're not currently listening to anything")
+				ctx.Message.Reply(ctx.Context, ctx.Atlas, "You're not currently listening to anything")
 
 				return
 			}
@@ -56,7 +56,7 @@ func (c Bandinfo) Register() *atlas.Command {
 			artist, err := c.Lastfm.Artist.GetInfo(lastfm.P{"artist": np.Artist.Name, "username": user.Lastfm})
 
 			if err != nil {
-				ctx.Message.Reply(ctx.Atlas, "That artist could not be found")
+				ctx.Message.Reply(ctx.Context, ctx.Atlas, "That artist could not be found")
 
 				return
 			}
@@ -103,7 +103,7 @@ func (c Bandinfo) displayBandInfo(ctx atlas.Context, artist lastfm.ArtistGetInfo
 	fields = c.appendToFields(fields, "Total Play Count", lib.HumanNumber(artist.Stats.Plays), true)
 	fields = c.appendToFields(fields, "Your Play Count", lib.HumanNumber(artist.Stats.UserPlays), true)
 
-	ctx.Atlas.CreateMessage(ctx.Message.ChannelID, &disgord.CreateMessageParams{
+	ctx.Atlas.CreateMessage(ctx.Context, ctx.Message.ChannelID, &disgord.CreateMessageParams{
 		Embed: &disgord.Embed{
 			Title: artist.Name,
 			URL:   artist.URL,

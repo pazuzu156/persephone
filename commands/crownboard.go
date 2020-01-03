@@ -46,7 +46,7 @@ func (c CrownBoard) Register() *atlas.Command {
 
 		f, t := c.embedFooter(ctx)
 
-		ctx.Atlas.CreateMessage(ctx.Message.ChannelID, &disgord.CreateMessageParams{
+		ctx.Atlas.CreateMessage(ctx.Context, ctx.Message.ChannelID, &disgord.CreateMessageParams{
 			Embed: &disgord.Embed{
 				// Title:       "Crown Leaderboards",
 				Title:       fmt.Sprintf("Crowns Leaderboards • %s total crowns", lib.HumanNumber(crownsCount)),

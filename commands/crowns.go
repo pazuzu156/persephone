@@ -53,7 +53,7 @@ func (c Crowns) Register() *atlas.Command {
 			for n, arg := range ctx.Args {
 				if strings.HasPrefix(arg, "<@") {
 					mention, _ := lib.GetDiscordIDFromMention(arg)
-					user, _ = ctx.Atlas.GetUser(mention)
+					user, _ = ctx.Atlas.GetUser(ctx.Context, mention)
 				}
 
 				if strings.HasPrefix(arg, "--") {
@@ -65,7 +65,7 @@ func (c Crowns) Register() *atlas.Command {
 						page, err = strconv.Atoi(pageNumber)
 
 						if err != nil {
-							ctx.Message.Reply(ctx.Atlas, "")
+							ctx.Message.Reply(ctx.Context, ctx.Atlas, "")
 
 							return
 						}
@@ -108,7 +108,7 @@ func (c Crowns) Register() *atlas.Command {
 // displayCrowns displays all crowns for users logged in with lastfm.
 func (c Crowns) displayCrowns(ctx atlas.Context, user *disgord.User, page int) {
 	if user == nil {
-		ctx.Message.Reply(ctx.Atlas, "That username couldn't be found")
+		ctx.Message.Reply(ctx.Context, ctx.Atlas, "That username couldn't be found")
 
 		return
 	}
@@ -146,7 +146,7 @@ func (c Crowns) displayCrowns(ctx atlas.Context, user *disgord.User, page int) {
 				descar = append(descar, fmt.Sprintf("%d. 👑 %s with %d plays", (n+1)+offset, crown.Artist, crown.PlayCount))
 			}
 
-			ctx.Atlas.CreateMessage(ctx.Message.ChannelID, &disgord.CreateMessageParams{
+			ctx.Atlas.CreateMessage(ctx.Context, ctx.Message.ChannelID, &disgord.CreateMessageParams{
 				Embed: &disgord.Embed{
 					Title:       fmt.Sprintf("%d crowns for %s", count, user.Username),
 					Description: lib.JoinString(descar, "\n"),
@@ -168,14 +168,14 @@ func (c Crowns) displayCrowns(ctx atlas.Context, user *disgord.User, page int) {
 			return
 		}
 
-		ctx.Message.Reply(ctx.Atlas, fmt.Sprintf("%s Invalid page count", ctx.Message.Author.Mention()))
+		ctx.Message.Reply(ctx.Context, ctx.Atlas, fmt.Sprintf("%s Invalid page count", ctx.Message.Author.Mention()))
 
 		return
 	}
 
 	if lib.GetUser(user).DiscordID == 0 {
-		ctx.Message.Reply(ctx.Atlas, "That user hasn't logged in to the bot yet.")
+		ctx.Message.Reply(ctx.Context, ctx.Atlas, "That user hasn't logged in to the bot yet.")
 	} else {
-		ctx.Message.Reply(ctx.Atlas, "That user doesn't have any crowns yet")
+		ctx.Message.Reply(ctx.Context, ctx.Atlas, "That user doesn't have any crowns yet")
 	}
 }

@@ -32,7 +32,7 @@ func (c Newtaste) Register() *atlas.Command {
 
 		r, _ := lib.SaveImage(dc, ctx, "taste")
 
-		ctx.Atlas.CreateMessage(ctx.Message.ChannelID, &disgord.CreateMessageParams{
+		ctx.Atlas.CreateMessage(ctx.Context, ctx.Message.ChannelID, &disgord.CreateMessageParams{
 			Files: []disgord.CreateMessageFileParams{
 				{
 					FileName: lib.TagImageName(ctx, "taste") + ".png",

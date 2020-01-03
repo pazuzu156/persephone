@@ -52,7 +52,7 @@ func (c Youtube) Register() *atlas.Command {
 			track, err := fm.GetNowPlayingTrack(ctx.Message.Author, c.Lastfm)
 
 			if err != nil {
-				ctx.Message.Reply(ctx.Atlas, err.Error())
+				ctx.Message.Reply(ctx.Context, ctx.Atlas, err.Error())
 
 				return
 			}
@@ -73,7 +73,7 @@ func (c Youtube) displayResults(ctx atlas.Context, ss map[string]string) {
 	resp, err := http.Get(c.RootURL + qstring)
 
 	if err != nil {
-		ctx.Message.Reply(ctx.Atlas, err.Error())
+		ctx.Message.Reply(ctx.Context, ctx.Atlas, err.Error())
 
 		return
 	}
@@ -85,10 +85,10 @@ func (c Youtube) displayResults(ctx atlas.Context, ss map[string]string) {
 	json.Unmarshal(buf, &body)
 
 	if len(body.Items) > 0 {
-		ctx.Message.Reply(ctx.Atlas, fmt.Sprintf("Result for **%s**: https://youtu.be/%s",
+		ctx.Message.Reply(ctx.Context, ctx.Atlas, fmt.Sprintf("Result for **%s**: https://youtu.be/%s",
 			ss["q"], body.Items[0].ID.VideoID))
 	} else {
-		ctx.Message.Reply(ctx.Atlas, "No results could be found for what you're listening to")
+		ctx.Message.Reply(ctx.Context, ctx.Atlas, "No results could be found for what you're listening to")
 	}
 }
 

@@ -1,6 +1,7 @@
 package lib
 
 import (
+	"context"
 	"fmt"
 	"time"
 
@@ -22,19 +23,19 @@ func RegisterEvents(client *atlas.Atlas) {
 		guild := GetServer(evt.GuildID)
 
 		if cr && ur {
-			s.CreateMessage(UInt64ToSnowflake(guild.GuildID), &disgord.CreateMessageParams{
+			s.CreateMessage(context.Background(), UInt64ToSnowflake(guild.GuildID), &disgord.CreateMessageParams{
 				Content: fmt.Sprintf("User %s and there crowns were removed", user.Username),
 			})
 		} else if cr && !ur {
-			s.CreateMessage(UInt64ToSnowflake(guild.GuildID), &disgord.CreateMessageParams{
+			s.CreateMessage(context.Background(), UInt64ToSnowflake(guild.GuildID), &disgord.CreateMessageParams{
 				Content: fmt.Sprintf("User %s was not removed, but their crowns were", user.Username),
 			})
 		} else if !cr && ur {
-			s.CreateMessage(UInt64ToSnowflake(guild.GuildID), &disgord.CreateMessageParams{
+			s.CreateMessage(context.Background(), UInt64ToSnowflake(guild.GuildID), &disgord.CreateMessageParams{
 				Content: fmt.Sprintf("User %s was removed, but their crowns were not", user.Username),
 			})
 		} else {
-			s.CreateMessage(UInt64ToSnowflake(guild.GuildID), &disgord.CreateMessageParams{
+			s.CreateMessage(context.Background(), UInt64ToSnowflake(guild.GuildID), &disgord.CreateMessageParams{
 				Content: fmt.Sprintf("User %s and crowns were not removed", user.Username),
 			})
 		}

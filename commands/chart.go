@@ -50,7 +50,7 @@ func (c Chart) Register() *atlas.Command {
 					argv, isset := ctx.Args[i+1]
 
 					if !isset {
-						ctx.Message.Reply(ctx.Atlas, "A value is required for that argument")
+						ctx.Message.Reply(ctx.Context, ctx.Atlas, "A value is required for that argument")
 
 						return
 					}

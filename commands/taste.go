@@ -46,7 +46,7 @@ func (c Taste) Register() *atlas.Command {
 
 			if strings.HasPrefix(ctx.Args[0], "<@") {
 				mention, _ := lib.GetDiscordIDFromMention(ctx.Args[0])
-				user, _ = ctx.Atlas.GetUser(mention)
+				user, _ = ctx.Atlas.GetUser(ctx.Context, mention)
 			}
 
 			if user == nil {
@@ -57,13 +57,13 @@ func (c Taste) Register() *atlas.Command {
 				// 	user, _ = ctx.Atlas.GetUser(dbu.GetDiscordID())
 				// }
 
-				ctx.Message.Reply(ctx.Atlas, "You need to supply a user to taste!")
+				ctx.Message.Reply(ctx.Context, ctx.Atlas, "You need to supply a user to taste!")
 
 				return
 			}
 
 			if user.ID == ctx.Message.Author.ID {
-				ctx.Message.Reply(ctx.Atlas, "You cannot taste yourself")
+				ctx.Message.Reply(ctx.Context, ctx.Atlas, "You cannot taste yourself")
 
 				return
 			}
@@ -85,7 +85,7 @@ func (c Taste) Register() *atlas.Command {
 			}
 
 			if len(matches) == 0 {
-				ctx.Message.Reply(ctx.Atlas, fmt.Sprintf("You and %s share no common artists", dbu.Username))
+				ctx.Message.Reply(ctx.Context, ctx.Atlas, fmt.Sprintf("You and %s share no common artists", dbu.Username))
 
 				return
 			}
@@ -111,7 +111,7 @@ func (c Taste) Register() *atlas.Command {
 
 			f, t := lib.AddEmbedFooter(ctx.Message)
 
-			ctx.Atlas.CreateMessage(ctx.Message.ChannelID, &disgord.CreateMessageParams{
+			ctx.Atlas.CreateMessage(ctx.Context, ctx.Message.ChannelID, &disgord.CreateMessageParams{
 				Embed: &disgord.Embed{
 					Title: fmt.Sprintf("%s and %s taste comparison",
 						ctx.Message.Author.Username,
@@ -126,7 +126,7 @@ func (c Taste) Register() *atlas.Command {
 				},
 			})
 		} else {
-			ctx.Message.Reply(ctx.Atlas, "You need to supply a user to taste!")
+			ctx.Message.Reply(ctx.Context, ctx.Atlas, "You need to supply a user to taste!")
 		}
 	}
 
