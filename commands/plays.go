@@ -25,13 +25,13 @@ Passing no value to a parameter will get the plays for said parameter using the 
 		Usage:   "plays --artist Grabak",
 		Parameters: []Parameter{
 			{
-				Name:        "artist",
+				Name:        "artist,ar",
 				Value:       "name",
 				Description: "Gets play count for a given artist",
 				Required:    false,
 			},
 			{
-				Name:        "album",
+				Name:        "album,al",
 				Value:       "name:artist",
 				Description: "Gets play count for a given album",
 				Required:    false,
@@ -47,12 +47,13 @@ func (c Plays) Register() *atlas.Command {
 
 		if len(ctx.Args) > 0 {
 			for n, arg := range ctx.Args {
-				if strings.HasPrefix(arg, "--") {
+				if strings.HasPrefix(arg, "--") || strings.HasPrefix(arg, "-") {
 					arg = strings.TrimLeft(arg, "--")
+					arg = strings.TrimLeft(arg, "-")
 					_, isset := ctx.Args[n+1]
 
 					switch strings.ToLower(arg) {
-					case "album": // album
+					case "album", "al": // album
 						var album lastfm.AlbumGetInfo
 
 						if isset {
@@ -80,7 +81,7 @@ func (c Plays) Register() *atlas.Command {
 							ctx.Message.Reply(ctx.Atlas, fmt.Sprintf("**%s** has not scrobbled this album yet", ctx.Message.Author.Username))
 						}
 						break
-					case "artist": // artist
+					case "artist", "ar": // artist
 						var artist lastfm.ArtistGetInfo
 
 						if isset {
