@@ -2,10 +2,10 @@ package commands
 
 import (
 	"fmt"
-	"persephone/lib"
 	"strconv"
 
 	"github.com/pazuzu156/atlas"
+	"github.com/pazuzu156/persephone/lib"
 )
 
 // DeleteUser command.

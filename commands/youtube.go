@@ -6,10 +6,10 @@ import (
 	"io/ioutil"
 	"net/http"
 	"net/url"
-	"persephone/fm"
-	"persephone/lib"
 
 	"github.com/pazuzu156/atlas"
+	"github.com/pazuzu156/persephone/fm"
+	"github.com/pazuzu156/persephone/lib"
 )
 
 // Youtube command.

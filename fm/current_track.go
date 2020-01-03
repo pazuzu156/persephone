@@ -1,11 +1,11 @@
 package fm
 
 import (
-    "errors"
-    "persephone/lib"
+	"errors"
 
 	"github.com/andersfylling/disgord"
 	"github.com/pazuzu156/lastfm-go"
+	"github.com/pazuzu156/persephone/lib"
 )
 
 // GetNowPlayingTrack returns the currently playing track

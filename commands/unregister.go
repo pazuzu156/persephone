@@ -2,9 +2,9 @@ package commands
 
 import (
 	"fmt"
-	"persephone/lib"
 
 	"github.com/pazuzu156/atlas"
+	"github.com/pazuzu156/persephone/lib"
 )
 
 // Unregister command.

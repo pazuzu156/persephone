@@ -1,6 +1,6 @@
 package commands
 
-import "persephone/lib"
+import "github.com/pazuzu156/persephone/lib"
 
 var (
 	commands = []CommandItem{}

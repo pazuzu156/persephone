@@ -2,14 +2,14 @@ package commands
 
 import (
 	"fmt"
-	"persephone/fm"
-	"persephone/lib"
 	"sort"
 	"strings"
 
 	"github.com/andersfylling/disgord"
 	"github.com/pazuzu156/atlas"
 	"github.com/pazuzu156/lastfm-go"
+	"github.com/pazuzu156/persephone/fm"
+	"github.com/pazuzu156/persephone/lib"
 )
 
 // Taste command.

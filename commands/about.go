@@ -2,11 +2,11 @@ package commands
 
 import (
 	"fmt"
-	"persephone/lib"
 	"strconv"
 
 	"github.com/andersfylling/disgord"
 	"github.com/pazuzu156/atlas"
+	"github.com/pazuzu156/persephone/lib"
 )
 
 // About command.

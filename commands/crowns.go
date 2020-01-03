@@ -3,7 +3,6 @@ package commands
 import (
 	"fmt"
 	"math"
-	"persephone/lib"
 	"sort"
 	"strconv"
 	"strings"
@@ -12,6 +11,7 @@ import (
 	"github.com/andersfylling/disgord"
 	"github.com/naoina/genmai"
 	"github.com/pazuzu156/atlas"
+	"github.com/pazuzu156/persephone/lib"
 )
 
 // Crowns command.

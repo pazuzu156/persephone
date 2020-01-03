@@ -2,11 +2,11 @@ package commands
 
 import (
 	"fmt"
-	"persephone/fm"
-	"persephone/lib"
 
 	"github.com/andersfylling/disgord"
 	"github.com/pazuzu156/atlas"
+	"github.com/pazuzu156/persephone/fm"
+	"github.com/pazuzu156/persephone/lib"
 )
 
 // Recent command.

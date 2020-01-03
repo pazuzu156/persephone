@@ -1,4 +1,4 @@
-module persephone
+module github.com/pazuzu156/persephone
 
 go 1.13
 

@@ -1,11 +1,10 @@
 package main
 
 import (
-	"persephone/commands"
-	"persephone/lib"
-
 	"github.com/andersfylling/disgord"
 	"github.com/pazuzu156/atlas"
+	"github.com/pazuzu156/persephone/commands"
+	"github.com/pazuzu156/persephone/lib"
 )
 
 var (

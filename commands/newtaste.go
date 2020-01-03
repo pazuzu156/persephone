@@ -2,11 +2,11 @@ package commands
 
 import (
 	"os"
-	"persephone/lib"
 
 	"github.com/andersfylling/disgord"
 	"github.com/fogleman/gg"
 	"github.com/pazuzu156/atlas"
+	"github.com/pazuzu156/persephone/lib"
 )
 
 // Newtaste command.

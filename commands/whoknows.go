@@ -2,7 +2,6 @@ package commands
 
 import (
 	"fmt"
-	"persephone/lib"
 	"sort"
 	"strconv"
 	"strings"
@@ -11,6 +10,7 @@ import (
 	"github.com/andersfylling/disgord"
 	"github.com/pazuzu156/atlas"
 	"github.com/pazuzu156/lastfm-go"
+	"github.com/pazuzu156/persephone/lib"
 )
 
 // Whoknows command.

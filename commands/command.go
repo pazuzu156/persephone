@@ -1,12 +1,12 @@
 package commands
 
 import (
-	"persephone/lib"
 	"strconv"
 
 	"github.com/andersfylling/disgord"
 	"github.com/pazuzu156/atlas"
 	"github.com/pazuzu156/lastfm-go"
+	"github.com/pazuzu156/persephone/lib"
 )
 
 // Command is the base command object for all commands.

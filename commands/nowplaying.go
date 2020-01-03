@@ -3,13 +3,13 @@ package commands
 import (
 	"fmt"
 	"os"
-	"persephone/fm"
-	"persephone/lib"
 
 	"github.com/andersfylling/disgord"
 	"github.com/fogleman/gg"
 	"github.com/nfnt/resize"
 	"github.com/pazuzu156/atlas"
+	"github.com/pazuzu156/persephone/fm"
+	"github.com/pazuzu156/persephone/lib"
 )
 
 // Nowplaying command.

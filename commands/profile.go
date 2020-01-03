@@ -4,7 +4,6 @@ import (
 	"fmt"
 	"image"
 	"os"
-	"persephone/lib"
 
 	"github.com/andersfylling/disgord"
 	"github.com/cavaliercoder/grab"
@@ -12,6 +11,7 @@ import (
 	"github.com/nfnt/resize"
 	"github.com/pazuzu156/atlas"
 	"github.com/pazuzu156/lastfm-go"
+	"github.com/pazuzu156/persephone/lib"
 )
 
 // Profile command.

@@ -2,15 +2,14 @@ package commands
 
 import (
 	"fmt"
-	"persephone/fm"
-	"persephone/lib"
 	"strconv"
 	"strings"
 
 	"github.com/pazuzu156/atlas"
 	"github.com/pazuzu156/lastfm-go"
+	"github.com/pazuzu156/persephone/fm"
+	"github.com/pazuzu156/persephone/lib"
 )
-
 // Plays command.
 type Plays struct{ Command }
 
