@@ -3,6 +3,7 @@ package lib
 import (
 	"fmt"
 	"os"
+	"os/user"
 	"runtime"
 )
 
@@ -14,8 +15,9 @@ var homepath string = "/home/kaleb"
 func Storage() string {
 	if runtime.GOOS == "linux" {
 		// return fmt.Sprintf("%s/.config/persephone", os.Getenv("HOME"))
+		usr, _ := user.Current()
 
-		return fmt.Sprintf("%s/.config/persephone", homepath)
+		return fmt.Sprintf("%s/.config/persephone", usr.HomeDir)
 	}
 
 	return ""
