@@ -6,3 +6,4 @@ persephone
 *.tar.gz
 vendor/*
 rsrc.syso
+*.zip
