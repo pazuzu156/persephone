@@ -25,5 +25,6 @@ uninstall:
 
 clean:
 	if [ -f persephone ]; then rm persephone; fi
+	if [ -f rsrc.syso ]; then rm rsrc.syso; fi
 
 .PHONY: all persephone install uninstall clean

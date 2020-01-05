@@ -8,6 +8,7 @@ OS=`uname -o`
 if [ ${OS,,} == "msys" ]; then
     EXE_NAME=persephone.exe
     PIGZ_PATH=/mingw64/bin/pigz
+    rsrc -ico=persephone.ico -arch=amd64
 fi
 
 if [ -f $PIGZ_PATH ]; then
