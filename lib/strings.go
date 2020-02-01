@@ -62,7 +62,7 @@ func JoinStringMap(strs map[int]string, char string) string {
 //
 // Deprecated: Use AvatarURL method from Disgord instead
 func GenAvatarURL(user *disgord.User) string {
-	if &user.Avatar == nil {
+	if user.Avatar == "" {
 		return NoArtistURL
 	}
 
