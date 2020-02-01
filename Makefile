@@ -11,12 +11,12 @@ install:
 	mkdir -pv ${INSHOME}/temp
 	mkdir -pv ${INSHOME}/static/fonts
 	mkdir -pv ${INSHOME}/static/images
-	if ! [ -f ${INSHOME}/config.json ]; then install -D -m644 config.example.json ${INSHOME}/config.json; fi
+	if ! [ -f ${INSHOME}/config.yml ]; then install -D -m644 config.example.yml ${INSHOME}/config.yml; fi
 	install -D -m644 static/fonts/NotoSans-Bold.ttf ${INSHOME}/static/fonts/NotoSans-Bold.ttf
 	install -D -m644 static/fonts/NotoSans-Regular.ttf ${INSHOME}/static/fonts/NotoSans-Regular.ttf
 	install -D -m644 static/images/background.png ${INSHOME}/static/images/background.png
 	install -D -m644 static/images/bm.png ${INSHOME}/static/images/bm.png
-	install -D -m644 artists.json ${INSHOME}/artists.json
+	install -D -m644 artists.yml ${INSHOME}/artists.yml
 
 uninstall:
 	sudo rm -rf /usr/bin/persephone
