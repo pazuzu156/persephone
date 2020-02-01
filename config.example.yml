@@ -7,19 +7,19 @@ elevated_role:
 prefix: "-"
 storage_path:
 starboard:
-    channel: starboard
-    activation_count: 5
+  channel: starboard
+  activation_count: 5
 lastfm:
-    apikey:
-    secret:
+  apikey:
+  secret:
 database:
-    hostname: 127.0.0.1
-    port: 3306
-    username: root
-    password:
-    name: persephone
+  hostname: 127.0.0.1
+  port: 3306
+  username: root
+  password:
+  name: persephone
 youtube:
-    apikey:
+  apikey:
 website:
-    app_url:
-    api_url:
+  app_url:
+  api_url:

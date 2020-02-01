@@ -1,5 +1,5 @@
 *.exe
-config.json
+config.yml
 temp/*
 !temp/.gitkeep
 persephone
