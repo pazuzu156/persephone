@@ -10,6 +10,7 @@ import (
 	"github.com/pazuzu156/persephone/fm"
 	"github.com/pazuzu156/persephone/lib"
 )
+
 // Plays command.
 type Plays struct{ Command }
 
@@ -42,6 +43,13 @@ Passing no value to a parameter will get the plays for said parameter using the 
 // Register registers and runs the plays command.
 func (c Plays) Register() *atlas.Command {
 	c.CommandInterface.Run = func(ctx atlas.Context) {
+		// restrict users who haven't updated lastfm login
+		if c.restrict(ctx) {
+			ctx.Message.Reply(ctx.Context, ctx.Atlas, "You must re-login to Persephone before gaining access to this command. Please see #announcements for more info")
+
+			return
+		}
+
 		np, _ := fm.GetNowPlayingTrack(ctx.Message.Author, c.Lastfm)
 
 		if len(ctx.Args) > 0 {

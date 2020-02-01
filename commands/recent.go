@@ -23,6 +23,13 @@ func InitRecent() Recent {
 // Register registers and runs the recent command.
 func (c Recent) Register() *atlas.Command {
 	c.CommandInterface.Run = func(ctx atlas.Context) {
+		// restrict users who haven't updated lastfm login
+		if c.restrict(ctx) {
+			ctx.Message.Reply(ctx.Context, ctx.Atlas, "You must re-login to Persephone before gaining access to this command. Please see #announcements for more info")
+
+			return
+		}
+
 		recent, _ := fm.GetRecentTracks(ctx.Message.Author, c.Lastfm, "4")
 		var tracks []*disgord.EmbedField
 
