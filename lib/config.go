@@ -1,48 +1,49 @@
 package lib
 
 import (
-	"encoding/json"
 	"io/ioutil"
 	"os"
+
+	"gopkg.in/yaml.v2"
 )
 
-// Configuration is the base json object.
+// Configuration is the base yaml object.
 type Configuration struct {
-	Token        string `json:"token"`
-	BotOwner     string `json:"bot_owner"`
-	BotID        string `json:"bot_id"`
-	GuildID      string `json:"guild_id"`
-	LogChannelID string `json:"log_channel_id"`
-	ElevatedRole string `json:"elevated_role"`
-	Prefix       string `json:"prefix"`
+	Token        string `yaml:"token"`
+	BotOwner     string `yaml:"bot_owner"`
+	BotID        string `yaml:"bot_id"`
+	GuildID      string `yaml:"guild_id"`
+	LogChannelID string `yaml:"log_channel_id"`
+	ElevatedRole string `yaml:"elevated_role"`
+	Prefix       string `yaml:"prefix"`
 	// Starboard string `json:"starboard"`
 	Starboard struct {
-		Channel         string `json:"channel"`
-		ActivationCount int    `json:"activation_count"`
-	} `json:"starboard"`
+		Channel         string `yaml:"channel"`
+		ActivationCount int    `yaml:"activation_count"`
+	} `yaml:"starboard"`
 	Lastfm struct {
-		APIKey string `json:"apikey"`
-		Secret string `json:"secret"`
-	} `json:"lastfm"`
+		APIKey string `yaml:"apikey"`
+		Secret string `yaml:"secret"`
+	} `yaml:"lastfm"`
 	Database struct {
-		Hostname string `json:"hostname"`
-		Port     int    `json:"port"`
-		Username string `json:"username"`
-		Password string `json:"password"`
-		Name     string `json:"name"`
-	} `json:"database"`
+		Hostname string `yaml:"hostname"`
+		Port     int    `yaml:"port"`
+		Username string `yaml:"username"`
+		Password string `yaml:"password"`
+		Name     string `yaml:"name"`
+	} `yaml:"database"`
 	YouTube struct {
-		APIKey string `json:"apikey"`
-	} `json:"youtube"`
+		APIKey string `yaml:"apikey"`
+	} `yaml:"youtube"`
 	Website struct {
-		AppURL string `json:"app_url"`
-		APIURL string `json:"api_url"`
-	} `json:"website"`
+		AppURL string `yaml:"app_url"`
+		APIURL string `yaml:"api_url"`
+	} `yaml:"website"`
 }
 
 // Config retrieves the app's configuration form config.json.
 func Config() Configuration {
-	file, err := os.Open(LocGet("config.json"))
+	file, err := os.Open(LocGet("config.yml"))
 	Check(err)
 	defer file.Close()
 
@@ -50,7 +51,7 @@ func Config() Configuration {
 	Check(err)
 
 	var config Configuration
-	err = json.Unmarshal(contents, &config)
+	err = yaml.Unmarshal(contents, &config)
 	Check(err)
 
 	return config

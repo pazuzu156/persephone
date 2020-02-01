@@ -32,4 +32,5 @@ require (
 	golang.org/x/text v0.3.2
 	golang.org/x/tools v0.0.0-20200103221440-774c71fcf114 // indirect
 	google.golang.org/appengine v1.6.5 // indirect
+	gopkg.in/yaml.v2 v2.2.8
 )
