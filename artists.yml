@@ -1,0 +1,27 @@
+# artists.yml is a list of artists to search for and get
+# band images for. This whole file is a list, each artist 
+# must use the following syntax:
+#
+# - name: Artist Name
+#   id: artist id
+#
+# It's that easy ;)
+
+- name: Týr
+  id: 14435
+- name: Testament
+  id: 70
+- name: Immortal
+  id: 75
+- name: Craft
+  id: 1154
+- name: Exmortus
+  id: 23401
+- name: Dark Funeral
+  id: 669
+- name: Dark Oath
+  id: 3540317048
+- name: Svartsyn
+  id: 3247
+- name: Mercenary
+  id: 2028

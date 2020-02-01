@@ -1,21 +1,22 @@
 package lib
 
 import (
-	"encoding/json"
 	"io/ioutil"
 	"os"
+
+	"gopkg.in/yaml.v2"
 )
 
 // MaArtist is an artist struct for metal-archives artist
 type MaArtist struct {
-	Name string `json:"name"`
-	ID   int    `json:"id"`
+	Name string `yaml:"name"`
+	ID   int    `yaml:"id"`
 }
 
 // GetMaArtistList returns a list of artists defined in
 // artists.json for metal-archives
 func GetMaArtistList() []MaArtist {
-	file, err := os.Open(LocGet("artists.json"))
+	file, err := os.Open(LocGet("artists.yml"))
 	Check(err)
 	defer file.Close()
 
@@ -23,7 +24,7 @@ func GetMaArtistList() []MaArtist {
 	Check(err)
 
 	var artists []MaArtist
-	err = json.Unmarshal(contents, &artists)
+	err = yaml.Unmarshal(contents, &artists)
 	Check(err)
 
 	return artists
