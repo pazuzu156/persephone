@@ -1,25 +1,25 @@
-token: NjIyNTIzNDg3NDcwNDg1NTM1.XX1JJw.SGyJhXjcU4ClnKpxuxXXYb-46yE
+token: NjIyNTIzNDg3NDcwNDg1NTM1.XjTHdw.FUTMZMGzby8jxxUvWK36NAAuH1w
 bot_owner: 192548928804225025
 bot_id: 622523487470485535
 guild_id: 549798423868735498
 log_channel_id: 609194162146902029
 elevated_role: 634172097731493908
-prefix: "-"
+prefix: .
 storage_path: /home/kaleb/.local/share/persephone
 starboard:
-    channel: starboard
-    activation_count: 1
+  channel: starboard
+  activation_count: 1
 lastfm:
-    apikey: 0a83b863e8a7b82fc467ce4c7ca01094
-    secret: ff03e79e11c51e55b30f0ab66f362b95
+  apikey: 0a83b863e8a7b82fc467ce4c7ca01094
+  secret: ff03e79e11c51e55b30f0ab66f362b95
 database:
-    hostname: 127.0.0.1
-    port: 3306
-    username: root
-    password:
-    name: persephone
+  hostname: 127.0.0.1
+  port: 3306
+  username: root
+  password:
+  name: persephone
 youtube:
-    apikey: AIzaSyC3NjVhtBvj0Be8dI8FhqzzG8xpjmW5XOc
+  apikey: AIzaSyC3NjVhtBvj0Be8dI8FhqzzG8xpjmW5XOc
 website:
-    app_url: http://localhost
-    api_url: http://localhost/api
+  app_url: http://localhost
+  api_url: http://localhost/api
