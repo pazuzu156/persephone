@@ -1,6 +1,6 @@
 # Persephone (Working Title)
 
-[![Build Status](https://img.shields.io/travis/pazuzu156/persephone?style=flat-square)](https://travis-ci.org/pazuzu156/Persephone)
+![Go](https://github.com/pazuzu156/persephone/workflows/Go/badge.svg)
 ![Code Climate maintainability](https://img.shields.io/codeclimate/maintainability-percentage/pazuzu156/Persephone?label=maintainability&style=flat-square)
 ![GitHub release](https://img.shields.io/github/release/pazuzu156/persephone?style=flat-square)
 ![GitHub last commit](https://img.shields.io/github/last-commit/pazuzu156/persephone?style=flat-square)
