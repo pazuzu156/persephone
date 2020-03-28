@@ -35,6 +35,13 @@ func InitProfile() Profile {
 // Register registers and runs the profile command.
 func (c Profile) Register() *atlas.Command {
 	c.CommandInterface.Run = func(ctx atlas.Context) {
+		// restrict users who haven't updated lastfm login
+		if c.restrict(ctx) {
+			ctx.Message.Reply(ctx.Context, ctx.Atlas, "You must re-login to Persephone before gaining access to this command. Please see #announcements for more info")
+
+			return
+		}
+
 		lfmuser, _ := lib.GetLastfmUserInfo(ctx.Message.Author, c.Lastfm)
 
 		avURL, _ := ctx.Message.Author.AvatarURL(256, false)
