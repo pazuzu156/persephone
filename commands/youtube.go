@@ -44,13 +44,6 @@ func InitYoutube() Youtube {
 // Register registers and runs the youtube command.
 func (c Youtube) Register() *atlas.Command {
 	c.CommandInterface.Run = func(ctx atlas.Context) {
-		// restrict users who haven't updated lastfm login
-		if c.restrict(ctx) {
-			ctx.Message.Reply(ctx.Context, ctx.Atlas, "You must re-login to Persephone before gaining access to this command. Please see #announcements for more info")
-
-			return
-		}
-
 		ss := map[string]string{"key": c.APIKey, "part": "snippet", "type": "video"}
 
 		if len(ctx.Args) > 0 {

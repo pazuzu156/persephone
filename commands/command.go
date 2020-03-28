@@ -48,12 +48,6 @@ func Init(t *CommandItem) Command {
 	return Command{cmd, lfm}
 }
 
-func (c Command) restrict(ctx atlas.Context) bool {
-	user := lib.GetUser(ctx.Message.Author)
-
-	return user.LastfmToken == ""
-}
-
 // embedFooter returns a footer and timestamp for disgord embeds
 func (c Command) embedFooter(ctx atlas.Context) (f *disgord.EmbedFooter, t disgord.Time) {
 	f, t = lib.AddEmbedFooter(ctx.Message)

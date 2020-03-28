@@ -27,13 +27,6 @@ func InitNowPlaying() Nowplaying {
 // Register registers and runs the nowplaying command.
 func (c Nowplaying) Register() *atlas.Command {
 	c.CommandInterface.Run = func(ctx atlas.Context) {
-		// restrict users who haven't updated lastfm login
-		if c.restrict(ctx) {
-			ctx.Message.Reply(ctx.Context, ctx.Atlas, "You must re-login to Persephone before gaining access to this command. Please see #announcements for more info")
-
-			return
-		}
-
 		track, err := fm.GetNowPlayingTrack(ctx.Message.Author, c.Lastfm)
 		lfmuser, _ := lib.GetLastfmUserInfo(ctx.Message.Author, c.Lastfm)
 
