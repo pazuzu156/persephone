@@ -76,7 +76,7 @@ func (c Plays) Register() *atlas.Command {
 						plays, _ := strconv.Atoi(album.UserPlayCount)
 
 						if plays > 0 {
-							ctx.Message.Reply(ctx.Context, ctx.Atlas, fmt.Sprintf("**%s** has scrobbled %s by %s **%d** times", ctx.Message.Author.Username, album.Name, album.Artist, plays))
+							ctx.Message.Reply(ctx.Context, ctx.Atlas, fmt.Sprintf("**%s** has scrobbled %s by %s approximately **%d** times", ctx.Message.Author.Username, album.Name, album.Artist, plays/len(album.Tracks)))
 						} else {
 							ctx.Message.Reply(ctx.Context, ctx.Atlas, fmt.Sprintf("**%s** has not scrobbled this album yet", ctx.Message.Author.Username))
 						}
