@@ -13,6 +13,8 @@ fi
 
 if [ -f $PIGZ_PATH ]; then
     TAR_FLAGS="-I pigz -cvf"
+else
+    NOTAR=true
 fi
 
 if test -z `which go`; then
@@ -24,19 +26,28 @@ go build -o $EXE_NAME -i -v
 
 mv temp/.gitkeep gkt
 
-if ! [ -f config.json ]; then
+if ! [ -f config.yml ]; then
     if ! [ ${NOTAR+x} ]; then
-        cp config.example.json config.json
+        cp config.example.yml config.yml
     fi
+else
+    mv config.yml config.backup.yml
+    cp config.example.yml config.yml
 fi
 
 # NOTAR will prevent compressing files
 if ! [ ${NOTAR+x} ]; then
-    tar $TAR_FLAGS persephone.tar.gz $EXE_NAME temp/ static/ config.json artists.json
+    tar $TAR_FLAGS persephone.tar.gz $EXE_NAME temp/ static/ config.yml artists.yml
 fi
 
 if ! [ ${NOZIP+x} ]; then
-	zip persephone-windows.zip $EXE_NAME temp/ static/ config.json artists.json
+	zip persephone-windows.zip $EXE_NAME temp/ static/**/* config.yml artists.yml
 fi
 
+# cleanup
 mv gkt temp/.gitkeep
+
+if [ -f config.backup.yml ]; then
+    rm config.yml
+    mv config.backup.yml config.yml
+fi
