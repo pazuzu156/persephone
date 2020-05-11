@@ -1,11 +1,6 @@
 package main
 
 import (
-	"fmt"
-	"os"
-	"os/signal"
-	"syscall"
-
 	"github.com/andersfylling/disgord"
 	"github.com/pazuzu156/atlas"
 	"github.com/pazuzu156/persephone/commands"
@@ -31,13 +26,13 @@ func main() {
 			OwnerID: config.BotOwner,
 		})
 
-		c := make(chan os.Signal)
-		signal.Notify(c, os.Interrupt, syscall.SIGTERM)
-		go func() {
-			<-c
-			shutdown()
-			os.Exit(0)
-		}()
+		// c := make(chan os.Signal)
+		// signal.Notify(c, os.Interrupt, syscall.SIGTERM)
+		// go func() {
+		// 	<-c
+		// 	shutdown()
+		// 	os.Exit(0)
+		// }()
 
 		client.Use(atlas.DefaultLogger())
 		client.GetPrefix = func(m *disgord.Message) string {
@@ -74,7 +69,7 @@ func init() {
 	atlas.Use(commands.InitDeleteUser().Register())
 }
 
-func shutdown() {
-	fmt.Println("Shutting down bot")
-	client.Disconnect()
-}
+// func shutdown() {
+// 	fmt.Println("Shutting down bot")
+// 	client.Disconnect()
+// }
