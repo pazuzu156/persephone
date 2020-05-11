@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"image"
 	"os"
+	"strconv"
 
 	"github.com/andersfylling/disgord"
 	"github.com/cavaliercoder/grab"
@@ -123,7 +124,9 @@ func (c Profile) Register() *atlas.Command {
 		lib.DrawStringWithShadow("Top Albums", 475, 150, dc)
 
 		// display album grid.
-		for i, album := range albums.Albums {
+		for i, albumItem := range albums.Albums {
+			album, _ := c.Lastfm.Album.GetInfo(lastfm.P{"artist": albumItem.Artist.Name,
+				"album": albumItem.Name, "username": c.getLastfmUser(ctx.Message.Author)})
 			ares, _ := grab.Get(lib.LocGet("temp/"), album.Images[3].URL)
 			ai, _ := lib.OpenImage(ares.Filename)
 			os.Remove(ares.Filename)
@@ -140,7 +143,9 @@ func (c Profile) Register() *atlas.Command {
 			lib.DrawStringWithShadow(lib.ShortStr(album.Name, 15), pos.Info.X, pos.Info.Y, dc)
 
 			dc.LoadFontFace(FontRegular, 16)
-			lib.DrawStringWithShadow(fmt.Sprintf("%s plays", album.PlayCount), pos.Info.Plays.X, pos.Info.Plays.Y, dc)
+			plays, _ := strconv.Atoi(album.UserPlayCount)
+			plays = plays / len(album.Tracks)
+			lib.DrawStringWithShadow(fmt.Sprintf("%d album plays", plays), pos.Info.Plays.X, pos.Info.Plays.Y, dc)
 		}
 
 		lib.BrandImage(dc)
