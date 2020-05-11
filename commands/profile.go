@@ -90,11 +90,11 @@ func (c Profile) Register() *atlas.Command {
 		dc.DrawImage(aar, 55, 105)
 
 		dc.LoadFontFace(FontRegular, 25)
-        
-        if len(artists.Artists > 0) {
-            lib.DrawStringWithShadow(lib.ShortStr(artists.Artists[0].Name, 33), 60, 370, dc)
-            lib.DrawStringWithShadow(fmt.Sprintf("%s plays", artists.Artists[0].PlayCount), 60, 400, dc)
-        }
+
+		if len(artists.Artists) > 0 {
+			lib.DrawStringWithShadow(lib.ShortStr(artists.Artists[0].Name, 33), 60, 370, dc)
+			lib.DrawStringWithShadow(fmt.Sprintf("%s plays", artists.Artists[0].PlayCount), 60, 400, dc)
+		}
 
 		x := float64(61)
 		y := float64(445)
