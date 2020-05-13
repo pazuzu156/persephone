@@ -73,3 +73,8 @@ func (c Command) getBotUser(ctx atlas.Context) *disgord.User {
 func (c Command) getLastfmUser(user *disgord.User) string {
 	return lib.GetUser(user).Lastfm
 }
+
+// getLastfmUserFromCtx returns a Last.FM username from the database from a given Atlas context.
+func (c Command) getLastfmUserFromCtx(ctx atlas.Context) string {
+	return c.getLastfmUser(ctx.Message.Author)
+}

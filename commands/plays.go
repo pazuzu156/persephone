@@ -63,14 +63,14 @@ func (c Plays) Register() *atlas.Command {
 							if len(argvs) > 1 {
 								al := argvs[0]
 								ar := argvs[1]
-								album, _ = c.Lastfm.Album.GetInfo(lastfm.P{"artist": ar, "album": al, "username": c.getLastfmUser(ctx.Message.Author)})
+								album, _ = c.Lastfm.Album.GetInfo(lastfm.P{"artist": ar, "album": al, "username": c.getLastfmUserFromCtx(ctx)})
 							} else {
 								ctx.Message.Reply(ctx.Context, ctx.Atlas, "Invalid argument syntax. The argument value should look like: album:artist")
 
 								break
 							}
 						} else {
-							album, _ = c.Lastfm.Album.GetInfo(lastfm.P{"artist": np.Artist.Name, "album": np.Album.Name, "username": c.getLastfmUser(ctx.Message.Author)})
+							album, _ = c.Lastfm.Album.GetInfo(lastfm.P{"artist": np.Artist.Name, "album": np.Album.Name, "username": c.getLastfmUserFromCtx(ctx)})
 						}
 
 						plays, _ := strconv.Atoi(album.UserPlayCount)
@@ -87,9 +87,9 @@ func (c Plays) Register() *atlas.Command {
 						if isset {
 							delete(ctx.Args, 0)
 							argvs := lib.JoinStringMap(ctx.Args, " ")
-							artist, _ = c.Lastfm.Artist.GetInfo(lastfm.P{"artist": argvs, "username": c.getLastfmUser(ctx.Message.Author)})
+							artist, _ = c.Lastfm.Artist.GetInfo(lastfm.P{"artist": argvs, "username": c.getLastfmUserFromCtx(ctx)})
 						} else {
-							artist, _ = c.Lastfm.Artist.GetInfo(lastfm.P{"artist": np.Artist.Name, "username": c.getLastfmUser(ctx.Message.Author)})
+							artist, _ = c.Lastfm.Artist.GetInfo(lastfm.P{"artist": np.Artist.Name, "username": c.getLastfmUserFromCtx(ctx)})
 						}
 
 						plays, _ := strconv.Atoi(artist.Stats.UserPlays)

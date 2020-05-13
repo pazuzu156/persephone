@@ -86,7 +86,7 @@ func (c Chart) Register() *atlas.Command {
 		}
 
 		if kind == "artist" {
-			chart, _ := c.Lastfm.User.GetTopArtists(lastfm.P{"user": c.getLastfmUser(ctx.Message.Author), "period": period})
+			chart, _ := c.Lastfm.User.GetTopArtists(lastfm.P{"user": c.getLastfmUserFromCtx(ctx), "period": period})
 
 			for n, ch := range chart.Artists {
 				fmt.Printf("%d: %s\n", n+1, ch.Name)

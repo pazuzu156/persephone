@@ -90,32 +90,64 @@ var (
 			X: 720,
 			Y: 180,
 			Plays: lib.PlaysText{
-				X: 870,
-				Y: 180,
+				X: 735,
+				Y: 200,
 			},
 		},
 		{
 			X: 720,
-			Y: 210,
+			Y: 230,
 			Plays: lib.PlaysText{
-				X: 870,
-				Y: 210,
+				X: 735,
+				Y: 250,
 			},
 		},
 		{
 			X: 720,
-			Y: 240,
+			Y: 280,
 			Plays: lib.PlaysText{
-				X: 870,
-				Y: 240,
+				X: 735,
+				Y: 300,
 			},
 		},
 		{
 			X: 720,
-			Y: 270,
+			Y: 330,
 			Plays: lib.PlaysText{
-				X: 870,
-				Y: 270,
+				X: 735,
+				Y: 350,
+			},
+		},
+		{
+			X: 720,
+			Y: 380,
+			Plays: lib.PlaysText{
+				X: 735,
+				Y: 400,
+			},
+		},
+		{
+			X: 720,
+			Y: 430,
+			Plays: lib.PlaysText{
+				X: 735,
+				Y: 450,
+			},
+		},
+		{
+			X: 720,
+			Y: 480,
+			Plays: lib.PlaysText{
+				X: 735,
+				Y: 500,
+			},
+		},
+		{
+			X: 720,
+			Y: 530,
+			Plays: lib.PlaysText{
+				X: 735,
+				Y: 550,
 			},
 		},
 	}

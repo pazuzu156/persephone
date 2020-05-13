@@ -49,9 +49,7 @@ func (c Profile) Register() *atlas.Command {
 
 			artists, _ := c.Lastfm.User.GetTopArtists(lastfm.P{"user": lfmuser.Name, "period": "overall", "limit": "5"})
 			albums, _ := c.Lastfm.User.GetTopAlbums(lastfm.P{"user": lfmuser.Name, "limit": "4", "period": "overall"})
-
-			// top tags api end-point is currently broken. will return later.
-			// tags, _ := c.Lastfm.User.GetTopTags(lastfm.P{"user": lfmuser.Name})
+			tracks, _ := c.Lastfm.User.GetTopTracks(lastfm.P{"user": c.getLastfmUserFromCtx(ctx), "limit": "8"})
 
 			bg, _ := lib.OpenImage(lib.LocGet("static/images/background.png"))
 
@@ -127,10 +125,10 @@ func (c Profile) Register() *atlas.Command {
 			// display album grid.
 			for i, albumItem := range albums.Albums {
 				album, _ := c.Lastfm.Album.GetInfo(lastfm.P{"artist": albumItem.Artist.Name,
-					"album": albumItem.Name, "username": c.getLastfmUser(ctx.Message.Author)})
+					"album": albumItem.Name, "username": c.getLastfmUserFromCtx(ctx)})
 				ares, _ := grab.Get(lib.LocGet("temp/"), album.Images[3].URL)
 				ai, _ := lib.OpenImage(ares.Filename)
-				os.Remove(ares.Filename)
+				os.Remove(ares.Filename) // possible suspect to deletion of bm.png. keep a watch on this
 				ar := resize.Resize(145, 145, ai, resize.Bicubic)
 				pos := AlbumPositions[i]
 
@@ -141,12 +139,25 @@ func (c Profile) Register() *atlas.Command {
 				dc.DrawImage(ar, pos.X, pos.Y)
 
 				dc.LoadFontFace(FontRegular, 20)
-				lib.DrawStringWithShadow(lib.ShortStr(album.Name, 15), pos.Info.X, pos.Info.Y, dc)
+				lib.DrawStringWithShadow(lib.ShortStr(album.Name, 14), pos.Info.X, pos.Info.Y, dc)
 
 				dc.LoadFontFace(FontRegular, 16)
 				plays, _ := strconv.Atoi(album.UserPlayCount)
 				plays = plays / len(album.Tracks)
 				lib.DrawStringWithShadow(fmt.Sprintf("%d album plays", plays), pos.Info.Plays.X, pos.Info.Plays.Y, dc)
+			}
+
+			dc.LoadFontFace(FontRegular, 20)
+			lib.DrawStringWithShadow("Top Tracks", 800, 150, dc)
+
+			for i, track := range tracks.Tracks {
+				pos := TrackPositions[i]
+
+				dc.LoadFontFace(FontRegular, 20)
+				lib.DrawStringWithShadow(lib.ShortStr(track.Name, 20), pos.X, pos.Y, dc)
+
+				dc.LoadFontFace(FontRegular, 16)
+				lib.DrawStringWithShadow(fmt.Sprintf("%s | %s plays", lib.ShortStr(track.Artist.Name, 10), track.PlayCount), pos.Plays.X, pos.Plays.Y, dc)
 			}
 
 			lib.BrandImage(dc)
