@@ -1,4 +1,4 @@
-# Persephone (Working Title)
+# Persephone
 
 ![Go](https://github.com/pazuzu156/persephone/workflows/Go/badge.svg)
 ![Code Climate maintainability](https://img.shields.io/codeclimate/maintainability-percentage/pazuzu156/Persephone?label=maintainability&style=flat-square)
