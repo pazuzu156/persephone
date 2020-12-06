@@ -1,0 +1,16 @@
+token:
+ownerID:
+lastfm:
+    apikey:
+    secret:
+database:
+    hostname: 127.0.0.1
+    port: 3306
+    username: root
+    password:
+    name: persephone
+youtube:
+    apikey:
+website:
+    apiUrl:
+    appUrl:

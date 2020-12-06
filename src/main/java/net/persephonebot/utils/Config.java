@@ -1,14 +1,33 @@
 package net.persephonebot.utils;
 
-public class Config {
-    private String token;
-    private String ownerID;
+import java.net.URL;
 
-    public String getToken() {
-        return token;
+public class Config {
+    public String token;
+    public String ownerID;
+    public LastFM lastfm;
+    public Database database;
+    public Youtube youtube;
+    public Website website;
+
+    public class LastFM {
+        public String apikey;
+        public String secret;
     }
 
-    public String getOwnerID() {
-        return ownerID;
+    public class Database {
+        public String hostname;
+        public int port;
+        public String username;
+        public String password;
+        public String name;
+    }
+    public class Youtube {
+        public String apikey;
+    }
+
+    public class Website {
+        public URL apiUrl;
+        public URL appUrl;
     }
 }

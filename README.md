@@ -12,7 +12,7 @@ Persephone is a Discord bot that's used to interface with Lastfm, and is built t
 
 Libraries used for the bot will be listed here (you can also see them listed in `build.gradle`)
 
-- [Gson](https://github.com/google/gson) Google's JSON parsing library
+- [Jackson](https://github.com/FasterXML/jackson-dataformats-text/tree/master/yaml) YAML parsing library
 - [JDA](https://github.com/DV8FromTheWorld/JDA) Discord API wrapper for Java
 - [JDA-Utilities](https://github.com/JDA-Applications/JDA-Utilities) Extra utilities for JDA (Specifically commands)*
 - [Apache Commons Lang3](https://commons.apache.org/proper/commons-lang/) Apache's common language stuff for Java
