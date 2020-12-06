@@ -10,28 +10,21 @@ Persephone is a Discord bot that's used to interface with Lastfm, and is built t
 
 ## Used Libraries
 
-Libraries used for the bot will be listed here (you can also see them listed in `go.mod`)
+Libraries used for the bot will be listed here (you can also see them listed in `build.gradle`)
 
-- [Disgord](https://github.com/andersfylling/disgord) The Discord library for Go
-- [Atlas](https://github.com/pazuzu156/atlas) The command router for Disgord (fork of [Aurora](https://github.com/polaron/aurora))
-- [Lastfm-Go](https://github.com/pazuzu156/lastfm-go) The Last.FM API library for Go (fork)
-- [gg](https://github.com/fogleman/gg) 2D Image generation for Go
-- [genmai](https://github.com/naoina/genmai) Database ORM for Go
-- <https://github.com/go-sql-driver/mysql> MySQL driver used with database
-- [Colly](https://github.com/gocolly/colly) For hex conversions for embed colors
+- [Gson](https://github.com/google/gson) Google's JSON parsing library
+- [JDA](https://github.com/DV8FromTheWorld/JDA) Discord API wrapper for Java
+- [JDA-Utilities](https://github.com/JDA-Applications/JDA-Utilities) Extra utilities for JDA (Specifically commands)*
+- [Apache Commons Lang3](https://commons.apache.org/proper/commons-lang/) Apache's common language stuff for Java
+- [SLF4J](http://www.slf4j.org/) Logging for Java
 
-## Building
+\* JDA Utilities github releases haven't been updated in years, however the library is still updated. Latest release versions can be found here: https://bintray.com/jagrosh/maven/JDA-Utilities
 
-Building is quite easy, just make sure you have [Go](https://golang.org/) installed, and run `go build` You should be able to run the compiled executable after making required changes to `config.json` for your bot
+## Building/Running
 
-### Linux
+Running the bot requires you have a version of Java 14 installed. For Windows, I recommend installing openjdk with chocolatey. Other systems, refer to your distribution's package repositories.
 
-On Linux, to build for distribution (or to install on your system) use the provided Makefile.
-
-    $ make; make install
-    ...
-
-Do not run `make install` with sudo, it will run sudo when needed. Make sure you update your configuration in `~/persephone/config.json` so the bot will run
+To run, simply edit `src\resources\config.json` with the needed bot configurations, then run using the `run` script for your system.
 
 ## Contributing
 
@@ -39,7 +32,7 @@ Please refer to [CONTRIBUTING.md](CONTRIBUTING.md) for more info
 
 ## Planned Features
 
-Theres a fair bit I want to do with this bot, I'll add a list of features here when I think of them, and if I find them an obtainable goal
+As this is a complete bot rewrite in another language, literally everything is a planned feature at this point :rofl:
 
 ## Donations
 
