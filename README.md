@@ -1,6 +1,6 @@
 # Persephone
 
-![Go](https://github.com/pazuzu156/persephone/workflows/Go/badge.svg)
+![Java w/Gradle](https://github.com/pazuzu156/persephone/workflows/Java%20w/Gradle/badge.svg?branch=java)
 ![Code Climate maintainability](https://img.shields.io/codeclimate/maintainability-percentage/pazuzu156/Persephone?label=maintainability&style=flat-square)
 ![GitHub release](https://img.shields.io/github/release/pazuzu156/persephone?style=flat-square)
 ![GitHub last commit](https://img.shields.io/github/last-commit/pazuzu156/persephone?style=flat-square)
