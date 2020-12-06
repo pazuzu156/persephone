@@ -1,9 +1,8 @@
-*.exe
-config.yml
-temp/*
-!temp/.gitkeep
-persephone
-*.tar.gz
-vendor/*
-rsrc.syso
-*.zip
+src/main/resources/config.json
+build/
+bin/
+.vscode/
+.settings/
+.classpath
+.project
+.settings/

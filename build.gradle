@@ -1,0 +1,20 @@
+plugins {
+    id 'java'
+    id 'application'
+}
+
+mainClassName = 'net.persephonebot.Main'
+version = 1.0
+sourceCompatibility = 14.0
+
+repositories {
+    jcenter()
+}
+
+dependencies {
+    compile 'com.google.code.gson:gson:2.8.6'
+    compile 'net.dv8tion:JDA:4.2.0_222'
+    compile 'com.jagrosh:jda-utilities:3.0.5'
+    compile 'org.apache.commons:commons-lang3:3.0'
+    compile 'org.slf4j:slf4j-simple:1.7.30'
+}
