@@ -5,6 +5,7 @@ import java.net.URL;
 public class Config {
     public String token;
     public String ownerID;
+    public String prefix;
     public LastFM lastfm;
     public Database database;
     public Youtube youtube;
