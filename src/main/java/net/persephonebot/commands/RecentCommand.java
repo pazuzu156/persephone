@@ -1,7 +1,5 @@
 package net.persephonebot.commands;
 
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import com.jagrosh.jdautilities.command.CommandEvent;
@@ -11,7 +9,7 @@ import de.umass.lastfm.PaginatedResult;
 import de.umass.lastfm.Track;
 import de.umass.lastfm.User;
 import net.dv8tion.jda.api.EmbedBuilder;
-import net.persephonebot.database.Db;
+import net.persephonebot.database.DBUser;
 
 public class RecentCommand extends BaseCommand {
     public RecentCommand() {
@@ -27,52 +25,44 @@ public class RecentCommand extends BaseCommand {
             .setColor(randomColor());
 
         try {
-            Db db = new Db();
+            DBUser dbu = new DBUser(event.getAuthor());
+            if (dbu.exists()) {
+                String lastfm = dbu.first().getString("lastfm");
+                PaginatedResult<Track> recent = User.getRecentTracks(
+                    lastfm,
+                    1, 5,
+                    config.lastfm.apikey
+                );
 
-            if (db.isOpen()) {
-                PreparedStatement stmt = db.prepare("SELECT * FROM `users` WHERE `discord_id` = ?");
-                stmt.setLong(1, event.getAuthor().getIdLong());
-                ResultSet res = stmt.executeQuery();
+                String imageUrl = dbu.jdaUser().getAvatarUrl();
+                StringBuilder sb = new StringBuilder();
 
-                if (res.first()) {
-                    String lastfm = res.getString("lastfm");
+                for (Track track : recent) {
+                    if (track.isNowPlaying()) {
+                        eb.addField(
+                            "Currently Playing",
+                            track.getArtist()+" - "+track.getName(),
+                            false
+                        );
+                        imageUrl = track.getImageURL(ImageSize.EXTRALARGE);
 
-                    PaginatedResult<Track> recent = User.getRecentTracks(
-                        lastfm,
-                        1, 5,
-                        config.lastfm.apikey
-                    );
-
-                    String imageUrl = event.getAuthor().getAvatarUrl();
-                    StringBuilder sb = new StringBuilder();
-
-                    for (Track track : recent) {
-                        if (track.isNowPlaying()) {
-                            eb.addField(
-                                "Currently Playing",
-                                track.getArtist()+" - "+track.getName(),
-                                false
-                            );
-                            imageUrl = track.getImageURL(ImageSize.EXTRALARGE);
-
-                            if (imageUrl == null) {
-                                imageUrl = track.getImageURL(ImageSize.LARGE);
-                            }
-                        } else {
-                            sb.append(String.format(
-                                "%s - %s\n",
-                                track.getArtist(),
-                                track.getName()
-                            ));
+                        if (imageUrl == null) {
+                            imageUrl = track.getImageURL(ImageSize.LARGE);
                         }
+                    } else {
+                        sb.append(String.format(
+                            "%s - %s\n",
+                            track.getArtist(),
+                            track.getName()
+                        ));
                     }
-
-                    eb.addField("Previous Tracks", sb.toString(), false);
-                    eb.setThumbnail(imageUrl);
                 }
 
-                event.reply(eb.build());
+                eb.addField("Previous Tracks", sb.toString(), false);
+                eb.setThumbnail(imageUrl);
             }
+
+            event.reply(eb.build());
         } catch (SQLException e) {
             e.printStackTrace();
         }
