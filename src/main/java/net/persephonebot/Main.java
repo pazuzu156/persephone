@@ -9,6 +9,7 @@ import net.dv8tion.jda.api.OnlineStatus;
 import net.dv8tion.jda.api.entities.Activity;
 import net.persephonebot.commands.AboutCommand;
 import net.persephonebot.commands.RecentCommand;
+import net.persephonebot.commands.RegisterCommand;
 import net.persephonebot.commands.WhoKnowsCommand;
 import net.persephonebot.utils.Listener;
 
@@ -26,6 +27,7 @@ public class Main {
 
         client.addCommands(new AboutCommand(),
             new RecentCommand(),
+            new RegisterCommand(),
             new WhoKnowsCommand());
 
         try {

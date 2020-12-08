@@ -9,7 +9,7 @@ public class Config {
     public LastFM lastfm;
     public Database database;
     public Youtube youtube;
-    public Website website;
+    public URL webLoginUrl;
 
     public class LastFM {
         public String apikey;
@@ -25,10 +25,5 @@ public class Config {
     }
     public class Youtube {
         public String apikey;
-    }
-
-    public class Website {
-        public URL apiUrl;
-        public URL appUrl;
     }
 }

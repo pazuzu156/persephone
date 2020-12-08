@@ -23,7 +23,8 @@ public class RecentCommand extends BaseCommand {
     protected void execute(CommandEvent event) {
         EmbedBuilder eb = new EmbedBuilder()
             .setTitle("Recent Tracks")
-            .setFooter(footerText(event), event.getAuthor().getAvatarUrl()).setColor(randomColor());
+            .setFooter(footerText(event), event.getAuthor().getAvatarUrl())
+            .setColor(randomColor());
 
         try {
             Db db = new Db();

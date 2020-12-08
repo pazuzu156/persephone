@@ -1,5 +1,6 @@
 token:
 ownerID:
+prefix: "-"
 lastfm:
     apikey:
     secret:
@@ -11,6 +12,4 @@ database:
     name: persephone
 youtube:
     apikey:
-website:
-    apiUrl:
-    appUrl:
+webLoginUrl:

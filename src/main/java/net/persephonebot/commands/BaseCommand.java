@@ -23,10 +23,10 @@ public abstract class BaseCommand extends Command {
         DateFormat sdf = new SimpleDateFormat("k:mm a z");
         Date date = new Date();
 
-        return "Command invoked by: "+Strings.User(event.getAuthor())+" \u2022 Today at "+sdf.format(date);
+        return "Command invoked by: " + Strings.User(event.getAuthor()) + " \u2022 Today at " + sdf.format(date);
     }
 
     public Color randomColor() {
-        return new Color((int)(Math.random() * 0x1000000));
+        return new Color((int) (Math.random() * 0x1000000));
     }
 }
