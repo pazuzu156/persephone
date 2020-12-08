@@ -33,44 +33,46 @@ public class RecentCommand extends BaseCommand {
                 PreparedStatement stmt = db.prepare("SELECT * FROM `users` WHERE `discord_id` = ?");
                 stmt.setLong(1, event.getAuthor().getIdLong());
                 ResultSet res = stmt.executeQuery();
-                String lastfm = "";
-                String imageUrl = event.getAuthor().getAvatarUrl();
 
-                while (res.next()) {
-                    lastfm = res.getString("lastfm");
-                }
-                db.close();
+                if (res.first()) {
+                    String lastfm = res.getString("lastfm");
 
-                PaginatedResult<Track> recent = User.getRecentTracks(
-                    lastfm, 1, 5, config.lastfm.apikey
-                );
-                StringBuilder sb = new StringBuilder();
+                    PaginatedResult<Track> recent = User.getRecentTracks(
+                        lastfm,
+                        1, 5,
+                        config.lastfm.apikey
+                    );
 
-                for (Track track : recent) {
-                    if (track.isNowPlaying()) {
-                        eb.addField(
-                            "Currently Playing",
-                            track.getArtist()+" - "+track.getName(),
-                            false
-                        );
-                        imageUrl = track.getImageURL(ImageSize.EXTRALARGE);
+                    String imageUrl = event.getAuthor().getAvatarUrl();
+                    StringBuilder sb = new StringBuilder();
 
-                        if (imageUrl == null) {
-                            track.getImageURL(ImageSize.LARGE);
+                    for (Track track : recent) {
+                        if (track.isNowPlaying()) {
+                            eb.addField(
+                                "Currently Playing",
+                                track.getArtist()+" - "+track.getName(),
+                                false
+                            );
+                            imageUrl = track.getImageURL(ImageSize.EXTRALARGE);
+
+                            if (imageUrl == null) {
+                                imageUrl = track.getImageURL(ImageSize.LARGE);
+                            }
+                        } else {
+                            sb.append(String.format(
+                                "%s - %s\n",
+                                track.getArtist(),
+                                track.getName()
+                            ));
                         }
-                    } else {
-                        sb.append(String.format("%s - %s\n",
-                            track.getArtist(), track.getName()));
                     }
+
+                    eb.addField("Previous Tracks", sb.toString(), false);
+                    eb.setThumbnail(imageUrl);
                 }
 
-                System.out.println(imageUrl);
-
-                eb.addField("Previous Tracks", sb.toString(), false);
-                eb.setThumbnail(imageUrl);
+                event.reply(eb.build());
             }
-
-            event.reply(eb.build());
         } catch (SQLException e) {
             e.printStackTrace();
         }
