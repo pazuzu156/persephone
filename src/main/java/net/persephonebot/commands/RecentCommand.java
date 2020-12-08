@@ -11,7 +11,7 @@ import de.umass.lastfm.PaginatedResult;
 import de.umass.lastfm.Track;
 import de.umass.lastfm.User;
 import net.dv8tion.jda.api.EmbedBuilder;
-import net.persephonebot.utils.Db;
+import net.persephonebot.database.Db;
 
 public class RecentCommand extends BaseCommand {
     public RecentCommand() {

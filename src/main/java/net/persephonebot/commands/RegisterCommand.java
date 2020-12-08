@@ -6,7 +6,7 @@ import java.sql.SQLException;
 
 import com.jagrosh.jdautilities.command.CommandEvent;
 
-import net.persephonebot.utils.Db;
+import net.persephonebot.database.Db;
 
 public class RegisterCommand extends BaseCommand {
     public RegisterCommand() {

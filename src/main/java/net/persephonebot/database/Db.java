@@ -1,4 +1,4 @@
-package net.persephonebot.utils;
+package net.persephonebot.database;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
