@@ -3,6 +3,7 @@ package net.persephonebot.database;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Map;
 
 import net.dv8tion.jda.api.entities.User;
 
@@ -56,5 +57,24 @@ public class DBUser extends Db {
      */
     public User jdaUser() {
         return this._user;
+    }
+
+
+    public Map<Integer, String[]> getCrowns(int limit, int offset) throws SQLException {
+        DBCrown crowns = new DBCrown();
+
+        return crowns.getCrowns(this._user, limit, offset);
+    }
+
+    /**
+     * Gets a user's crowns.
+     *
+     * @return
+     * @throws SQLException
+     */
+    public Map<Integer, String[]> getCrowns() throws SQLException {
+        DBCrown crowns = new DBCrown();
+
+        return crowns.getCrowns(this._user);
     }
 }

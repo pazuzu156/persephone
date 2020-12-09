@@ -1,9 +1,6 @@
 package net.persephonebot.commands;
 
 import java.awt.Color;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 import com.jagrosh.jdautilities.command.Command;
 import com.jagrosh.jdautilities.command.CommandEvent;
@@ -17,15 +14,24 @@ public abstract class BaseCommand extends Command {
 
     public BaseCommand() {
         config = BotConfig.cfg();
+        this.guildOnly = true;
     }
 
+    /**
+     * Writes common footer text.
+     *
+     * @param event
+     * @return footer test string
+     */
     public String footerText(CommandEvent event) {
-        DateFormat sdf = new SimpleDateFormat("k:mm a z");
-        Date date = new Date();
-
-        return "Command invoked by: " + Strings.User(event.getAuthor()) + " \u2022 Today at " + sdf.format(date);
+        return "Command invoked by: " + Strings.User(event.getAuthor());
     }
 
+    /**
+     * Generates a random color. Used for embeds.
+     *
+     * @return Random color
+     */
     public Color randomColor() {
         return new Color((int) (Math.random() * 0x1000000));
     }

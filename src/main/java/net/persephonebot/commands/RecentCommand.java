@@ -1,6 +1,7 @@
 package net.persephonebot.commands;
 
 import java.sql.SQLException;
+import java.time.Instant;
 
 import com.jagrosh.jdautilities.command.CommandEvent;
 
@@ -22,7 +23,8 @@ public class RecentCommand extends BaseCommand {
         EmbedBuilder eb = new EmbedBuilder()
             .setTitle("Recent Tracks")
             .setFooter(footerText(event), event.getAuthor().getAvatarUrl())
-            .setColor(randomColor());
+            .setColor(randomColor())
+            .setTimestamp(Instant.now());
 
         try {
             DBUser dbu = new DBUser(event.getAuthor());

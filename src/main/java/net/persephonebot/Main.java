@@ -8,6 +8,7 @@ import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.OnlineStatus;
 import net.dv8tion.jda.api.entities.Activity;
 import net.persephonebot.commands.AboutCommand;
+import net.persephonebot.commands.CrownsCommand;
 import net.persephonebot.commands.RecentCommand;
 import net.persephonebot.commands.RegisterCommand;
 import net.persephonebot.commands.WhoKnowsCommand;
@@ -26,6 +27,7 @@ public class Main {
             .setActivity(Activity.listening("Music"));
 
         client.addCommands(new AboutCommand(),
+            new CrownsCommand(),
             new RecentCommand(),
             new RegisterCommand(),
             new WhoKnowsCommand());

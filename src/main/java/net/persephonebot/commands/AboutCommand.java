@@ -1,5 +1,7 @@
 package net.persephonebot.commands;
 
+import java.time.Instant;
+
 import com.jagrosh.jdautilities.command.CommandEvent;
 
 import org.apache.commons.lang3.StringUtils;
@@ -30,7 +32,8 @@ public class AboutCommand extends BaseCommand {
             .addField("Roles", roles(event), false)
             .addField("Source", "https://github.com/pazuzu156/persephone", true)
             .addField("Website", "https://persephonebot.net", true)
-            .setFooter(footerText(event));
+            .setFooter(footerText(event), event.getAuthor().getAvatarUrl())
+            .setTimestamp(Instant.now());
 
         event.reply(eb.build());
     }

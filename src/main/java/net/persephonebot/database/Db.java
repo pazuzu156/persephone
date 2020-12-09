@@ -3,6 +3,7 @@ package net.persephonebot.database;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Properties;
 
@@ -64,6 +65,66 @@ public class Db {
      */
     public PreparedStatement prepare(String sql) throws SQLException {
         return _connection.prepareStatement(sql);
+    }
+
+    /**
+     * Runs a select query.
+     *
+     * @param table - the table to query
+     * @param options - query options
+     * @return
+     * @throws SQLException
+     */
+    public ResultSet select(String table, String... options) throws SQLException {
+        String sql = "SELECT * FROM "+table;
+        PreparedStatement stmt = null;
+
+        if (options.length > 0) {
+            if (options.length > 1) {
+                sql += String.format(" WHERE `%s` %s ?", options[0], options[1]);
+                if (options.length > 3 && options[3] != null) {
+                    // sql += " "+options[3];
+                    for (int i = 3; i < options.length; i++) {
+                        sql += " "+options[i];
+                    }
+                }
+
+                stmt = prepare(sql);
+                stmt.setString(1, options[2]);
+            }
+        } else {
+            stmt = prepare(sql);
+        }
+
+        return stmt.executeQuery();
+    }
+
+    /**
+     * Writes an ascending order string.
+     *
+     * @param by - Item to order by
+     * @return
+     */
+    public String orderAsc(String by) {
+        return String.format("ORDER BY `%s` ASC", by);
+    }
+
+    /**
+     * Writes a descending order string.
+     *
+     * @param by - Item to order by
+     * @return
+     */
+    public String orderDesc(String by) {
+        return String.format("ORDER BY `%s` DESC", by);
+    }
+
+    public String limit(int limit) {
+        return String.format("LIMIT %d", limit);
+    }
+
+    public String offset(int offset) {
+        return String.format("OFFSET %d", offset);
     }
 
     /**
