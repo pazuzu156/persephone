@@ -49,7 +49,7 @@ func (c Profile) Register() *atlas.Command {
 
 			artists, _ := c.Lastfm.User.GetTopArtists(lastfm.P{"user": lfmuser.Name, "period": "overall", "limit": "5"})
 			albums, _ := c.Lastfm.User.GetTopAlbums(lastfm.P{"user": lfmuser.Name, "limit": "4", "period": "overall"})
-			tracks, _ := c.Lastfm.User.GetTopTracks(lastfm.P{"user": c.getLastfmUserFromCtx(ctx), "limit": "8"})
+			tracks, _ := c.Lastfm.User.GetTopTracks(lastfm.P{"user": lfmuser.Name, "limit": "8"})
 
 			bg, _ := lib.OpenImage(lib.LocGet("static/images/background.png"))
 
@@ -143,7 +143,12 @@ func (c Profile) Register() *atlas.Command {
 
 				dc.LoadFontFace(FontRegular, 16)
 				plays, _ := strconv.Atoi(album.UserPlayCount)
-				plays = plays / len(album.Tracks)
+				// plays = plays / len(album.Tracks) // broken with 0 album tracks
+
+				if len(album.Tracks) > 0 {
+					plays = plays / len(album.Tracks)
+				}
+
 				lib.DrawStringWithShadow(fmt.Sprintf("%d album plays", plays), pos.Info.Plays.X, pos.Info.Plays.Y, dc)
 			}
 
